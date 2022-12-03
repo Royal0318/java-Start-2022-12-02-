@@ -11,6 +11,7 @@ public class git {
         String f = "보다";
         String g = "지불";
 
+
         System.out.println("\n사람 이름 2명을 입력해주세요");
         String People = sc.next();
         String People2 = sc.next();
