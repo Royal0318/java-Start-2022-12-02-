@@ -1,22 +1,3 @@
-문제)다음 세 가지 중 고르시오.
-	1. 감자. 2.옥수수 3. 수박
-	1번을 누를 시
-	1번 감자를 선택하셨습니다. 라는 문구가 나오도록설정한다
-	2번을 누를 시
-	2번 옥수수를 선택하셨습니다. 라는문구가 나오도록 설정한다
-	3번을 누를 시,
-	3번 수박을 선택하셨습니다. 라는문구가 나오도록 설정한다
-	
-	그 뒤 1번 감자에서 1천원어치, 2천원어치 3천원어치.
-	2번을 누를 시 옥수수에서 4천원어치, 5천원어치 6천원어치,
-	3번을 누를 시 수박에서 10000천원어치, 20000천원어치, 30000천원어치.
-	라는 문구가 각각 나오도록 설정하고,
-	그 안에서 또 1번을 누를 시
-	“감자 1천원어치를 선택하셨습니다.” 라는 문구가 나오도록 하고,
-	몇 개를 주문하겠냐고 질문한 뒤 그 개수에 따라 금액이 변동하도록 코드를 작성하시오
-
-
-
 
 
 import java.util.Scanner;
@@ -24,68 +5,50 @@ import java.util.Scanner;
 public class githubupload {
     public static void manin(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n1.감자  \n2.옥수수  \n3.수박");
-        int foodselect = sc.nextInt();
+        String a = "는";
+        String b = "와";
+        String c = "은";
+        String d = "를";
+        String e = "원";
+        String f = "보다";
+        String g = "지불";
 
-        if (foodselect == 1) {
-            System.out.println("감자를 선택하셨습니다.");
-            System.out.println("\n1.1000원어치 구매 \n2.2000원어치 구매 \n3.3000원어치 구매");
-            int moneyselect = sc.nextInt();
-            if (moneyselect == 1) {
-                System.out.println("감자를 1000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(1000 * num)+"원 입니다");
-            }
-            if (moneyselect == 1) {
-                System.out.println("감자를 2000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(2000 * num)+"원 입니다");
-            }
-            if (moneyselect == 1) {
-                System.out.println("감자를 3000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(3000 * num)+"원 입니다");
-            }
-        }
-        if (foodselect == 2) {
-            System.out.println("옥수수를 선택하셨습니다.");
-            System.out.println("\n1.4000원어치 구매 \n2.5000원어치 구매 \n3.6000원어치 구매");
-            int moneyselect = sc.nextInt();
-            if (moneyselect == 1) {
-                System.out.println("옥수수를 4000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(4000 * num)+"원 입니다");
-            }
-            if (moneyselect == 2) {
-                System.out.println("옥수수를 5000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(5000 * num)+"원 입니다");
-            }
-            if (moneyselect == 3) {
-                System.out.println("옥수수를 6000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(6000 * num)+"원 입니다");
-            }
-        }
-        if (foodselect == 3) {
-            System.out.println("수박을 선택하셨습니다.");
-            System.out.println("\n1.10000원어치 구매 \n2.20000원어치 구매 \n3.30000원어치 구매");
-            int moneyselect = sc.nextInt();
-            if (moneyselect == 1) {
-                System.out.println("수박을 10000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(10000 * num)+"원 입니다");
-            }
-            if (moneyselect == 2) {
-                System.out.println("수박을 20000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(20000 * num)+"원 입니다");
-            }
-            if (moneyselect == 3) {
-                System.out.println("수박을 30000원어치 구매하셨습니다 몇개를 구매 하시겠습니까?");
-                int num = sc.nextInt();
-                System.out.println("총 금액은 "+(30000 * num)+"원 입니다");
-            }
-        }
+
+        System.out.println("\n사람 이름 2명을 입력해주세요");
+        String People = sc.next();
+        String People2 = sc.next();
+
+        System.out.println("\n"+People+"가 구매한 음식이름 3가지를 적어주세요");
+        String food = sc.next();
+        String food2 = sc.next();
+        String food3 = sc.next();
+
+        System.out.println("구매한 음식 3가지의 가격을 적어주세요 ");
+        int Price = sc.nextInt();
+        int Price2 = sc.nextInt();
+        int Price3 = sc.nextInt();
+        int total = (Price + Price2 + Price3);
+
+        System.out.println("\n"+People2+"가 구매한 음식이름 3가지를 적어주세요");
+        String food4 = sc.next();
+        String food5 = sc.next();
+        String food6 = sc.next();
+
+        System.out.println("구매한 음식 3가지의 가격을 적어주세요 ");
+        int Price4 = sc.nextInt();
+        int Price5 = sc.nextInt();
+        int Price6 = sc.nextInt();
+        int total2 = (Price4 + Price5 + Price6);
+
+        System.out.println("\n"+People+""+a+""+food+""+b+""+food2+""+b+""+food3+""+d+"샀습니다");
+        System.out.println("\n"+People2+""+a+""+food4+""+b+""+food5+""+b+""+food6+""+d+"샀습니다");
+
+        System.out.println("\n"+food+""+a+""+Price+""+e+""+food2+""+a+""+Price2+""+e+""+food3+""+a+""+Price3+""+e+"입니다");
+        System.out.println("\n"+food4+""+a+""+Price4+""+e+""+food5+""+a+""+Price5+""+e+""+food6+""+a+""+Price6+""+e+"입니다");
+
+        System.out.println("\n총 합은 "+(total + total2)+""+e+"나왔으며");
+        System.out.println("\n"+People+""+a+""+total+""+e+""+g+"하고");
+        System.out.println("\n"+People2+""+a+""+total2+""+e+""+g+"하였으며");
+        System.out.println("\n"+People+""+c+""+People2+""+f+""+(total - total2)+""+e+""+g+"했습니다");
     }
 }
