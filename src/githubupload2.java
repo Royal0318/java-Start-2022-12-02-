@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class githubupload {
+public class githubupload2 {
     public static void manin(String[] args) {
         Scanner sc = new Scanner(System.in);
         String a = "는";
