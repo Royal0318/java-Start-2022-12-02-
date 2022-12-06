@@ -8,7 +8,7 @@
 */
 
 import java.util.Scanner;
-public class Decembertwo {
+public class Decemberthree {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("2022년 12월 1일 ~ 31일중 요일을 알고싶은 날짜를 입력해주세요");
