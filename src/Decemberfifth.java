@@ -19,7 +19,6 @@ bmi가 30이상은 고도비만
 18.5미만은 저체중
 이라는 bmi지수를 이용하여 결과값이 도출되도록 코드를 작성하라
 bmi계산식  = 체중/키(m) * 키(m)
-
 */
 import java.util.Scanner;
 public class Decemberfifth {
