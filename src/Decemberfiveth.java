@@ -9,7 +9,7 @@
 단 1 ~ 31일 범위를 벗어날 시 "1 ~ 31 사이의 값을 입력하세요"라는 문장이 출력되도록 하여야 한다.
 */
 import java.util.Scanner;
-public class Decembersecond2 {
+public class Decemberfiveth {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("2022년 12월 1일 ~ 31일중 요일을 알고싶은 날짜를 입력해주세요");
