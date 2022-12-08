@@ -8,7 +8,6 @@
 문)2022년 12월을 기준으로 요일을 알 고 싶을 때 날짜를 입력받아서 요일값이 출력되도록 코드를 작성하여라
 단 1 ~ 31일 범위를 벗어날 시 "1 ~ 31 사이의 값을 입력하세요"라는 문장이 출력되도록 하여야 한다.
 */
-
 import java.util.Scanner;
 public class Decembersecond2 {
     public static void main(String[] args) {
