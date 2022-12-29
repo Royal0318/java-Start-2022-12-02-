@@ -15,11 +15,15 @@
 즉 출력은 1번째,3번째,4번째,5번째처럼 나오는 형태가 아닌 사라진 인덱스를 채워주게 된다
 만약 일치하지 않게 될경우 차감된 값과 나머지 값을 출력하게 된다
 손님의 선택과 삭제하는금액을 모두 0으로 작성시 프로그램이 종료되게 하는 프로그램을 작성하시오
+추가)마지막에는 현재 남은손님들의 돈이 합쳐서 얼마가 존재하는지
+그리고 몇번째 까지 존재하는지 나타내시오
  */
 import java.util.Scanner;
 public class Decembertwentynineth {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int TotalMoney = 0;
+        int MinusMoneySum = 0;
         System.out.println("총 몇명까지 만들겠습니까?");
         int People = sc.nextInt();
         int[] arr = new int[People];
@@ -27,16 +31,18 @@ public class Decembertwentynineth {
 
         for (int i = 0; i < People; i++) {
             arr[i] = sc.nextInt();
+            TotalMoney += arr[i]; //입력하는 금액을 저장한다
         }
         for (int i = 0; i < People; i++) {
             System.out.println("" + (i + 1) + "번째 손님이 가진 금액 : " + arr[i] + "원");
         }
-        for (;;) {
+        for (int j = 0; j < People; j++) {
             int RemainMoney = 0;
             System.out.println("몇번째 손님의 돈을 차감 하시겠습니까?");
             int PeopleSelect = sc.nextInt();
             System.out.println("얼마를 차감 하시겠습니까?");
             int MinusMoney = sc.nextInt();
+            MinusMoneySum += MinusMoney;//차감되는 돈을 저장
             if (PeopleSelect == 0 && MinusMoney == 0) { //시스템 종료조건
                 System.out.println("시스템을 종료합니다");
                 break;
@@ -59,5 +65,6 @@ public class Decembertwentynineth {
                 }
             }
         }
+        System.out.println("남은 손님 돈의 총합은 "+(TotalMoney - MinusMoneySum)+"원이고 \n현재 "+People+"번째 손님까지 존재합니다");
     }
 }
