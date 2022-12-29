@@ -37,6 +37,10 @@ public class Decembertwentynineth {
             int PeopleSelect = sc.nextInt();
             System.out.println("얼마를 차감 하시겠습니까?");
             int MinusMoney = sc.nextInt();
+            if (PeopleSelect == 0 && MinusMoney == 0) { //시스템 종료조건
+                System.out.println("시스템을 종료합니다");
+                break;
+            }
             RemainMoney = (arr[PeopleSelect - 1] - MinusMoney); //남는돈 = 선택한 손남의 돈 - 차감하는돈
 
             if (RemainMoney == 0) { //돈이 0원이되서 삭제되는경우
@@ -53,10 +57,6 @@ public class Decembertwentynineth {
                 for (int i = 0; i < People; i++) {
                     System.out.println(""+(i + 1)+"번째 손님이 가진 금액 : "+arr[i]+"원");
                 }
-            }
-            if (PeopleSelect == 0 && MinusMoney == 0) { //시스템 종료조건
-                System.out.println("시스템을 종료합니다");
-                 break;
             }
         }
     }
