@@ -1,3 +1,19 @@
+/*
+문)맨 처음에 인덱스 값을 생성하고 각 사람마다 값을 넣어주세요
+그 다음 원하는 인덱스 번호에 값을 추가가되는 1차원배열 코드를 만들어주세요
+종료 조건은 원하는 인덱스 번호,값에 0을 넣었을경우 프로그램이 종료되도록 만들어주세요
+예) 5명까지 생성 각각의 값은 10,20,30,40,50
+2번째 자리에 100이라는 값을 넣을때
+출력값
+1번째 값 : 10
+2번째 값 : 100
+3번째 값 : 20
+4번째 값 : 30
+5번째 값 : 40
+6번째 값 : 50
+위처럼 나오도록 작성해주세요
+ */
+
 import java.util.Scanner;
 public class Decemberthirtieth {
     public static void main(String[] args) {
@@ -15,7 +31,7 @@ public class Decemberthirtieth {
         for (int i = 0; i < People; i++) {
             System.out.println("" + (i + 1) + "번째 사람의 번호는 : " + arr[i] + "입니다");
         }
-        for (int i = 0;i < People;i++) {
+        for (int i = 0; i < People; i++) {
             int IndexSum = 0;
             PlusSum += 1; //추가할때마다 총 인덱스에서 1개씩 증가함
             System.out.println("몇번자리에 인덱스를 추가하시겠습니까?");
