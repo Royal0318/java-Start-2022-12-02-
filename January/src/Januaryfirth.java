@@ -2,26 +2,26 @@ import java.util.Scanner;
 public class Januaryfirth {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int People = 15;
-        int Count2 = 0;
+        int Pass = 0;
         int ArrCount2 = 0;
+        int Count2 = 0;
         int ControlCount = 0;
         int BackCount = 0;
-        int Pass = 0;
         int SnackCount = 0;
         int BreadCount = 0;
         int FruitCount = 0;
         int DrinkCount = 0;
         int FishCount = 0;
-        int[] arr = new int[People];
-        int[] Snack = new int[People];
-        int[] Bread = new int[People];
-        int[] Fruit = new int[People];
-        int[] Drink = new int[People];
-        int[] Fish = new int[People];
-        int[] Debt = new int[People]; //빚 관련 array
-        int[] lendSum = new int[People]; //빌려준 돈관련 array
-        int[] ArrCount = new int[People];
+        int OutPutCount = 0;
+        int[] arr = new int[15];
+        int[] Snack = new int[15];
+        int[] Bread = new int[15];
+        int[] Fruit = new int[15];
+        int[] Drink = new int[15];
+        int[] Fish = new int[15];
+        int[] Debt = new int[15]; //빚 관련 array
+        int[] lendSum = new int[15]; //빌려준 돈관련 array
+        int[] ArrCount = new int[15];
         arr[0] = 20000;
         arr[1] = 20000;
         arr[2] = 20000;
@@ -35,7 +35,7 @@ public class Januaryfirth {
         System.out.println("10번째부터 15번째 손님의 돈을 각각 입력해주세요");
         arr[10] = sc.nextInt(); arr[11] = sc.nextInt(); arr[12] = sc.nextInt(); arr[13] = sc.nextInt(); arr[14] = sc.nextInt();
 
-        for (int i = 0; i < People; i++) {
+        for (int i = 0; i < 15; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
             System.out.println("\n1.과자  \n2.빵  \n3.과일  \n4.음료수  \n5.생선  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
             System.out.println("i값 테스트 Pass테스트 "+i+" "+Pass+"");
@@ -70,7 +70,7 @@ public class Januaryfirth {
                 System.out.println("구매할 개수를 적어주세요");
                 int Number = sc.nextInt();
                 if (arr[i] < (1500 * Number)) { //돈이부족한경우
-                    arr[i] -= (1500 * Number); //notbuycount가 있어야 구매를 하지 않고 넘겨도 영수증 손님이 순서대로 나오기 때문
+                    arr[i] -= (1500 * Number);
                     Snack[i] += Number;
                     Count2 = 1;
                 } else { //돈이 부족하지 않고 주문이 완료된 경우
@@ -146,6 +146,10 @@ public class Januaryfirth {
                 }
             } else if (Select == 7) {
                 for (int j = 0; j <= i; j++) {
+                    if (Snack[j] == 0 && Bread[j] == 0 && Fruit[j] == 0 && Drink[j] == 0 && Fish[j] == 0) {
+                        continue; //하나도 구매하지 않은경우 출력되지 않도록 설정한다
+                    }
+                    OutPutCount += 1; //?
                     System.out.println("i값 테스트 Pass테스트 "+i+" "+Pass+"");
                     System.out.println("============주문표============");
                     if (Snack[j] >= 1) {
@@ -163,7 +167,7 @@ public class Januaryfirth {
                     if (Fish[j] >= 1) {
                         System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                     }
-                    System.out.println("============" + (j + (1 - Pass)) + "번째 손님============");
+                    System.out.println("============" + OutPutCount + "번째 손님============");//얘만 순서대로 출력되면됨 눈에보이는것만
                     if (Snack[j] >= 1) {
                         System.out.println("과자 X " + Snack[j] + " = " + (Snack[j] * 1500) + "원");
                     }
@@ -184,22 +188,22 @@ public class Januaryfirth {
                     Count2 = 0; //처음에 손님이고르고 다음손님으로 넘어갈때 count도 초기화되야한다
                 }
             } else if (Select == 8) {
-                if (ControlCount == 0 && i >= 1) {
+                if (ControlCount == 0 && i == 0) {
+                    System.out.println("최소 2번째 순서부터 제어가 가능합니다");
+                    i--;
+                } else if (ControlCount == 0) {
                     System.out.println("몇번째 손님을 제어하시겠습니까?");
                     BackCount += i; //이전손님의 순서를 미리 저장
                     i = sc.nextShort() - 2;
                     ControlCount = 1;
                     Pass = 0;
-                } else if (ControlCount == 0 && i == 0) {
-                    System.out.println("최소 2번째 순서부터 제어가 가능합니다");
-                    i--;
+                    OutPutCount = 0;
                 }
             } else if (Select == 9) {
                 System.out.println("test "+ArrCount2+"");
                 System.out.println("빚진사람의 번호와 돈을 받는사람의 번호를 각각 적어주세요");
                 int PayBack = sc.nextInt(); //빚진사람
                 ArrCount[PayBack] = PayBack;
-                System.out.println("Test"+ArrCount[PayBack]+"");
                 int PayBack2 = sc.nextInt(); //돈을 받는사람
                 arr[PayBack2] = PayBack2;
 
@@ -214,7 +218,7 @@ public class Januaryfirth {
                     if (ReSelect == 1) {
                         System.out.println();
                     } else if (ReSelect == 2) {
-                        for (int j = i; j < People; j++) {
+                        for (int j = i; j < 15; j++) {
                             System.out.println("얼마를 빌리겠습니까?");
                             int Borrow = sc.nextInt();
                             arr[j + 1] -= Borrow; //돈을 빌려주는사람
