@@ -4,11 +4,6 @@ public class Januaryfirth {
         Scanner sc = new Scanner(System.in);
         int People = 15;
         int Count2 = 0;
-        int SnackCount = 0;
-        int BreadCount = 0;
-        int FruitCount = 0;
-        int DrinkCount = 0;
-        int FishCount = 0;
         int ArrCount2 = 0;
         int ControlCount = 0;
         int BackCount = 0;
@@ -22,26 +17,13 @@ public class Januaryfirth {
         int[] Debt = new int[People]; //빚 관련 array
         int[] lendSum = new int[People]; //빌려준 돈관련 array
         int[] ArrCount = new int[People];
-        arr[0] = 20000;
-        arr[1] = 20000;
-        arr[2] = 20000;
-        arr[3] = 20000;
-        arr[4] = 20000;
-        arr[5] = 10000;
-        arr[6] = 10000;
-        arr[7] = 10000;
-        arr[8] = 10000;
-        arr[9] = 10000;
+        arr[0] = 20000; arr[1] = 20000; arr[2] = 20000; arr[3] = 20000; arr[4] = 20000; arr[5] = 10000; arr[6] = 10000; arr[7] = 10000; arr[8] = 10000; arr[9] = 10000;
         System.out.println("10번째부터 15번째 손님의 돈을 각각 입력해주세요");
-        arr[10] = sc.nextInt();
-        arr[11] = sc.nextInt();
-        arr[12] = sc.nextInt();
-        arr[13] = sc.nextInt();
-        arr[14] = sc.nextInt();
+        arr[10] = sc.nextInt(); arr[11] = sc.nextInt(); arr[12] = sc.nextInt(); arr[13] = sc.nextInt(); arr[14] = sc.nextInt();
         for (int i = 0; i < People; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
             System.out.println("\n1.과자  \n2.빵  \n3.과일  \n4.음료수  \n5.생선  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
-            if (ControlCount == 1) {
+            if (ControlCount == 1) {//제어로 진입시 나타난다
                 System.out.println("10.이전 손님으로 돌아가기");
             }
             System.out.println("" + (i + 1) + "번째 손님의 선택입니다 (현재 소지 금액 "+arr[i]+"원)");
@@ -52,25 +34,25 @@ public class Januaryfirth {
                 i--;
             }
             //=============================제어=======================
-            if (Select == 6 || Select == 7) {
+            if (Select < 1 || Select > 10 && ControlCount == 1) {
+                System.out.println("잘못된 입력입니다");
+                i--;
+            }
+            if (Select == 6 || Select == 7 || Select == 8) {
                 if (ControlCount == 1) {
                     System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
                     i--;
                 }
             }
-            if (Select < 1 || Select > 10 && ControlCount == 1) {
-                System.out.println("잘못된 입력입니다");
-                i--;
-            }
-            if (Select == 10) { //이전 손님으로 돌아가기
-                i = BackCount - 1;
-                ControlCount = 0; //컨트롤값 초기화
-            }
-            if (Select == 8) {
+            if (Select == 8 && ControlCount == 0) {
                 System.out.println("몇번째 손님을 제어하시겠습니까?");
                 BackCount += i; //이전손님의 순서를 미리 저장
                 i = sc.nextInt() - 2;
                 ControlCount = 1;
+            }
+            if (Select == 10) { //이전 손님으로 돌아가기
+                i = BackCount - 1;
+                ControlCount = 0; //컨트롤값 초기화
             }
             //=============================제어=======================
             if (Select == 1) { /////////과자
@@ -83,7 +65,6 @@ public class Januaryfirth {
                 } else { //돈이 부족하지 않고 주문이 완료된 경우
                     System.out.println("주문이 완료되었습니다");
                     Snack[i - Pass] += Number;
-                    SnackCount = 1;
                     arr[i - Pass] -= (1500 * Number);
                     i = i - 1;//계속주문하기위해
                 }
@@ -97,7 +78,6 @@ public class Januaryfirth {
                 } else {
                     System.out.println("주문이 완료되었습니다");
                     Bread[i - Pass] += Number;
-                    BreadCount = 1;
                     arr[i - Pass] -= (1000 * Number);
                     i = i - 1;
                 }
@@ -111,7 +91,6 @@ public class Januaryfirth {
                 } else {
                     System.out.println("주문이 완료되었습니다");
                     Fruit[i - Pass] += Number;
-                    FruitCount = 1;
                     arr[i - Pass] -= (2500 * Number);
                     i = i - 1;
                 }
@@ -125,7 +104,6 @@ public class Januaryfirth {
                 } else {
                     System.out.println("주문이 완료되었습니다");
                     Drink[i - Pass] += Number;
-                    DrinkCount = 1;
                     arr[i - Pass] -= (1000 * Number);
                     i = i - 1;
                 }
@@ -139,7 +117,6 @@ public class Januaryfirth {
                 } else {
                     System.out.println("주문이 완료되었습니다");
                     Fish[i - Pass] += Number;
-                    FishCount = 1;
                     arr[i - Pass] -= (4000 * Number);
                     i = i - 1;
                 }
@@ -199,11 +176,10 @@ public class Januaryfirth {
                 }
             }
             if (Select == 6) {
-                if (SnackCount == 0 && FishCount == 0 && FruitCount == 0 && BreadCount == 0 && DrinkCount == 0) {//모두 하나도 사지 않은경우
+                if (Snack[i - Pass] == 0 && Bread[i - Pass] == 0 && Fruit[i - Pass] == 0 && Drink[i - Pass] == 0 && Fish[i - Pass] == 0) {//모두 하나도 사지 않은경우
                     Pass += 1;
                 }
-                if (SnackCount != 0 || FishCount != 0 || FruitCount != 0 || BreadCount != 0 || DrinkCount != 0) {
-                    SnackCount = 0;BreadCount = 0;FishCount = 0;FruitCount = 0;DrinkCount = 0;
+                if (Snack[i - Pass] != 0 || Bread[i - Pass] != 0 || Fruit[i - Pass] != 0 || Drink[i - Pass] != 0 || Fish[i - Pass] != 0) {
                     Count2 = 0;
                 }
             } else if (Select == 7) {
@@ -241,7 +217,6 @@ public class Januaryfirth {
                         System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                     }
                     System.out.println("현재 가지고 있는 금액 : " + arr[j] + "원  \n빛 진 금액 : " + Debt[j] + "원  \n빛을 청산하고 남은 금액 : " + arr[j] + "원  \n미납 된 금액 : " + (Debt[j] - arr[j]) + "원  \n빌려준 금액 : " + lendSum[j] + "원\n");
-                    SnackCount = 0;BreadCount = 0;FishCount = 0;FruitCount = 0;DrinkCount = 0;//다음사람으로넘어갈 때 초기화
                     Count2 = 0; //처음에 손님이고르고 다음손님으로 넘어갈때 count도 초기화되야한다
                 }
             }
