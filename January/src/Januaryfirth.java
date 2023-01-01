@@ -1,9 +1,9 @@
+//남은일 : 돈을빌려주면 누구에게 빌려줬는지 구현,빚,미납금액구현
 import java.util.Scanner;
 public class Januaryfirth {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int Pass = 0;
-        int ArrCount2 = 0;
+        int TotalMoney = 150000;
         int Count2 = 0;
         int ControlCount = 0;
         int BackCount = 0;
@@ -34,11 +34,12 @@ public class Januaryfirth {
         arr[9] = 10000;
         System.out.println("10번째부터 15번째 손님의 돈을 각각 입력해주세요");
         arr[10] = sc.nextInt(); arr[11] = sc.nextInt(); arr[12] = sc.nextInt(); arr[13] = sc.nextInt(); arr[14] = sc.nextInt();
+        TotalMoney += arr[10]; TotalMoney += arr[11]; TotalMoney += arr[12]; TotalMoney += arr[13]; TotalMoney += arr[14];
 
         for (int i = 0; i < 15; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
             System.out.println("\n1.과자  \n2.빵  \n3.과일  \n4.음료수  \n5.생선  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
-            System.out.println("i값 테스트 Pass테스트 "+i+" "+Pass+"");
+            System.out.println("i값 테스트 "+i+" ");
 
             if (ControlCount == 1) {//제어로 진입시 나타난다
                 System.out.println("10.이전 손님으로 돌아가기");
@@ -73,11 +74,12 @@ public class Januaryfirth {
                     arr[i] -= (1500 * Number);
                     Snack[i] += Number;
                     Count2 = 1;
-                } else { //돈이 부족하지 않고 주문이 완료된 경우
+                } else {
                     System.out.println("주문이 완료되었습니다");
                     Snack[i] += Number;
                     SnackCount += 1;
                     arr[i] -= (1500 * Number);
+                    TotalMoney -= (1500 * Number);
                     i = i - 1;//계속주문하기위해
                 }
             } else if (Select == 2) {/////////빵
@@ -92,6 +94,7 @@ public class Januaryfirth {
                     Bread[i] += Number;
                     BreadCount += 1;
                     arr[i] -= (1000 * Number);
+                    TotalMoney -= (1000 * Number);
                     i = i - 1;
                 }
             } else if (Select == 3) {/////////과일
@@ -106,6 +109,7 @@ public class Januaryfirth {
                     Fruit[i] += Number;
                     FruitCount += 1;
                     arr[i] -= (2500 * Number);
+                    TotalMoney -= (2500 * Number);
                     i = i - 1;
                 }
             } else if (Select == 4) {/////////음료수
@@ -120,6 +124,7 @@ public class Januaryfirth {
                     Drink[i] += Number;
                     DrinkCount += 1;
                     arr[i] -= (1000 * Number);
+                    TotalMoney -= (1000 * Number);
                     i = i - 1;
                 }
             } else if (Select == 5) {/////////생선
@@ -134,11 +139,12 @@ public class Januaryfirth {
                     Fish[i] += Number;
                     FishCount += 1;
                     arr[i] -= (4000 * Number);
+                    TotalMoney -= (4000 * Number);
                     i = i - 1;
                 }
             } else if (Select == 6) {
                 if (SnackCount == 0 && BreadCount == 0 && FishCount == 0 && FruitCount == 0 && DrinkCount == 0) {//모두 하나도 사지 않은경우
-                    Pass += 1;
+                    System.out.println();
                 }
                 if (SnackCount != 0 || BreadCount != 0 || FishCount != 0 || FruitCount != 0 || DrinkCount != 0) {
                     SnackCount = 0;BreadCount = 0;FishCount = 0;FruitCount = 0;DrinkCount = 0;
@@ -149,8 +155,7 @@ public class Januaryfirth {
                     if (Snack[j] == 0 && Bread[j] == 0 && Fruit[j] == 0 && Drink[j] == 0 && Fish[j] == 0) {
                         continue; //하나도 구매하지 않은경우 출력되지 않도록 설정한다
                     }
-                    OutPutCount += 1; //?
-                    System.out.println("i값 테스트 Pass테스트 "+i+" "+Pass+"");
+                    OutPutCount += 1;
                     System.out.println("============주문표============");
                     if (Snack[j] >= 1) {
                         System.out.println("과자 X " + Snack[j] + " = " + (Snack[j] * 1500) + "원");
@@ -193,20 +198,17 @@ public class Januaryfirth {
                     i--;
                 } else if (ControlCount == 0) {
                     System.out.println("몇번째 손님을 제어하시겠습니까?");
-                    BackCount += i; //이전손님의 순서를 미리 저장
+                    BackCount = i; //이전손님의 순서를 미리 저장
                     i = sc.nextShort() - 2;
                     ControlCount = 1;
-                    Pass = 0;
                     OutPutCount = 0;
                 }
             } else if (Select == 9) {
-                System.out.println("test "+ArrCount2+"");
                 System.out.println("빚진사람의 번호와 돈을 받는사람의 번호를 각각 적어주세요");
                 int PayBack = sc.nextInt(); //빚진사람
                 ArrCount[PayBack] = PayBack;
                 int PayBack2 = sc.nextInt(); //돈을 받는사람
                 arr[PayBack2] = PayBack2;
-
                 System.out.println("얼마를 갚겠습니까?");
                 int PayBackMoney = sc.nextInt();
             }
@@ -242,7 +244,6 @@ public class Januaryfirth {
                                     } else if (arr[j - NumFixCount] < 1500 && arr[j - NumFixCount] >= 1000) {
                                         System.out.println("빵,음료수를 구매 할 수 있습니다");
                                     }
-                                    Pass = 0;
                                     break;
                                 } else {
                                     System.out.println("잘못된 입력입니다");
@@ -266,5 +267,6 @@ public class Januaryfirth {
                 }
             }
         }
+        System.out.println("모든 사람의 남은 금액은 "+TotalMoney+"원 입니다");
     }
 }
