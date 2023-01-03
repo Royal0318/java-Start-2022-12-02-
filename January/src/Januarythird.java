@@ -11,7 +11,6 @@ public class Januarythird {
         int FruitCount = 0;
         int DrinkCount = 0;
         int FishCount = 0;
-        int OutPutCount = 0;
         int[] arr = new int[15];
         int[] Snack = new int[15];
         int[] Bread = new int[15];
@@ -56,10 +55,11 @@ public class Januarythird {
 
         for (int i = 0; i < 15; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
+            int OutPutCount = 0;
             System.out.println("\n1.과자  \n2.빵  \n3.과일  \n4.음료수  \n5.생선  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
 
             if (ControlCount == 1) {//제어로 진입시 나타난다
-                System.out.println("10.이전 손님으로 돌아가기");
+                System.out.println("10.이전 손님으로 돌아가기\n");
             }
             System.out.println("" + (i + 1) + "번째 손님의 선택입니다 \n안내 : 현재 소지 금액 "+arr[i]+"원");
             int Select = sc.nextInt();
@@ -160,7 +160,7 @@ public class Januarythird {
                     i = i - 1;
                 }
             } else if (Select == 6) {
-                if (SnackCount == 0 && BreadCount == 0 && FishCount == 0 && FruitCount == 0 && DrinkCount == 0) {//모두 하나도 사지 않은경우
+                if (SnackCount == 0 && BreadCount == 0 && FishCount == 0 && FruitCount == 0 && DrinkCount == 0) {
                     System.out.println();
                 }
                 if (SnackCount != 0 || BreadCount != 0 || FishCount != 0 || FruitCount != 0 || DrinkCount != 0) {
@@ -189,7 +189,9 @@ public class Januarythird {
                     if (Fish[j] >= 1) {
                         System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                     }
-                    System.out.println("============" + OutPutCount + "번째 손님============");//얘만 순서대로 출력되면됨 눈에보이는것만
+
+                    System.out.println("===========" + OutPutCount + "번째 손님===========");//얘만 순서대로 출력되면됨 눈에보이는것만
+
                     if (Snack[j] >= 1) {
                         System.out.println("과자 X " + Snack[j] + " = " + (Snack[j] * 1500) + "원");
                     }
@@ -509,7 +511,7 @@ public class Januarythird {
                                     BorrowArr14[k + 1] += Borrow;
                                 }
                             }
-                            if (arr[j + 1] > 0 && arr[j - NumFixCount] >= 0) { //다음사람이 가지고있는 돈보다 적게 빌리지만 계산된값이 음수가 아니라 통과된경우
+                            if (arr[j + 1] >= 0 && arr[j - NumFixCount] >= 0) { //다음사람이 가지고있는 돈보다 적게 빌리지만 계산된값이 음수가 아니라 통과된경우
                                 lendSum[j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
                                 DebtSum[j - NumFixCount] += Borrow; //받는 사람이 빛진금액 누적
                                 System.out.println("" + Borrow + "원을 빌려 현재 가진돈은 " + arr[j - NumFixCount] + "원  \n다음사람이 가진 돈은 " + arr[j + 1] + "원 입니다  \n1.더 빌린다  2.빌리지 않는다");
@@ -536,7 +538,7 @@ public class Januarythird {
                             } else if (arr[j + 1] > 0 && arr[j - NumFixCount] < 0) {
                                 System.out.println("돈을 "+-(arr[j - NumFixCount])+"원 부족합니다 돈을 더 빌리세요");
                                 NumFixCount += 1;
-                            } else if (arr[j + 1] < Borrow) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우
+                            } else if (arr[j + 1] < 0) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우
                                 arr[j + 1] += Borrow;
                                 arr[j - NumFixCount] -= Borrow; //받거나 준것 그대로 반환
                                 System.out.println("다음사람이 가진 돈은 "+arr[j + 1]+"원이며 이보다 더 많이 빌릴 수 없습니다");
