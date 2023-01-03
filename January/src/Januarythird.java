@@ -203,7 +203,7 @@ public class Januarythird {
                     if (Fish[j] >= 1) {
                         System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                     }
-                    System.out.println("현재 가지고 있는 금액 : " + arr[j] + "원  \n빛 진 금액 : " + DebtSum[j] + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j] - PayBackSum[j])  + "원  \n미납 된 금액 : " + PayBackSum[j] + "원  \n빌려준 금액 : " + lendSum[j] + "원\n");
+                    System.out.println("현재 가지고 있는 금액 : " + arr[j] + "원  \n빛 진 금액 : " + DebtSum[j] + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j] - PayBackSum[j])  + "원  \n미납 된 금액 : " + PayBackSum[j] + "원  \n빌려준 금액 : " + lendSum[j + 1] + "원\n");
                     SnackCount = 0;BreadCount = 0;FishCount = 0;FruitCount = 0;DrinkCount = 0;
                     Count2 = 0; //처음에 손님이고르고 다음손님으로 넘어갈때 count도 초기화되야한다
                 }
@@ -220,198 +220,243 @@ public class Januarythird {
                 }
             } else if (Select == 9) {
                 System.out.println("몇번째 손님에게 갚겠습니까?");
-                int PayBack = sc.nextInt() - 1;
+                int PeopleSelect = sc.nextInt();
                 System.out.println("얼마를 갚겠습니까?");
                 int PayBackMoney = sc.nextInt();
 
-                if (PayBack < 0 || PayBack > 15) {
+                if (PeopleSelect < 0 || PeopleSelect > 15) {
                     System.out.println("잘못된 입력입니다");
                     i--;
                 } else if (PayBackMoney < 0) {
                     System.out.println("잘못된 입력입니다");
                     i--;
                 }
-                for (int k = PayBack; k <= PayBack; k++) { //한사람에게 값음
 
+                for (int k = PeopleSelect; k <= PeopleSelect; k++) { //한사람에게 값음
                     if (i == 0) { //0번째 손님
                         if (BorrowArr0[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr0[k] += PayBackMoney;
-                            PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr0[k] < 0) {
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney; //0번째 손님이 arr[PeopleSelect]번째 손님에게 돈을 갚았으니까 +=
+                            PayBackSum[i] += PayBackMoney; //값는돈을 모두 합산한다
+                            break;
+                        } else if (BorrowArr0[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 1) {
                         if (BorrowArr1[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr1[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr1[k] < 0) {
+                            break;
+                        } else if (BorrowArr1[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 2) {
                         if (BorrowArr2[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr2[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr2[k] < 0) {
+                            break;
+                        } else if (BorrowArr2[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 3) {
                         if (BorrowArr3[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr3[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr3[k] < 0) {
+                            break;
+                        } else if (BorrowArr3[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 4) {
                         if (BorrowArr4[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr4[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr4[k] < 0) {
+                            break;
+                        } else if (BorrowArr4[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 5) {
                         if (BorrowArr5[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr5[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr5[k] < 0) {
+                            break;
+                        } else if (BorrowArr5[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 6) {
                         if (BorrowArr6[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr6[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr6[k] < 0) {
+                            break;
+                        } else if (BorrowArr6[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 7) {
                         if (BorrowArr7[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr7[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr7[k] < 0) {
+                            break;
+                        } else if (BorrowArr7[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 8) {
                         if (BorrowArr8[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr8[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr8[k] < 0) {
+                            break;
+                        } else if (BorrowArr8[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 9) {
                         if (BorrowArr9[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr9[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr9[k] < 0) {
+                            break;
+                        } else if (BorrowArr9[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 10) {
                         if (BorrowArr10[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr10[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr10[k] < 0) {
+                            break;
+                        } else if (BorrowArr10[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 11) {
                         if (BorrowArr11[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr11[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr11[k] < 0) {
+                            break;
+                        } else if (BorrowArr11[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 12) {
                         if (BorrowArr12[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr12[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr12[k] < 0) {
+                            break;
+                        } else if (BorrowArr12[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (i == 13) {
                         if (BorrowArr13[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr13[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr13[k] < 0) {
+                            break;
+                        } else if (BorrowArr13[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     } else if (BorrowArr14[k] > 0) {
                         if (BorrowArr14[k] > 0) {
-                            System.out.println("" + PayBack + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
-                            BorrowArr14[k] += PayBackMoney;
+                            System.out.println("" + PeopleSelect + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다");
+                            arr[PeopleSelect] += PayBackMoney;
                             PayBackSum[i] += PayBackMoney;
-                        } else if (BorrowArr14[k] < 0) {
+                            break;
+                        } else if (BorrowArr14[k] == 0) {
                             System.out.println("돈을 빌린 내역이 없습니다");
                             i--;
+                            break;
                         } else if (i == k) {
                             System.out.println("자신에게 돈을 갚을 수 없습니다");
                             i--;
+                            break;
                         }
                     }
                 }
@@ -429,15 +474,12 @@ public class Januarythird {
                             int Borrow = sc.nextInt();
                             arr[j + 1] -= Borrow; //돈을 빌려주는사람
                             arr[j - NumFixCount] += Borrow; //돈을 받는사람
-                            /*
-                            만약야 j가 0번째 사람이고 j가 j+1번째 사람 또는 j + 2에게 빌렸을경우
-                            밑에 for문 k값은 0부터 i까지 빌린돈을 기록한다
-                             */
-                            for (int k = j; k <= j; k++) { //i가 0부터 시작되면
-                                if ((j - NumFixCount) == 0) { //0번째 손님
+
+                            for (int k = j; k <= j; k++) {
+                                if ((j - NumFixCount) == 0) {
                                     BorrowArr0[k + 1] += Borrow; //다음사람에게 얼마를 빌렸는지 체크해야하니까 + 1
-                                    DebtSum[0] += Borrow;
-                                } else if ((j - NumFixCount) == 1) { //2번째 사람이 돈을 빌렸을때부터 여기다가 누적시킨다
+                                    DebtSum[0] += Borrow; //빌린사람의 빚을 모두 합산하는 변수
+                                } else if ((j - NumFixCount) == 1) {
                                     BorrowArr1[k + 1] += Borrow;
                                     DebtSum[1] += Borrow;
                                 } else if ((j - NumFixCount) == 2) {
@@ -481,8 +523,8 @@ public class Januarythird {
                                     DebtSum[14] += Borrow;
                                 }
                             }
-                            if (arr[j + 1] >= 0 && arr[j - NumFixCount] >= 0) { //다음사람이 가지고있는 돈보다 적게 빌리지만 계산된값이 음수가 아니라 통과된경우
-                                lendSum[j + 1] -= Borrow; //다음 사람이 빌려준 금액을 누적
+                            if (arr[j + 1] > 0 && arr[j - NumFixCount] >= 0) { //다음사람이 가지고있는 돈보다 적게 빌리지만 계산된값이 음수가 아니라 통과된경우
+                                lendSum[j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
                                 DebtSum[j] += Borrow; //받는 사람이 빛진금액 누적
                                 System.out.println("" + Borrow + "원을 빌려 현재 가진돈은 " + arr[j - NumFixCount] + "원  \n다음사람이 가진 돈은 " + arr[j + 1] + "원 입니다  \n1.더 빌린다  2.빌리지 않는다");
                                 int BorrowSelect = sc.nextInt();//가진돈은 물건값을 구매하고 남은돈이다
@@ -504,13 +546,16 @@ public class Januarythird {
                                     System.out.println("잘못된 입력입니다");
                                     break;
                                 }
-                            } else if (arr[j + 1] >= 0 && arr[j - NumFixCount] < 0) {
+                            } else if (arr[j + 1] > 0 && arr[j - NumFixCount] < 0) {
                                 System.out.println("돈을 "+-(arr[j - NumFixCount])+"원 부족합니다 돈을 더 빌리세요");
                                 NumFixCount += 1;
-                            } else if (arr[j + 1] < 0) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우
+                            } else if (arr[j + 1] < Borrow) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우
                                 arr[j + 1] += Borrow;
                                 arr[j - NumFixCount] -= Borrow; //받거나 준것 그대로 반환
                                 System.out.println("다음사람이 가진 돈은 "+arr[j + 1]+"원이며 이보다 더 많이 빌릴 수 없습니다");
+                                j--;
+                            } else if (Borrow == 0) {
+                                System.out.println("최소 1원 이상 빌릴 수 있습니다");
                                 j--;
                             } else {
                                 System.out.println("잘못된 입력입니다");
