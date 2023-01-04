@@ -1,3 +1,5 @@
+//남은작업 : 건너띄기를 했을때 어떤번호로 제어해야하는지 알려주는 프로그램작성
+
 import java.util.Scanner;
 public class Januaryfourth {
     public static void main(String[] args) {
@@ -11,6 +13,7 @@ public class Januaryfourth {
         int FruitCount = 0;
         int DrinkCount = 0;
         int FishCount = 0;
+        int PassCount = 0;
         int[] arr = new int[15];
         int[] Snack = new int[15];
         int[] Bread = new int[15];
@@ -41,18 +44,15 @@ public class Januaryfourth {
         arr[3] = 20000; arr[9] = 10000;
         arr[4] = 20000;
         arr[5] = 10000;
-        System.out.println("10번째부터 15번째 손님의 돈을 각각 입력해주세요");
-        arr[10] = sc.nextInt();
-        arr[11] = sc.nextInt();
-        arr[12] = sc.nextInt();
-        arr[13] = sc.nextInt();
-        arr[14] = sc.nextInt();
-        TotalMoney += arr[10];
-        TotalMoney += arr[11];
-        TotalMoney += arr[12];
-        TotalMoney += arr[13];
-        TotalMoney += arr[14];
-
+        for (int i = 10; i < 15; i++) {
+            System.out.println(""+i+"번째 손님의 돈을 입력 해주세요");
+            arr[i] = sc.nextInt();
+            TotalMoney += arr[i];
+            if (arr[i] < 0) {
+                System.out.println("돈은 음수가 될 수 없습니다");
+                i--;
+            }
+        }
         for (int i = 0; i < 15; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
             int OutPutCount = 0;
@@ -68,7 +68,6 @@ public class Januaryfourth {
                 System.out.println("잘못된 입력입니다");
                 i--;
             }
-            //=============================제어=======================
             if (Select < 1 || Select > 10 && ControlCount == 1) {
                 System.out.println("잘못된 입력입니다");
                 i--;
@@ -78,12 +77,10 @@ public class Januaryfourth {
                     System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
                     i--;
                 }
-            }
-            if (Select == 10) { //이전 손님으로 돌아가기
+            } else if (Select == 10) {
                 i = BackCount - 1;
                 ControlCount = 0; //컨트롤값 초기화
             }
-            //=============================제어=======================
             if (Select == 1) { /////////과자
                 System.out.println("구매할 개수를 적어주세요");
                 int Number = sc.nextInt();
@@ -161,7 +158,7 @@ public class Januaryfourth {
                 }
             } else if (Select == 6) {
                 if (SnackCount == 0 && BreadCount == 0 && FishCount == 0 && FruitCount == 0 && DrinkCount == 0) {
-                    System.out.println();
+                    PassCount += 1;
                 }
                 if (SnackCount != 0 || BreadCount != 0 || FishCount != 0 || FruitCount != 0 || DrinkCount != 0) {
                     SnackCount = 0;BreadCount = 0;FishCount = 0;FruitCount = 0;DrinkCount = 0;
@@ -208,7 +205,7 @@ public class Januaryfourth {
                         if (Fish[j] >= 1) {
                             System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                         }
-                        System.out.println("현재 가지고 있는 금액 : " + arr[j] + "원  \n빛 진 금액 : " + DebtSum[j] + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n미납 된 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n빌려준 금액 : " + lendSum[j] + "원\n");
+                        System.out.println("현재 가지고 있는 금액 : " + arr[j] + "원  \n빛 진 금액 : " + DebtSum[j] + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n미납 된 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n빌려준 금액 : " + lendSum[j] + "원 \n안내 : 해당 손님 제어를 원하시면 8번 제어하기 --> "+((OutPutCount + PassCount) - 1)+"번을 입력해주세요\n");
                         SnackCount = 0;
                         BreadCount = 0;
                         FishCount = 0;
@@ -222,10 +219,10 @@ public class Januaryfourth {
                     System.out.println("최소 2번째 순서부터 제어가 가능합니다");
                     i--;
                 } else if (ControlCount == 0) {
-                        System.out.println("몇번째 손님을 제어 하시겠습니까?");
-                        BackCount = i; //이전손님의 순서를 미리 저장
-                        i = sc.nextInt() - 2;
-                        ControlCount = 1;
+                    System.out.println("몇번째 손님을 제어 하시겠습니까?");
+                    BackCount = i; //이전손님의 순서를 미리 저장
+                    i = sc.nextInt() - 2;
+                    ControlCount = 1;
                 }
                 /*
                 예를들어 1번째에 구매 2번째에 구매x 3번째에 구매했다고 할 시 순서대로 고려하지 않은경우 출력값은 1번째 3번째가 나오지만
