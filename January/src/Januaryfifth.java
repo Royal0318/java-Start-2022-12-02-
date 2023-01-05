@@ -35,12 +35,11 @@ public class Januaryfifth {
         int[] BorrowArr12 = new int[15];
         int[] BorrowArr13 = new int[15];
         int[] BorrowArr14 = new int[15];
-        arr[0] = 20000; arr[6] = 10000;
-        arr[1] = 20000; arr[7] = 10000;
-        arr[2] = 20000; arr[8] = 10000;
-        arr[3] = 20000; arr[9] = 10000;
-        arr[4] = 20000;
-        arr[5] = 10000;
+        arr[0] = 20000; arr[5] = 10000;
+        arr[1] = 20000; arr[6] = 10000;
+        arr[2] = 20000; arr[7] = 10000;
+        arr[3] = 20000; arr[8] = 10000;
+        arr[4] = 20000; arr[9] = 10000;
         for (int i = 10; i < 15; i++) {
             System.out.println(""+i+"번째 손님의 돈을 입력 해주세요");
             arr[i] = sc.nextInt();
@@ -83,6 +82,7 @@ public class Januaryfifth {
                 int Number = sc.nextInt();
                 if (arr[i] < (1500 * Number)) { //돈이부족한경우
                     arr[i] -= (1500 * Number); //미리 계산되고 돈을 보충했을경우 자동구매되도록 설계
+                    TotalMoney -= (1500 * Number);
                     Snack[i] += Number; //과자 개수 카운트하는 변수
                     Count2 = 1; //돈이 부족할경우
                 } else {
@@ -98,6 +98,7 @@ public class Januaryfifth {
                 int Number = sc.nextInt();
                 if (arr[i] < (1000 * Number)) {
                     arr[i] -= (1000 * Number);
+                    TotalMoney -= (1000 * Number);
                     Bread[i] += Number;
                     Count2 = 1;
                 } else {
@@ -113,6 +114,7 @@ public class Januaryfifth {
                 int Number = sc.nextInt();
                 if (arr[i] < (2500 * Number)) {
                     arr[i] -= (2500 * Number);
+                    TotalMoney -= (2500 * Number);
                     Fruit[i] += Number;
                     Count2 = 1;
                 } else {
@@ -128,6 +130,7 @@ public class Januaryfifth {
                 int Number = sc.nextInt();
                 if (arr[i] < (1000 * Number)) {
                     arr[i] -= (1000 * Number);
+                    TotalMoney -= (1000 * Number);
                     Drink[i] += Number;
                     Count2 = 1;
                 } else {
@@ -143,6 +146,7 @@ public class Januaryfifth {
                 int Number = sc.nextInt();
                 if (arr[i] < (4000 * Number)) {
                     arr[i] -= (4000 * Number);
+                    TotalMoney -= (4000 * Number);
                     Fish[i] += Number;
                     Count2 = 1;
                 } else {
@@ -213,7 +217,7 @@ public class Januaryfifth {
                 }
             } else if (Select == 8) {
                 if (ControlCount == 0 && i == 0) {
-                    System.out.println("최소 2번째 순서부터 제어가 가능합니다");
+                    System.out.println("최소 2번째 손님부터 제어가 가능합니다");
                     i--;
                 } else if (ControlCount == 0) {
                     System.out.println("몇번째 손님을 제어 하시겠습니까?");
@@ -600,14 +604,14 @@ public class Januaryfifth {
             }
             if (Count2 == 1) { ////////////////////돈빌림,돈이부족할때 여기로넘어온다
                 if (arr[i] < 1000) {
-                    System.out.println("돈이 부족합니다 다시 선택하시겠습니까?  \n1.Yes  \n2.No(돈 빌리기)");
+                    System.out.println("돈이 부족합니다 다시 선택하시겠습니까?  \n1.Yes  \n2.No(돈빌리기)");
                     int ReSelect = sc.nextInt();
 
                     if (ReSelect == 1) {
                         System.out.println();
                     } else if (ReSelect == 2) {
                         for (int j = i; j < 15; j++) {
-                            System.out.println("얼마를 빌리겠습니까?");
+                            System.out.println("빌리고싶은 금액을 적어주세요");
                             int Borrow = sc.nextInt();
                             arr[j + 1] -= Borrow; //돈을 빌려주는사람
                             arr[j - NumFixCount] += Borrow; //돈을 받는사람
@@ -648,14 +652,14 @@ public class Januaryfifth {
                             if (arr[j + 1] >= 0 && arr[j - NumFixCount] >= 0) { //다음사람이 가지고있는 돈보다 적게 빌리지만 계산된값이 음수가 아니라 통과된경우
                                 lendSum[j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
                                 DebtSum[j - NumFixCount] += Borrow; //빛진금액 누적
-                                System.out.println("" + Borrow + "원을 빌려 현재 가진돈은 " + arr[j - NumFixCount] + "원  \n다음사람이 가진 돈은 " + arr[j + 1] + "원 입니다  \n1.더 빌린다  2.빌리지 않는다");
+                                System.out.println("" + Borrow + "원을 빌려 현재 " + arr[j - NumFixCount] + "원  \n다음사람의 돈은 " + arr[j + 1] + "원 입니다  \n1.추가로 빌린다  2.빌리지 않는다");
                                 int BorrowSelect = sc.nextInt();//가진돈은 물건값을 구매하고 남은돈이다
 
                                 if (BorrowSelect == 1) {
                                     if (ControlCount == 0) {
-                                        NumFixCount += 1;//더 빌리는경우 그 사람이 계속 고정되고 빌려주는사람만 다다음사람으로 이동되도록 해야하기 때문에  더빌릴때마다 count가 늘어남
-                                    } else {
-                                        i--;
+                                        NumFixCount += 1;//더 빌리는경우 그 사람이 계속 고정되고 빌려주는사람만 다다음사람으로 이동되도록 해야하기 때문에 더빌릴때마다 count가 늘어남
+                                    } else if (ControlCount != 0) {
+                                        NumFixCount += 1;
                                     }
                                 } else if (BorrowSelect == 2) {
                                     if (arr[j - NumFixCount] >= 4000) {
