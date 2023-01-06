@@ -2,7 +2,7 @@ package function;
 
 import java.util.Scanner;
 
-public class test {
+public class JanuarySixth2 {
     public static void main(String[] args) {
         System.out.println("남은 금액은 "+Allowance()+"원 입니다");
     }
