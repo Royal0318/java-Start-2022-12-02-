@@ -2,19 +2,21 @@ import java.util.Scanner;
 
 public class Januarytwelveth {
     public static void main(String[] args) {
-        if (End() == 0) {
+        if (main() == 0) {
             System.exit(1);
         }
     }
-
-    public static int End() {
-        Scanner sc = new Scanner(System.in);
+    public static int main () { //리턴받을값이 없는함수에 변수들을 넣어야 초기화되지 않는다
         int Number = 0;
         int Count = 0;
+        return TotalIndex(Number,Count);
+    }
+    public static int TotalIndex (int Number,int Count) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("총 개수");
         int Index = sc.nextInt();
         int [] arr = new int[Index];
-        return MenuSelect(arr,Number, Index,Count);
+        return MenuSelect(arr,Number,Index,Count);
     }
 
     public static int MenuSelect(int[]arr,int Number, int Index,int Count) {
