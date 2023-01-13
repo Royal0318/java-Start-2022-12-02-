@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Januarythirtheenth {
-    public static void main(String[] args) { //종료
+    public static void main(String[] args) {
         System.out.println("총 금액은 "+main()+"원 입니다");
     }
     public static int main() { //변수보관
@@ -49,6 +49,9 @@ public class Januarythirtheenth {
             } else if (FoodSelect == 3) {
                 return Splash(FoodPriceSum,RetryCount,CalculatorSum,CalculatorCount);
             } else if (FoodSelect == 4) {
+                if (FoodPriceSum > 0) {
+                    RetryCount += 1;
+                }
                 return MenuSelect(FoodPriceSum,RetryCount,CalculatorSum,CalculatorCount);
             } else {
                 System.out.println();
@@ -85,19 +88,16 @@ public class Januarythirtheenth {
             if (RetryCount == 0) {
                 if (SizeSelect == 1) {
                     FoodPriceSum += 21000;
-                    RetryCount += 1;
                     System.out.println("탕수육 대를 주문하여 현재 누적금액은 " + FoodPriceSum + "원 입니다");
                     return Restaurant(FoodPriceSum, RetryCount,CalculatorSum,CalculatorCount);
                 }
                 if (SizeSelect == 2) {
                     FoodPriceSum += 18000;
-                    RetryCount += 1;
                     System.out.println("탕수육 중을 주문하여 현재 누적금액은 " + FoodPriceSum + "원 입니다");
                     return Restaurant(FoodPriceSum, RetryCount,CalculatorSum,CalculatorCount);
                 }
                 if (SizeSelect == 3) {
                     FoodPriceSum += 15000;
-                    RetryCount += 1;
                     System.out.println("탕수육 소를 주문하여 현재 누적금액은 " + FoodPriceSum + "원 입니다");
                     return Restaurant(FoodPriceSum, RetryCount,CalculatorSum,CalculatorCount);
                 }
