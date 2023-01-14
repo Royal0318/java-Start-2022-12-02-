@@ -49,19 +49,20 @@ public class Januaryforteenth {
             Answerarr[Row][Column] += 1;
             AnswerSum += arr[Row][Column];
             QueationCount += 1;
-            return Answer(Chance,arr,Answerarr,Row,Column,AnswerSum,WrongSum,WrongCount,QueationCount); //정답
+            return Answer(Chance,arr,Answerarr,AnswerSum,WrongSum,WrongCount,QueationCount); //정답
         } else {
+            Answerarr[Row][Column] += 1;
             WrongCount += 1;
             return Wrong(Chance,arr,Answerarr,Row,Column,AnswerSum,WrongSum,WrongCount,QueationCount); //틀림
         }
     }
-    public static int Answer(int Chance,int[][]arr,int[][]Answerarr,int Row,int Column,int AnswerSum,int WrongSum,int WrongCount,int QueationCount) {
+    public static int Answer(int Chance,int[][]arr,int[][]Answerarr,int AnswerSum,int WrongSum,int WrongCount,int QueationCount) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 if (Answerarr[i][j] == 0) { //정답을 맞춘 행렬index에 1의값을 부여 해당값은 정답을출력 0인값은 ?값을 출력
                     System.out.printf("[" + i + "][" + j + "] : ? ");
                 } else if (Answerarr[i][j] == 1) {
-                    System.out.printf("[" + i + "][" + j + "] : "+arr[Row][Column]+" ");
+                    System.out.printf("[" + i + "][" + j + "] : "+arr[i][j]+" ");
                 }
             }
             System.out.println("\n");
@@ -80,7 +81,7 @@ public class Januaryforteenth {
                     if (Answerarr[i][j] == 0) {
                         System.out.printf("[" + i + "][" + j + "] : ? ");
                     } else if (Answerarr[i][j] == 1) {
-                        System.out.printf("[" + i + "][" + j + "] : "+arr[Row][Column]+" ");
+                        System.out.printf("[" + i + "][" + j + "] : "+arr[i][j]+" ");
                         if (WrongCount >= 2) { //2번째 틀렸을때부터 값을 저장한다
                             WrongSum += arr[Row][Column];
                         }
