@@ -59,7 +59,7 @@
 
  */
 import java.util.Scanner;
-public class function {
+public class Januaryfifteenth {
     public static void main(String[] args) {
         System.out.println("모든 사람의 남은 돈의 합은 "+main()+"원 입니다");
     }
@@ -76,6 +76,8 @@ public class function {
         int FishCount = 0;
         int[][] arr = new int[15][15]; //행과 열 총 15줄씩
         arr[0][0] = 20000;
+        arr[0][1] = 10000;
+        arr[0][3] = 30000;
         arr[1][0] = 20000;
         arr[2][0] = 20000;
         arr[3][0] = 20000;
@@ -374,11 +376,10 @@ public class function {
                     lendSum[i + 1][i] -= PayBackMoney; //빌려준사람의 빌린값에서 차감
                     //PayBackSum[i] += PayBackMoney;
                     System.out.println("" + (PeopleSelect + 1) + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다   \n남은 빚 : " + arr[i][i + 1] + "원");
-                    break;
+                    return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
                 }
             }
         }
-        return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
     public static int NeedMoney(int NumFixCount,int ICount,int TotalMoney,int Count2,int ControlCount,int BackCount,int SnackCount,int BreadCount,int FruitCount,int DrinkCount,int FishCount,int[][] arr,int[] Snack,int[] Bread,int[] Fruit,int[] Drink,int[] Fish,int[][] PayBackSum,int[][] DebtSum,int[][] lendSum,int i) {
@@ -391,12 +392,29 @@ public class function {
             if (ReSelect == 1) {
                 System.out.println();
             } else if (ReSelect == 2) {
+
                 for (int j = i; j < 15; j++) {
                     System.out.println("빌리고싶은 금액을 적어주세요");
                     int Borrow = sc.nextInt();
-                    arr[j + 1][j + 1] -= Borrow; //arr[j+1번째 사람이][j+1번째사람 -1에게 돈을빌려줌] 헷갈리지말자
-                    arr[j - NumFixCount][j + 2] += Borrow; //만약0번째인덱스부터 시작해서 다음사람에게 돈을 빌릴경우 arr[0][2]즉 0번째인덱스지만 1번째사람이 2번재 사람에게 빌리는것
 
+                    arr[j + 1][j + 1] -= Borrow; //arr[j+1번째 사람이][j+1번째사람 -1에게 돈을빌려줌] 헷갈리지말자
+                    arr[j - NumFixCount][j - NumFixCount + 2] += Borrow; //만약0번째인덱스부터 시작해서 다음사람에게 돈을 빌릴경우 arr[0][2]즉 0번째인덱스지만 1번째사람이 2번재 사람에게 빌리는것
+
+                    if (Borrow == 0 || Borrow < 0) {
+                        System.out.println("최소 1원 이상 빌릴 수 있습니다");
+                        j--;
+                    }
+                    if (arr[j + 1].length > Borrow && arr[j - NumFixCount].length < 0) {
+                        System.out.println("돈이 " + -(arr[j - NumFixCount].length) + "원 부족합니다 돈을 더 빌리세요");
+                        NumFixCount += 1;
+                    }
+
+                    if (arr[j + 1].length < 0) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우 그값이 음수가되는경우 많이빌린경우니까
+                        arr[j + 1][j + 1] += Borrow;
+                        arr[j - NumFixCount][j + 2] -= Borrow;//계산된돈을 그대로 반환한다
+                        System.out.println("다음사람이 가진 돈은 " + arr[j + 1].length + "원이며 이보다 더 많이 빌릴 수 없습니다");
+                        j--;
+                    }
                     if (arr[j + 1].length >= 0 && arr[j - NumFixCount].length >= 0) { //arr[j + 1]번째 사람이 가지고있는 돈의 합
                         lendSum[j + 1][j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
                         DebtSum[j - NumFixCount][j + 2] += Borrow; //빛진금액 누적
@@ -419,23 +437,13 @@ public class function {
                             } else if (arr[j - NumFixCount].length < 1500 && arr[j - NumFixCount].length >= 1000) {
                                 System.out.println("안내 : 빵,음료수를 구매 할 수 있습니다");
                             }
-                            break;
+                            return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
                         } else {
                             System.out.println("잘못된 입력입니다");
-                            break;
+                            return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
                         }
-                    } else if (Borrow == 0 || Borrow < 0) {
-                        System.out.println("최소 1원 이상 빌릴 수 있습니다");
-                        j--;
-                    } else if (arr[j + 1].length < 0) {//다음사람이 가지고있는 돈보다 많이 빌리려고 하는경우
-                        arr[j + 1][j] += Borrow;
-                        arr[j - NumFixCount][j + 1] -= Borrow; //받거나 준것 그대로 반환
-                        System.out.println("다음사람이 가진 돈은 " + arr[j + 1].length + "원이며 이보다 더 많이 빌릴 수 없습니다");
-                        j--;
-                    } else if (arr[j + 1].length > 0 && arr[j - NumFixCount].length < 0) {
-                        System.out.println("돈을 " + -(arr[j - NumFixCount].length) + "원 부족합니다 돈을 더 빌리세요");
-                        NumFixCount += 1;
-                    } else {
+                    }
+                    else {
                         System.out.println("잘못된 입력입니다");
                         i--;
                     }
