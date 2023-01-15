@@ -61,7 +61,7 @@
 import java.util.Scanner;
 public class function {
     public static void main(String[] args) {
-
+        System.out.println("모든 사람의 남은 돈의 합은 "+main()+"원 입니다");
     }
     public static int main() {
         int TotalMoney = 150000;
@@ -90,13 +90,13 @@ public class function {
         int[] Fruit = new int[15];
         int[] Drink = new int[15];
         int[] Fish = new int[15];
-        int[] PayBackSum = new int[15]; //빚 관련 array
-        int[] DebtSum = new int[15]; //빚 관련 array
-        int[] lendSum = new int[15]; //빌려준 돈관련 array
+        int[][] PayBackSum = new int[15][15]; //빚 관련 array
+        int[][] DebtSum = new int[15][15]; //빚 관련 array
+        int[][] lendSum = new int[15][15]; //빌려준 돈관련 array
         return PeopleMoneyInput(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int PeopleMoneyInput(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum) {
+    public static int PeopleMoneyInput(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum) {
         Scanner sc = new Scanner(System.in);
         for (int i = 10; i < 15; i++) {
             System.out.println("" + i + "번째 손님의 돈을 입력 해주세요");
@@ -110,7 +110,7 @@ public class function {
         return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int Menu(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum) {
+    public static int Menu(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum) {
         Scanner sc = new Scanner(System.in);
         for (int i = ICount; i < 15; i++) {
             int NumFixCount = 0; //다시 메뉴판으로 돌아오면은 초기화되도록설정
@@ -151,7 +151,7 @@ public class function {
             } else if (Select == 5) {
                 return Fishfunction(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum, i);
             } else if (Select == 6) {
-                return NextPeople(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum, i);
+                return NextPeople(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
             } else if (Select == 7) {
                 return BuyMenuPrint(OutPutCount, ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum, i);
             } else if (Select == 8) {
@@ -165,7 +165,7 @@ public class function {
         return 0;
     }
 
-    public static int Snackfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Snackfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("구매할 개수를 적어주세요");
         int Number = sc.nextInt();
@@ -173,7 +173,7 @@ public class function {
             arr[i][0] -= (1500 * Number); //미리 계산되고 돈을 보충했을경우 자동구매되도록 설계
             TotalMoney -= (1500 * Number);
             Snack[i] += Number; //과자 개수 카운트하는 변수
-            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
+            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum,i);
         } else {
             System.out.println("주문이 완료되었습니다");
             Snack[i] += Number;
@@ -184,7 +184,7 @@ public class function {
         return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int Breadfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Breadfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("구매할 개수를 적어주세요");
         int Number = sc.nextInt();
@@ -192,7 +192,7 @@ public class function {
             arr[i][0] -= (1000 * Number);
             TotalMoney -= (1000 * Number);
             Bread[i] += Number;
-            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
+            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum,i);
         } else {
             System.out.println("주문이 완료되었습니다");
             Bread[i] += Number;
@@ -204,7 +204,7 @@ public class function {
 
     }
 
-    public static int Fruitfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Fruitfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("구매할 개수를 적어주세요");
         int Number = sc.nextInt();
@@ -212,7 +212,7 @@ public class function {
             arr[i][0] -= (2500 * Number);
             TotalMoney -= (2500 * Number);
             Fruit[i] += Number;
-            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
+            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum,i);
         } else {
             System.out.println("주문이 완료되었습니다");
             Fruit[i] += Number;
@@ -224,7 +224,7 @@ public class function {
 
     }
 
-    public static int Drinkfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Drinkfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("구매할 개수를 적어주세요");
         int Number = sc.nextInt();
@@ -232,7 +232,7 @@ public class function {
             arr[i][0] -= (1000 * Number);
             TotalMoney -= (1000 * Number);
             Drink[i] += Number;
-            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
+            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum,i);
         } else {
             System.out.println("주문이 완료되었습니다");
             Drink[i] += Number;
@@ -244,7 +244,7 @@ public class function {
 
     }
 
-    public static int Fishfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Fishfunction(int NumFixCount,int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("구매할 개수를 적어주세요");
         int Number = sc.nextInt();
@@ -252,7 +252,7 @@ public class function {
             arr[i][0] -= (4000 * Number);
             TotalMoney -= (4000 * Number);
             Fish[i] += Number;
-            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
+            return NeedMoney(NumFixCount,ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum,i);
         } else {
             System.out.println("주문이 완료되었습니다");
             Fish[i] += Number;
@@ -264,7 +264,7 @@ public class function {
 
     }
 
-    public static int NextPeople(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int NextPeople(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum) {
         if (SnackCount == 0 && BreadCount == 0 && FishCount == 0 && FruitCount == 0 && DrinkCount == 0) {
             System.out.println();
         }
@@ -279,7 +279,7 @@ public class function {
         return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int BuyMenuPrint(int OutPutCount, int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int BuyMenuPrint(int OutPutCount, int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         if (ControlCount == 0) {
             for (int j = 0; j <= i; j++) {
                 if (Snack[j] == 0 && Bread[j] == 0 && Fruit[j] == 0 && Drink[j] == 0 && Fish[j] == 0) {
@@ -320,7 +320,7 @@ public class function {
                 if (Fish[j] >= 1) {
                     System.out.println("생선 X " + Fish[j] + " = " + (Fish[j] * 4000) + "원");
                 }
-                System.out.println("현재 가지고 있는 금액 : " + arr[j].length + "원  \n빛 진 금액 : " + DebtSum[j] + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n미납 된 금액 : " + (DebtSum[j] - PayBackSum[j]) + "원  \n빌려준 금액 : " + lendSum[j] + "원 \n안내 : 해당 손님 제어를 원하시면 8번 제어하기 --> " + (j + 1) + "번을 입력해주세요\n");
+                System.out.println("현재 가지고 있는 금액 : " + arr[j].length + "원  \n빛 진 금액 : " + DebtSum[j].length + "원  \n빚을 청산하고 남은 금액 : " + (DebtSum[j].length - PayBackSum[j].length) + "원  \n미납 된 금액 : " + (DebtSum[j].length - PayBackSum[j].length) + "원  \n빌려준 금액 : " + lendSum[j].length + "원 \n안내 : 해당 손님 제어를 원하시면 8번 제어하기 --> " + (j + 1) + "번을 입력해주세요\n");
                 SnackCount = 0;
                 BreadCount = 0;
                 FishCount = 0;
@@ -328,15 +328,14 @@ public class function {
                 DrinkCount = 0; //다음손님이 물건을 고를때 누적되지 않도록 초기화
                 Count2 = 0; //처음에 손님이고르고 다음손님으로 넘어갈때 count도 초기화
             }
-            return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
         }
+        return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int Control(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Control(int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
         if (ControlCount == 0 && i == 0) {
             System.out.println("최소 2번째 손님부터 제어가 가능합니다");
-            i--;
         } else if (ControlCount == 0) {
             System.out.println("몇번째 손님을 제어 하시겠습니까?");
             BackCount = i; //이전손님의 순서를 미리 저장
@@ -346,8 +345,9 @@ public class function {
         return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int Payback (int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
+    public static int Payback (int ICount, int TotalMoney, int Count2, int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[][] PayBackSum, int[][] DebtSum, int[][] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
+
         while (true) {
             System.out.println("몇번째 손님에게 갚겠습니까?");
             int PeopleSelect = sc.nextInt() - 1;
@@ -356,33 +356,24 @@ public class function {
 
             if (PeopleSelect < 0 || PeopleSelect > 15) {
                 System.out.println("잘못된 입력입니다");
-                i--;
             } else if (PayBackMoney < 0) {
                 System.out.println("잘못된 입력입니다");
-                i--;
             }
-            arr[i][PeopleSelect] //빌린사람
-            arr[i + 1][PeopleSelect] //받는사람
-            if (i == k) {
+
+            if (arr[i][i] == arr[i][PeopleSelect]) {
                 System.out.println("자신에게 돈을 갚을 수 없습니다");
-                i--;
-                break;
-            } else if (BorrowArr0[k] == 0) { //빌린돈이 0원이라면 빌리지 않은것이니까 내역이 없다고 나옴
+            } else if (arr[i][PeopleSelect] == 0) { //빌린돈이 0원이라면 빌리지 않은것이니까 내역이 없다고 나옴
                 System.out.println("돈을 빌린 내역이 없습니다");
-                i--;
-                break;
-            } else if (k > 0) {
-                if (BorrowArr0[k] < PayBackMoney) { //빌린돈보다 많이 갚는경우
-                    System.out.println("빌린 돈은 " + BorrowArr0[k] + "원이며 그 값을 초과 할 수 없습니다");
-                    i--;
-                } else if (BorrowArr0[k] >= PayBackMoney) {
-                    BorrowArr0[k] -= PayBackMoney; //몇번째 사람에게 빌렸는지 알려주는 배열값에 담긴 돈을 뺌
-                    arr[PeopleSelect - 1] -= PayBackMoney; //빌린사람의 돈을 차감
-                    lendSum[PeopleSelect] -= PayBackMoney; //빌려준사람의 빌린값에서 차감
-                    arr[PeopleSelect] += PayBackMoney; //빌려준사람의 돈을 추가
-                    PayBackSum[i] += PayBackMoney; //마지막 종료조건을 위해 빌려준 돈을 모두 합산
-                    System.out.println("" + (PeopleSelect + 1) + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다   \n남은 빚 : " + BorrowArr0[k] + "원");
-                    i--;
+            } else if (arr[i][PeopleSelect] > 0) {
+                if (arr[i][PeopleSelect] < PayBackMoney) { //빌린돈보다 많이 갚는경우
+                    System.out.println("빌린 돈은 " + arr[i][PayBackMoney] + "원이며 그 값을 초과 할 수 없습니다");
+                } else if (arr[i][PeopleSelect] >= PayBackMoney) {
+                    arr[i][PeopleSelect] -= PayBackMoney; //몇번째 사람에게 빌렸는지 알려주는 배열값에 담긴 돈을 뺌
+                    arr[i][PeopleSelect] -= PayBackMoney; //빌린사람의 돈을 차감
+                    arr[i + 1][i] += PayBackMoney; //빌려준사람의 돈을 추가
+                    lendSum[i + 1][i] -= PayBackMoney; //빌려준사람의 빌린값에서 차감
+                    //PayBackSum[i] += PayBackMoney;
+                    System.out.println("" + (PeopleSelect + 1) + "번째 손님에게 " + PayBackMoney + "원을 갚았습니다   \n남은 빚 : " + arr[i][i + 1] + "원");
                     break;
                 }
             }
@@ -390,9 +381,10 @@ public class function {
         return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
-    public static int NeedMoney(int NumFixCount,int ICount,int TotalMoney,int Count2,int ControlCount,int BackCount,int SnackCount,int BreadCount,int FruitCount,int DrinkCount,int FishCount,int[][] arr,int[] Snack,int[] Bread,int[] Fruit,int[] Drink,int[] Fish,int[] PayBackSum,int[] DebtSum,int[] lendSum,int i) {
+    public static int NeedMoney(int NumFixCount,int ICount,int TotalMoney,int Count2,int ControlCount,int BackCount,int SnackCount,int BreadCount,int FruitCount,int DrinkCount,int FishCount,int[][] arr,int[] Snack,int[] Bread,int[] Fruit,int[] Drink,int[] Fish,int[][] PayBackSum,int[][] DebtSum,int[][] lendSum,int i) {
        Scanner sc = new Scanner(System.in);
-        if (arr[i][0] < 1000) {
+
+        if (arr[i].length < 1000) {
             System.out.println("돈이 부족합니다 다시 선택하시겠습니까?  \n1.Yes  \n2.No(돈빌리기)");
             int ReSelect = sc.nextInt();
 
@@ -402,19 +394,19 @@ public class function {
                 for (int j = i; j < 15; j++) {
                     System.out.println("빌리고싶은 금액을 적어주세요");
                     int Borrow = sc.nextInt();
-                    arr[j + 1][j] -= Borrow; //j+1번째사람의 j번째 인덱스에 빌려준돈을 저장
-                    arr[j - NumFixCount][j + 1] += Borrow; //j번째 사람은 j+1번째 사람에게 돈을 빌렸다라고 기억한다
+                    arr[j + 1][j + 1] -= Borrow; //arr[j+1번째 사람이][j+1번째사람 -1에게 돈을빌려줌] 헷갈리지말자
+                    arr[j - NumFixCount][j + 2] += Borrow; //만약0번째인덱스부터 시작해서 다음사람에게 돈을 빌릴경우 arr[0][2]즉 0번째인덱스지만 1번째사람이 2번재 사람에게 빌리는것
 
                     if (arr[j + 1].length >= 0 && arr[j - NumFixCount].length >= 0) { //arr[j + 1]번째 사람이 가지고있는 돈의 합
-                        lendSum[j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
-                        DebtSum[j - NumFixCount] += Borrow; //빛진금액 누적
+                        lendSum[j + 1][j + 1] += Borrow; //다음 사람이 빌려준 금액을 누적
+                        DebtSum[j - NumFixCount][j + 2] += Borrow; //빛진금액 누적
                         System.out.println("" + Borrow + "원을 빌려 현재 " + arr[j - NumFixCount].length + "원  \n다음사람의 돈은 " + arr[j + 1].length + "원 입니다  \n1.추가로 빌린다  2.빌리지 않는다");
                         int BorrowSelect = sc.nextInt();//가진돈은 물건값을 구매하고 남은돈이다
 
                         if (BorrowSelect == 1) {
                             if (ControlCount == 0) {
                                 NumFixCount += 1;//더 빌리는경우 그 사람이 계속 고정되고 빌려주는사람만 다다음사람으로 이동되도록 해야하기 때문에 더빌릴때마다 count가 늘어남
-                            } else if (ControlCount != 0) {
+                            } else {
                                 NumFixCount += 1;
                             }
                         } else if (BorrowSelect == 2) {
@@ -427,7 +419,6 @@ public class function {
                             } else if (arr[j - NumFixCount].length < 1500 && arr[j - NumFixCount].length >= 1000) {
                                 System.out.println("안내 : 빵,음료수를 구매 할 수 있습니다");
                             }
-                            i--;
                             break;
                         } else {
                             System.out.println("잘못된 입력입니다");
@@ -453,5 +444,6 @@ public class function {
                 System.out.println("모든 사람의 남은 금액은 " + TotalMoney + "원 입니다");
             }
         }
+        return Menu(ICount, TotalMoney, Count2, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 }
