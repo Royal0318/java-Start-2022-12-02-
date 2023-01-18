@@ -59,7 +59,7 @@
 
  */
 import java.util.Scanner;
-public class JanuarySeventeenth {
+public class Januaryeighteenth {
     public static void main(String[] args) {
         System.out.println("모든 사람의 남은 돈의 합은 "+main()+"원 입니다");
     }
@@ -74,6 +74,14 @@ public class JanuarySeventeenth {
         int DrinkCount = 0;
         int FishCount = 0;
         int[][] arr = new int[15][15];
+        int[] Snack = new int[15];
+        int[] Bread = new int[15];
+        int[] Fruit = new int[15];
+        int[] Drink = new int[15];
+        int[] Fish = new int[15];
+        int[] PayBackSum = new int[15];
+        int[] DebtSum = new int[15];
+        int[] lendSum = new int[15];
         arr[0][0] = 20000;
         arr[1][0] = 20000;
         arr[2][0] = 20000;
@@ -84,14 +92,6 @@ public class JanuarySeventeenth {
         arr[7][0] = 10000;
         arr[8][0] = 10000;
         arr[9][0] = 10000;
-        int[] Snack = new int[15];
-        int[] Bread = new int[15];
-        int[] Fruit = new int[15];
-        int[] Drink = new int[15];
-        int[] Fish = new int[15];
-        int[] PayBackSum = new int[15];
-        int[] DebtSum = new int[15];
-        int[] lendSum = new int[15];
         return PeopleMoneyInput(ICount, TotalMoney,ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
     }
 
@@ -375,7 +375,6 @@ public class JanuarySeventeenth {
 
     public static int Payback (int ICount, int TotalMoney,int ControlCount, int BackCount, int SnackCount, int BreadCount, int FruitCount, int DrinkCount, int FishCount, int[][] arr, int[] Snack, int[] Bread, int[] Fruit, int[] Drink, int[] Fish, int[] PayBackSum, int[] DebtSum, int[] lendSum, int i) {
         Scanner sc = new Scanner(System.in);
-        //처음에 돈이부족해서 돈을빌릴때 10000원을 빌리고나서 30000만원입력후 돌아가서 3번째순서까지 넘어간후 1번제어 들어가서 2번째사람에게 돈을 갚으려고할때 -20000만원나옴
         if (DebtSum[i] == 0) {
             System.out.println("돈을 빌린 내역이 없습니다");
         } else {
@@ -399,7 +398,7 @@ public class JanuarySeventeenth {
             }
             if (arr[i][PeopleSelect] > 0) {
                 if (arr[PeopleSelect][0] < PayBackMoney) { //빌린돈보다 많이 갚는경우
-                    System.out.println("빌린 돈은 " + arr[PeopleSelect][0] + "원이며 그 값을 초과 할 수 없습니다");
+                    System.out.println("빌린 돈은 " + arr[i][PeopleSelect] + "원이며 그 값을 초과 할 수 없습니다");
                 } else if (arr[i][PeopleSelect] >= PayBackMoney) {
                     DebtSum[i] -= PayBackMoney;
                     lendSum[i + 1] -= PayBackMoney;
@@ -435,7 +434,6 @@ public class JanuarySeventeenth {
                     arr[j + 1][0] -= Borrow; //돈을 빌려주는사람의 전체돈에서 차감
                     arr[j - NumFixCount][0] += Borrow;//돈을 받는사람의 전체돈에서 차감
 
-
                     if (arr[j + 1][0] >= 0 && arr[j - NumFixCount][0] >= 0) {
                         arr[j + 1][j + 1 - NumFixCount] += Borrow; //빌려준사람 기록
                         arr[j - NumFixCount][j + 1] += Borrow;
@@ -447,7 +445,7 @@ public class JanuarySeventeenth {
 
                         if (BorrowSelect == 1) {
                             if (ControlCount == 0) {
-                                NumFixCount += 1;//더 빌리는경우 그 사람이 계속 고정되고 빌려주는사람만 다다음사람으로 이동되도록 해야하기 때문에 더빌릴때마다 count가 늘어남
+                                NumFixCount += 1;//더 빌리는경우 그 사람이 계속 고정되고 빌려주는사람만  이동되도록 해야하기위해 추가
                             }
                         } else if (BorrowSelect == 2) {
                             return AddBorrow(NumFixCount,ICount,TotalMoney,ControlCount,BackCount,SnackCount,BreadCount,FruitCount,DrinkCount,FishCount,arr,Snack,Bread,Fruit,Drink,Fish,PayBackSum,DebtSum,lendSum,j);
@@ -456,10 +454,8 @@ public class JanuarySeventeenth {
                             return Menu(ICount, TotalMoney, ControlCount, BackCount, SnackCount, BreadCount, FruitCount, DrinkCount, FishCount, arr, Snack, Bread, Fruit, Drink, Fish, PayBackSum, DebtSum, lendSum);
                         }
                     } else if (arr[j + 1][0] < 0) {
-                        arr[j + 1][0] += Borrow;  //다시 반환
-                        arr[j + 1][j + 1] += Borrow;
-                        arr[j - NumFixCount][j - NumFixCount + 1] -= Borrow;
-                        arr[j - NumFixCount][j - NumFixCount] -= Borrow;
+                        arr[j + 1][0] += Borrow;
+                        arr[j - NumFixCount][0] -= Borrow;
                         System.out.println("다음사람이 가진 돈은 " + arr[j + 1][0] + "원이며 이보다 더 많이 빌릴 수 없습니다");
                         j--;
                     } else if (arr[j + 1][0] > Borrow && arr[j - NumFixCount][0] < 0) {
