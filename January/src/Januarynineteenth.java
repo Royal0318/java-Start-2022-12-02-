@@ -4,14 +4,7 @@ public class Januarynineteenth {
     public static void main(String[] args) {
         System.out.println("안내 : 기회가 "+(VariableSave() - 1)+"회를 초과하였기 때문에 게임이 종료됩니다");
     }
-/*
-1.정답을 틀렸을때 힌트값을 줘보자 (완)
-2.내가입력한숫자가 행렬에 없는숫자인경우 그메시지를출력한다 (완)
-3.함수값을 좀더 세세하게나눠라
-4.기회를 모두 사용한경우 왜졌는지 설명을해라 (완)
-5.게임에 이긴경우 이겼다는메시지 (완)
-6.main값 메서드안에있는변수 수정
- */
+
     public static int VariableSave() {
         //변수를 보관하는 메인 메소드
         int Chance = 0; //틀렸을경우 기회변수가 올라감 10회 초과시 게임종료
@@ -54,6 +47,15 @@ public class Januarynineteenth {
         int Row = sc.nextInt(); //행
         int Column = sc.nextInt(); //열
 
+        if (Row < 0 || Row > 3) { //인덱스를 초과하거나 음수값을 입력한경우 재입력하도록 리턴시킨다
+            System.out.println("잘못된 입력입니다");
+            return MatrixCorrectAnswerInput(Chance, arr, CorrectNumberOutputarr, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
+        }
+        if (Column < 0 || Column > 3) {
+            System.out.println("잘못된 입력입니다");
+            return MatrixCorrectAnswerInput(Chance, arr, CorrectNumberOutputarr, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
+        }
+
         if (CorrectNumberOutputarr[Row][Column] != 0) { //정답을 맞춘곳에 다시 값을 중복으로 입력하려는경우
             System.out.println("이미 정답을 맞췄기 때문에 더이상 값을 입력할 수 없습니다");
             return MatrixCorrectAnswerInput(Chance, arr, CorrectNumberOutputarr, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
@@ -64,19 +66,31 @@ public class Januarynineteenth {
         }
     }
     public static int ReExamiation(int CorrectNumberInput,int Chance,int[][] arr,int[][] CorrectNumberOutputarr,int CorrectGuessesNumberSave,int IncorrectNumberSave,int AnswerCountSave,int MatrixCheck,int Row,int Column) {
-        //행렬값을 맞추기위해 답을 입력한경우 해당 값이 전체행렬값에 존재하는 값인지 판단하기 위해 거치는 메소드
-        if (arr[Row][Column] == CorrectNumberInput) { //정답을 맞춘 경우
-            CorrectNumberOutputarr[Row][Column] = 1; //정답시 입력한  행렬값에 1을부여하여 출력시 1을 가지고있는 행렬값만 출력된다
-            CorrectGuessesNumberSave += arr[Row][Column]; //정답시 Game2 문제를 풀기위한 정답값을 저장한다
-            AnswerCountSave += 1;
-            return CorrectGuessesInput(CorrectNumberInput, Chance, arr, CorrectNumberOutputarr, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave, Row, Column);
+        //행렬값을 맞추기위해 답을 입력한경우 해당 값이 전체행렬값에 존재하는 값인지 판단하기 위해 검사를 거치는 메소드
+        for (int i = 0; i < arr.length; i++) { //숫자를 부여 한 후 정답을 맞추기 전 전체행렬을 출력
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[i][j] == CorrectNumberInput) {
+                    MatrixCheck++;
+                }
+            }
+        }
+        if (MatrixCheck != 0) {
+            return CorrectGuessesInput(CorrectNumberInput,Chance,arr,CorrectNumberOutputarr,CorrectGuessesNumberSave,IncorrectNumberSave,AnswerCountSave,Row,Column);
         } else {
+            System.out.println("<<<<<<입력한 값은 총 배열내에 존재하지 않는 값 입니다>>>>>>");
             return IncorrectAnswerInput(CorrectNumberInput, Chance, arr, CorrectNumberOutputarr, Row, Column, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
         }
     }
 
     public static int CorrectGuessesInput(int CorrectNumberInput,int Chance,int[][]arr,int[][]CorrectNumberOutputarr,int CorrectGuessesNumberSave,int IncorrectNumberSave,int AnswerCountSave,int Row,int Column) {
         //정답을 맞춘경우에 넘어오는 메소드
+        if (arr[Row][Column] == CorrectNumberInput) { //정답을 맞춘 경우
+            CorrectNumberOutputarr[Row][Column] = 1; //정답시 입력한  행렬값에 1을부여하여 출력시 1을 가지고있는 행렬값만 출력된다
+            CorrectGuessesNumberSave += arr[Row][Column]; //정답시 Game2 문제를 풀기위한 정답값을 저장한다
+            AnswerCountSave += 1;
+         } else {
+            return IncorrectAnswerInput(CorrectNumberInput, Chance, arr, CorrectNumberOutputarr, Row, Column, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
+        }
         System.out.println("<정답입니다!>");
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
@@ -107,12 +121,12 @@ public class Januarynineteenth {
                         System.out.printf("[" + i + "][" + j + "] : ? ");
                     } else if (CorrectNumberOutputarr[i][j] == 1) {
                         System.out.printf("[" + i + "][" + j + "] : "+arr[i][j]+" ");
-                        if (Chance >= 2) { //2번이상 틀렸을 때 부터 틀린값들을 저장해서 Game3에 사용됨
-                            IncorrectNumberSave += arr[Row][Column];
-                        }
                     }
                 }
                 System.out.println("\n");
+            }
+            if (Chance >= 2) { //2번이상 틀렸을 때 부터 틀린값들을 저장해서 Game3에 사용됨
+                IncorrectNumberSave += arr[Row][Column];
             }
             return MatrixCorrectAnswerInput(Chance,arr,CorrectNumberOutputarr,CorrectGuessesNumberSave,IncorrectNumberSave,AnswerCountSave);
         } else {
@@ -135,15 +149,20 @@ public class Januarynineteenth {
         if (TotalCorrectNumber == CorrectGuessesNumberSave) {
             return Game3(Chance,IncorrectNumberSave);
         } else {
-            Chance -= 1;
+            Chance += 1;
             if (Chance <= 10) {
                 System.out.println("<오답입니다!> \n주의 : " + Chance + "번째 기회 10회 초과시 패배");
+                if (CorrectGuessesNumberSave < TotalCorrectNumber) {
+                    System.out.println("힌트 : 정답은 입력한 값 보다 작습니다");
+                } else {
+                    System.out.println("힌트 : 정답은 입력한 값 보다 큽니다");
+                }
+                return Game2(Chance,CorrectGuessesNumberSave,IncorrectNumberSave);
             } else {
                 System.out.println("<<<Game Over!!!!>>> \n<정답을 공개합니다> 정답을 맞춘 배열들의 총 합은"+CorrectGuessesNumberSave+"입니다");
                 return Chance;
             }
         }
-        return 0;
     }
     public static int Game3 (int Chance,int IncorrectNumberSave) {
         Scanner sc = new Scanner(System.in);
@@ -154,11 +173,17 @@ public class Januarynineteenth {
             System.out.println("<<<<<<<<<<축하합니다 끝까지 통과하였으므로 우승하였습니다!>>>>>>>>>>");
             System.exit(1);
         } else {
-            Chance -= 1;
+            Chance += 1;
             if (Chance <= 10) {
                 System.out.println("<오답입니다!> \n주의 : " + Chance + "번째 기회 10회 초과시 패배");
+                if (IncorrectNumberSave < TotalIncorrectNumber) {
+                    System.out.println("힌트 : 정답은 입력한 값 보다 작습니다");
+                } else {
+                    System.out.println("힌트 : 정답은 입력한 값 보다 큽니다");
+                }
+                return Game3(Chance,IncorrectNumberSave);
             } else {
-                System.out.println("<<<Game Over!!!!>>> \n<정답을 공개합니다> 정답을 맞춘 배열들의 총 합은"+IncorrectNumberSave+"입니다");
+                System.out.println("<<<Game Over!!!!>>> \n<정답을 공개합니다> 틀린 배열들의 총 합은"+IncorrectNumberSave+"입니다");
                 return Chance;
             }
         }
