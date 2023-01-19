@@ -46,7 +46,11 @@ public class Januarynineteenth {
         System.out.println("맞추고싶은 곳의 행열을 각각 입력하시오  \n예)1행1열 : (1 Enter 1)");
         int Row = sc.nextInt(); //행
         int Column = sc.nextInt(); //열
-
+        return OutofInput(Chance,arr,CorrectNumberOutputarr,CorrectGuessesNumberSave,IncorrectNumberSave,AnswerCountSave,Row,Column,MatrixCheck);
+    }
+    public static int OutofInput (int Chance,int[][] arr,int[][] CorrectNumberOutputarr,int CorrectGuessesNumberSave,int IncorrectNumberSave,int AnswerCountSave,int Row,int Column,int MatrixCheck) {
+       //행렬값이 주어진 행렬범위에 벗어나거나 정답을 중복으로 입력하려는경우 사용하는 메소드
+        Scanner sc = new Scanner(System.in);
         if (Row < 0 || Row > 3) { //인덱스를 초과하거나 음수값을 입력한경우 재입력하도록 리턴시킨다
             System.out.println("잘못된 입력입니다");
             return MatrixCorrectAnswerInput(Chance, arr, CorrectNumberOutputarr, CorrectGuessesNumberSave, IncorrectNumberSave, AnswerCountSave);
