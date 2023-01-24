@@ -59,7 +59,7 @@
 
  */
 import java.util.Scanner;
-public class Januarytwentyoneth {
+public class Januarytwentyfourth {
     public static void main(String[] args) {
         //마지막사람까지 모두 선택시 모든 사람의 남은 돈의합을 더해 출력
         System.out.println("모든 사람의 남은 돈의 합은 "+VariableSave()+"원 입니다");
@@ -102,19 +102,20 @@ public class Januarytwentyoneth {
                 i--;
             }
         }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck,SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck,SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
 
-    public static int Menu(int[] TotalDebtMoneySum,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput, int[] BreadNumberOutput, int[] FruitNumberOutput, int[] DrinkNumberOutput, int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum) {
+    public static int MenuSelect(int[] TotalDebtMoneySum,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput, int[] BreadNumberOutput, int[] FruitNumberOutput, int[] DrinkNumberOutput, int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum) {
         Scanner sc = new Scanner(System.in);
-        if (I == 15) { //15명이 모두 물건을 구매하거나 넘겼을때 시스템을 종료시키는 조건
+        if (I == 15) { //15명이 넘기거나 구매한 횟수를 합쳤을때 15회 도달시 시스템을 종료시키는 조건
             return TotalMoney;
         }
         for (int i = I; i < 15; i++) {
+            System.out.println("test "+i+" "+I+"");
             int FixedNumberCount = 0; //한 손님이 계속 돈을 빌리는경우 다음손님으로 넘어가지 않도록 다음손님에게 계속빌릴경우 고정시킬수있는 변수
             int OutputOrder = 0; //물건을 산 손님만 출력되고 손님순서가 순서되도록 출력되도록 도와주는 변수
             int ReturnMoney = 0; //물건을 사고나면 미리 결제가 되기 때문에 음식선택을 다시할때 돈을 반환할때 사용하는 변수
-            System.out.println("\n1.과자 1500원  \n2.빵 1000원  \n3.과일 2500원  \n4.음료수 1000원   \n5.생선 4000원  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
+            System.out.println("\n1.과자 1500원  \n2.빵 1000원  \n3.과일 2500원  \n4.음료수 1200원   \n5.생선 4000원  \n6.다음 손님  \n7.종료버튼 \n8.제어 \n9.돈갚기");
             if (ControlEntryCheck == 1) {//제어로 진입시 출력
                 System.out.println("10.이전 손님으로 돌아가기\n");
             }
@@ -135,15 +136,15 @@ public class Januarytwentyoneth {
                 ControlEntryCheck = 0; //컨트롤값 초기화
             }
             if (Select == 1) { //메뉴선택시 해당메소드로 리턴보낸다
-                return Snackfunction(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
+                return FoodNumberandBuy(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney,1500);
             } else if (Select == 2) {
-                return Breadfunction(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
+                return FoodNumberandBuy(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney,1000);
             } else if (Select == 3) {
-                return Fruitfunction(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
+                return FoodNumberandBuy(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney,2500);
             } else if (Select == 4) {
-                return Drinkfunction(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
+                return FoodNumberandBuy(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney,1200);
             } else if (Select == 5) {
-                return Fishfunction(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
+                return FoodNumberandBuy(TotalDebtMoneySum,FixedNumberCount,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney,4000);
             } else if (Select == 6) {
                 I++;
             } else if (Select == 7) {
@@ -156,125 +157,48 @@ public class Januarytwentyoneth {
         }
         return 0;
     }
-
-    public static int Snackfunction(int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney) {
+    public static int FoodNumberandBuy (int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney,int Price) {
         Scanner sc = new Scanner(System.in);
         if (ControlEntryCheck == 0) {
             System.out.println("구매할 개수를 적어주세요");
             int Number = sc.nextInt();
-            if (arr[i][0] < (1500 * Number)) { //돈이부족한경우
-                TotalMoney -= (1500 * Number); //15명의 총 가지고 있는 돈에서 구매한 총 가격만큼 차감
-                ReturnMoney += (1500 * Number); //돈이 부족한데 물건을 다시 구매한다고 했을때 구매했던 가격만큼 다시 반환 받기 때문에 저장하는 변수
-                arr[i][0] -= (1500 * Number); //?번째 손님이 가지고 있는 돈에서 구매한 총 가격만큼 차감
-                SnackNumberOutput[i] += Number;
+            if (arr[i][0] < (Price * Number)) { //돈이부족한경우
+                TotalMoney -= (Price * Number); //15명의 총 가지고 있는 돈에서 구매한 총 가격만큼 차감
+                ReturnMoney += (Price * Number); //돈이 부족한데 물건을 다시 구매한다고 했을때 구매했던 가격만큼 다시 반환 받기 때문에 저장하는 변수
+                arr[i][0] -= (Price * Number); //?번째 손님이 가지고 있는 돈에서 구매한 총 가격만큼 차감
+                if (Price == 1500) { //Price가격에 따른 음식의 구매 카운트 증가
+                    SnackNumberOutput[i] += Number;
+                } else if (Price == 1000) {
+                    BreadNumberOutput[i] += Number;
+                } else if (Price == 2500) {
+                    FruitNumberOutput[i] += Number;
+                } else if (Price == 1200) {
+                    DrinkNumberOutput[i] += Number;
+                } else {
+                    FishNumberOutput[i] += Number;
+                }
                 return NeedMoneySelect(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
             } else {
                 System.out.println("주문이 완료되었습니다"); //주문을 완료한경우
-                arr[i][0] -= (1500 * Number);
-                TotalMoney -= (1500 * Number);
-                SnackNumberOutput[i] += Number;
+                arr[i][0] -= (Price * Number);
+                TotalMoney -= (Price * Number);
+                if (Price == 1500) {
+                    SnackNumberOutput[i] += Number;
+                } else if (Price == 1000) {
+                    BreadNumberOutput[i] += Number;
+                } else if (Price == 2500) {
+                    FruitNumberOutput[i] += Number;
+                } else if (Price == 1200) {
+                    DrinkNumberOutput[i] += Number;
+                } else {
+                    FishNumberOutput[i] += Number;
+                }
             }
         } else {
             System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
         }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
-
-    public static int Breadfunction(int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney) {
-        Scanner sc = new Scanner(System.in);
-        if (ControlEntryCheck == 0) {
-            System.out.println("구매할 개수를 적어주세요");
-            int Number = sc.nextInt();
-            if (arr[i][0] < (1000 * Number)) {
-                arr[i][0] -= (1000 * Number);
-                TotalMoney -= (1000 * Number);
-                ReturnMoney += (1000 * Number);
-                BreadNumberOutput[i] += Number;
-                return NeedMoneySelect(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
-            } else {
-                System.out.println("주문이 완료되었습니다");
-                arr[i][0] -= (1000 * Number);
-                TotalMoney -= (1000 * Number);
-                BreadNumberOutput[i] += Number;
-            }
-        } else {
-            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
-        }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
-
-    }
-    public static int Fruitfunction(int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney) {
-        Scanner sc = new Scanner(System.in);
-        if (ControlEntryCheck == 0) {
-            System.out.println("구매할 개수를 적어주세요");
-            int Number = sc.nextInt();
-            if (arr[i][0] < (2500 * Number)) {
-                arr[i][0] -= (2500 * Number);
-                TotalMoney -= (2500 * Number);
-                ReturnMoney += (2500 * Number);
-                FruitNumberOutput[i] += Number;
-                return NeedMoneySelect(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
-            } else {
-                System.out.println("주문이 완료되었습니다");
-                arr[i][0] -= (2500 * Number);
-                TotalMoney -= (2500 * Number);
-                FruitNumberOutput[i] += Number;
-            }
-        } else {
-            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
-        }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
-
-    }
-
-    public static int Drinkfunction(int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney) {
-        Scanner sc = new Scanner(System.in);
-        if (ControlEntryCheck == 0) {
-            System.out.println("구매할 개수를 적어주세요");
-            int Number = sc.nextInt();
-            if (arr[i][0] < (1000 * Number)) {
-                arr[i][0] -= (1000 * Number);
-                TotalMoney -= (1000 * Number);
-                ReturnMoney += (1000 * Number);
-                DrinkNumberOutput[i] += Number;
-                return NeedMoneySelect(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
-            } else {
-                System.out.println("주문이 완료되었습니다");
-                arr[i][0] -= (1000 * Number);
-                TotalMoney -= (1000 * Number);
-                DrinkNumberOutput[i] += Number;
-            }
-        } else {
-            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
-        }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
-
-    }
-
-    public static int Fishfunction(int[] TotalDebtMoneySum,int FixedNumberCount,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i,int ReturnMoney) {
-        Scanner sc = new Scanner(System.in);
-        if (ControlEntryCheck == 0) {
-            System.out.println("구매할 개수를 적어주세요");
-            int Number = sc.nextInt();
-            if (arr[i][0] < (4000 * Number)) {
-                arr[i][0] -= (4000 * Number);
-                TotalMoney -= (4000 * Number);
-                ReturnMoney += (4000 * Number);
-                FishNumberOutput[i] += Number;
-                return NeedMoneySelect(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum, i,ReturnMoney);
-            } else {
-                System.out.println("주문이 완료되었습니다");
-                arr[i][0] -= (4000 * Number);
-                TotalMoney -= (4000 * Number);
-                FishNumberOutput[i] += Number;
-            }
-        } else {
-            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
-        }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
-
-    }
-
     public static int ReceiptOutput(int[] TotalDebtMoneySum,int OutPutOrder, int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i) {
         if (ControlEntryCheck == 0) {
             for (int j = 0; j <= i; j++) {
@@ -320,10 +244,10 @@ public class Januarytwentyoneth {
             }
         } else {
             System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
-            return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+            return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
         }
         I++;
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
     public static int PeopleControl(int[] TotalDebtMoneySum,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i) {
         //제어버튼으로 진입시 원하는 손님을 제어한다
@@ -338,7 +262,7 @@ public class Januarytwentyoneth {
         } else {
             System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다 \n안내 : 제어로 진입시 돈갚기,돌아가기만 가능합니다");
         }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
     public static int PaybackMoney (int[] TotalDebtMoneySum,int I, int TotalMoney,int ControlEntryCheck,int SavePreviousIndex, int[][] arr, int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum, int i) {
        //손님에게 돈을 갚을때 사용하는 메소드
@@ -349,20 +273,16 @@ public class Januarytwentyoneth {
             System.out.println("몇번째 손님에게 갚겠습니까?");
             int PeopleSelect = sc.nextInt() - 1;//인덱스 번호와 실제 나타나고있는 손님의 번호와 차이가있기때문
 
-            if (i == PeopleSelect) {
-                System.out.println("자신에게 돈을 갚을 수 없습니다");
-                return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
-            }
-            if (PeopleSelect < 0 || PeopleSelect > 15) {
+            if (i == PeopleSelect || PeopleSelect < 0 || PeopleSelect > 15) {
                 System.out.println("안내 : 잘못된 입력입니다");
-                return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+                return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
             }
             System.out.println("" + (PeopleSelect + 1) + "번째 손님에게 빌린 돈 : " + arr[i][PeopleSelect] + "원 \n얼마를 갚겠습니까?");
             int PayBackMoney = sc.nextInt();
 
             if (PayBackMoney < 0) {
                 System.out.println("안내 : 잘못된 입력입니다");
-                return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+                return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
             }
             if (arr[i][PeopleSelect] > 0) {
                 if (arr[PeopleSelect][0] < PayBackMoney) { //빌린돈보다 많이 갚는경우
@@ -380,7 +300,7 @@ public class Januarytwentyoneth {
                 System.out.println("안내 : 돈을 빌린 내역이 없습니다");
             }
         }
-        return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
     public static int NeedMoneySelect(int[] TotalDebtMoneySum,int FixedNumberCount,int I,int TotalMoney,int ControlEntryCheck,int SavePreviousIndex,int[][] arr,int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum,int i,int ReturnMoney) {
       //음식을 구매 후 돈이부족할때 넘어오는 메소드
@@ -392,13 +312,13 @@ public class Januarytwentyoneth {
 
             if (ReSelect == 1) {
                 arr[i][0] += ReturnMoney; //구매했던 금액을 다시 반환시킨다
-                return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+                return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
             } else if (ReSelect == 2) {
                 return BorrowNeedMoney(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
             } else {
                 System.out.println("안내 : 잘못된 입력입니다");
                 arr[i][0] += ReturnMoney; //구매했던 금액을 다시 반환시킨다
-                return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+                return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
             }
         }
         return 0;
@@ -425,6 +345,7 @@ public class Januarytwentyoneth {
                 //빌리는사람이 가지고있는 돈보다 더 빌리려는경우
                 return OverBorrowing(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum,j,Borrow);
             } else if (arr[j + 1][0] > Borrow && arr[j - FixedNumberCount][0] < 0 && Borrow > 0) {
+                //돈을 빌려도 추가적으로 더 빌려야하는경우
                 return NotEnoughMoney(TotalDebtMoneySum,FixedNumberCount, I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum,j,Borrow);
             } else if (arr[j + 1][0] > Borrow && arr[j - FixedNumberCount][0] < 0 && Borrow == 0 || Borrow < 0) {
                 //금액을 음수값으로 입력하거나 0원을 입력한경우
@@ -454,7 +375,7 @@ public class Januarytwentyoneth {
             return AvailableFood(TotalDebtMoneySum,FixedNumberCount,I,TotalMoney,ControlEntryCheck,SavePreviousIndex,arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum,j);
         } else {
             System.out.println("안내 : 잘못된 입력입니다");
-            return Menu(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+            return MenuSelect(TotalDebtMoneySum,I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
         }
         return 0;
     }
@@ -496,6 +417,6 @@ public class Januarytwentyoneth {
         } else {
             System.out.println("안내 : 잘못된 입력입니다");
         }
-        return Menu(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
+        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
 }
