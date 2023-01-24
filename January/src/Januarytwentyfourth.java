@@ -369,7 +369,16 @@ public class Januarytwentyfourth {
             } else {
                 FishNumberOutput[I] += FoodNumber;
             }
-            return AvailableFood(TotalDebtMoneySum, FixedNumberCount, I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum, j);
+            if (arr[j - FixedNumberCount][0] >= 4000) {
+                System.out.println("안내 : 과자,빵,과일,음료수.생선을 구매 할 수 있습니다");
+            } else if (arr[j - FixedNumberCount][0] < 4000 && arr[j - FixedNumberCount][0] >= 2500) {
+                System.out.println("안내 : 과자,빵,과일,음료수를 구매 할 수 있습니다");
+            } else if (arr[j - FixedNumberCount][0] < 2500 && arr[j - FixedNumberCount][0] >= 1500) {
+                System.out.println("안내 : 과자,빵,음료수를 구매 할 수 있습니다");
+            } else if (arr[j - FixedNumberCount][0] < 1500 && arr[j - FixedNumberCount][0] >= 1000) {
+                System.out.println("안내 : 빵,음료수를 구매 할 수 있습니다");
+            }
+            return MenuSelect(TotalDebtMoneySum, I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum);
         } else {
             System.out.println("안내 : 잘못된 입력입니다");
             return MenuSelect(TotalDebtMoneySum, I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum);
@@ -400,21 +409,5 @@ public class Januarytwentyfourth {
         I++;
         FixedNumberCount += 1;
         return BorrowNeedMoney(TotalDebtMoneySum, FixedNumberCount, I, TotalMoney, ControlEntryCheck, SavePreviousIndex, arr, SnackNumberOutput, BreadNumberOutput, FruitNumberOutput, DrinkNumberOutput, FishNumberOutput, DebtMoneySum, lendMoneySum,FoodNumber,Price);
-    }
-
-    public static int AvailableFood (int[] TotalDebtMoneySum,int FixedNumberCount,int I,int TotalMoney,int ControlEntryCheck,int SavePreviousIndex,int[][] arr,int[] SnackNumberOutput,int[] BreadNumberOutput,int[] FruitNumberOutput,int[] DrinkNumberOutput,int[] FishNumberOutput, int[] DebtMoneySum, int[] lendMoneySum,int j) {
-        //물건을 구매하고 남은돈으로 구매 할 수 있는 음식리스트를 알려준후 다시 메인메뉴로 재리턴
-        if (arr[j - FixedNumberCount][0] >= 4000) {
-            System.out.println("안내 : 과자,빵,과일,음료수.생선을 구매 할 수 있습니다");
-        } else if (arr[j - FixedNumberCount][0] < 4000 && arr[j - FixedNumberCount][0] >= 2500) {
-            System.out.println("안내 : 과자,빵,과일,음료수를 구매 할 수 있습니다");
-        } else if (arr[j - FixedNumberCount][0] < 2500 && arr[j - FixedNumberCount][0] >= 1500) {
-            System.out.println("안내 : 과자,빵,음료수를 구매 할 수 있습니다");
-        } else if (arr[j - FixedNumberCount][0] < 1500 && arr[j - FixedNumberCount][0] >= 1000) {
-            System.out.println("안내 : 빵,음료수를 구매 할 수 있습니다");
-        } else {
-            System.out.println("안내 : 잘못된 입력입니다");
-        }
-        return MenuSelect(TotalDebtMoneySum,I, TotalMoney,ControlEntryCheck, SavePreviousIndex, arr,SnackNumberOutput,BreadNumberOutput,FruitNumberOutput,DrinkNumberOutput,FishNumberOutput, DebtMoneySum, lendMoneySum);
     }
 }
