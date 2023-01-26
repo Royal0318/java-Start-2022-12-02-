@@ -1,7 +1,8 @@
-package lecture;
+package ObjectOrientation;
 
 import java.util.Scanner;
-
+//객체지향 기초를 이용하여 간단한 자기소개를 하는 문제를 만들어봤다
+//주의  : 적혀진 내용은 정확하지 않습니다!
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

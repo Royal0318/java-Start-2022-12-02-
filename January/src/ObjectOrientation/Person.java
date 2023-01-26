@@ -1,4 +1,4 @@
-package lecture;
+package ObjectOrientation;
 
 public class Person {
     String Name;
