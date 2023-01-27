@@ -31,14 +31,14 @@ public class Person {
     }
     void introduceMySelf(){
         System.out.println("==================자기소개 프로필==================");
-        System.out.println("이름 : "+Name+" \n나이 : "+Age+"\n키 : "+Tall+"\n몸무게 : "+weight+"\n가족인원수 : "+Familymembers+"\n성별 : "+Sex+"\n직업 : "+Jop+"\n꿈 : "+Dream+"\n현재 거주지 : "+Residence+"\n고향 : "+Hometown+"\n취미 : "+Hobby()+"\n쉬는날에 하는것 : "+Breaktime()+" "+Breaktime2()+" "+Breaktime3()+"\n취업 목표 : "+Goals+"\n최종학력 : "+Graduation+"\n미래의 소원 : "+Hope()+"");
+        System.out.println("이름 : "+Name+" \n나이 : "+Age+"\n키 : "+Tall+"\n몸무게 : "+weight+"\n가족인원수 : "+Familymembers+"\n성별 : "+Sex+"\n직업 : "+Jop+"\n꿈 : "+Dream+"\n현재 거주지 : "+Residence+"\n고향 : "+Hometown+"\n취미 : "+Hobby()+"\n쉬는날에 하는것 : "+Breaktime()+" "+Breaktime2()+" "+Breaktime3()+" "+Breaktime4()+"\n취업 목표 : "+Goals+"\n최종학력 : "+Graduation+"\n미래의 소원 : "+Hope()+" "+Hope2()+"");
         System.out.println("================================================");
     }
     void Fighting() {
-        System.out.println("열심히해서 꼭 취직하겠습니다 화이팅!");
+        System.out.println("마지막 한마디 : 열심히해서 꼭 취직하겠습니다 화이팅!");
     }
     String Hobby () {
-        return "프로그래밍,외국드라마감상";
+        return "외국드라마감상,영화감상";
     }
     String Breaktime () {
         return "누워있기";
@@ -49,8 +49,14 @@ public class Person {
     String Breaktime3 () {
         return "잠자기";
     }
+    String Breaktime4 () {
+        return "드라이브하기";
+    }
     String Hope () {
         return "외국기업에 가서 일해보기";
+    }
+    String Hope2 () {
+        return "좋은 회사에 취직하기";
     }
     /*
     1.String return이랑 위에 this랑 차이점이뭔가?
