@@ -24,20 +24,18 @@ public class Januarytwentynineth {
         while (true) {
             TotalGame.GameMainList();
             int GameListInput = sc.nextInt();
-
             if (GameListInput == 1 || GameListInput == 2 || GameListInput == 3 || GameListInput == 4 || GameListInput == 5) {
                 return ListDescription(GameListInput,Game4,Game5);
             } else if (GameListInput == 6) {
-                return "시스템을 종료합니다";
+                return "<<<시스템을 종료합니다>>>";
             } else {
                 System.out.println("잘못된 입력입니다");
             }
         }
     }
     public static String ListDescription (int GameListInput,String Game4,String Game5) {
-        //게임기획서를 보기위해 게임을 선택하면 기획서가 출력됨
+        //보고싶은 기획서의 번호를 리턴시켜 받은메소드에서 판별하여 해당 기획서를 출력시킴
         Januarytwentynineth2 TotalGame = new Januarytwentynineth2("Card Game", "빨리 보스잡기 게임", "격투게임", ""+Game4+"", ""+Game5+"", "", "", "", "", "", "", "");
-
         if (GameListInput == 1) {
             TotalGame.GameListExplanation();
         } else if (GameListInput == 2) {
