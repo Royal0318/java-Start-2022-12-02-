@@ -22,7 +22,6 @@ public class Januarytwentynineth2 {
     String ProductionPeriod;
     String EstimatedSales;
 
-
     Januarytwentynineth2(String Game, String Game2, String Game3, String Game4, String Game5, String GameTitle, String GameExplanation, String GameGenre, String GamePlayWay, String GameProducers, String ProductionPeriod, String EstimatedSales) {
         this.Game = Game;
         this.Game2 = Game2;
@@ -145,13 +144,8 @@ public class Januarytwentynineth2 {
 
     void Game4ListExplanation() {
         //4번 게임 기획서 출력
-        System.out.println("1.게임 제목 : " + Game4Select() + " \n2.게임 설명 : " + Game4Select2() + " \n3.게임 장르 : " + Game4Select3() + " \n4.게임 플레이 방식 : " + Game4Select4() + " \n5.게임 제작자 : " + Game4Select5() + " \n6.게임 제작기간 : " + Game4Select6() + " \n7.게임 예상 매출액 : " + Game4Select7() + "");
+        System.out.println("1.게임 제목 : " + Game4 + " \n2.게임 설명 : " + Game4Select2() + " \n3.게임 장르 : " + Game4Select3() + " \n4.게임 플레이 방식 : " + Game4Select4() + " \n5.게임 제작자 : " + Game4Select5() + " \n6.게임 제작기간 : " + Game4Select6() + " \n7.게임 예상 매출액 : " + Game4Select7() + "");
     }
-
-    String Game4Select() {
-        return "" + Game4 + "";
-    }
-
     String Game4Select2() {
         return "본 게임은 주어진 트랙안에서 상대방과 주어진 자동차로 경주는를 하여 결승전에 먼저 통과하는 플레이어가 승리하는 게임입니다";
     }
@@ -178,13 +172,8 @@ public class Januarytwentynineth2 {
 
     void Game5ListExplanation() {
         //5번 게임 기획서 출력
-        System.out.println("1.게임 제목 : " + Game5Select() + " \n2.게임 설명 : " + Game5Select2() + " \n3.게임 장르 : " + Game5Select3() + " \n4.게임 플레이 방식 : " + Game5Select4() + " \n5.게임 제작자 : " + Game5Select5() + " \n6.게임 제작기간 : " + Game5Select6() + " \n7.게임 예상 매출액 : " + Game5Select7() + "");
+        System.out.println("1.게임 제목 : " + Game5 + " \n2.게임 설명 : " + Game5Select2() + " \n3.게임 장르 : " + Game5Select3() + " \n4.게임 플레이 방식 : " + Game5Select4() + " \n5.게임 제작자 : " + Game5Select5() + " \n6.게임 제작기간 : " + Game5Select6() + " \n7.게임 예상 매출액 : " + Game5Select7() + "");
     }
-
-    String Game5Select() {
-        return "" + Game5 + "";
-    }
-
     String Game5Select2() {
         return "본 게임은 아군5명과 상대5명이 대결하며 상대의 기지 본체를 먼저 파괴하는 팀이 승리하는 팀전게임입니다";
     }

@@ -49,6 +49,7 @@ public class Januarytwentynineth {
         } else {
             System.out.println("잘못된 입력입니다");
         }
+        //기획서 출력후 다시 기획서를 선택할 수 있도록 리턴시킴
         return LookGameExplanation (Game4,Game5);
     }
 }
