@@ -19,7 +19,7 @@ public class Januarytwentynineth {
     public static String LookGameExplanation(String Game4,String Game5) {
         //게임 제목 리스트중에서 기획서내용을 보기위한 선택메소드
         Scanner sc = new Scanner(System.in);
-        Januarytwentynineth2 TotalGame = new Januarytwentynineth2("Card Game", "빨리 보스잡기 게임", "격투게임", ""+Game4+"", ""+Game5+"", "", "", "", "", "", "", "");
+        Januarytwentynineth2 TotalGame = new Januarytwentynineth2("Card Game", "빨리 보스잡기 게임", "격투게임", ""+Game4+"", ""+Game5+"");
 
         while (true) {
             TotalGame.GameMainList();
@@ -35,7 +35,7 @@ public class Januarytwentynineth {
     }
     public static String ListDescription (int GameListInput,String Game4,String Game5) {
         //보고싶은 기획서의 번호를 리턴시켜 받은메소드에서 판별하여 해당 기획서를 출력시킴
-        Januarytwentynineth2 TotalGame = new Januarytwentynineth2("Card Game", "빨리 보스잡기 게임", "격투게임", ""+Game4+"", ""+Game5+"", "", "", "", "", "", "", "");
+        Januarytwentynineth2 TotalGame = new Januarytwentynineth2("Card Game", "빨리 보스잡기 게임", "격투게임", ""+Game4+"", ""+Game5+"");
         if (GameListInput == 1) {
             TotalGame.GameListExplanation();
         } else if (GameListInput == 2) {
