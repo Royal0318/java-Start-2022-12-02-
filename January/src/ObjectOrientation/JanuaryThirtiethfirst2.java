@@ -1,20 +1,55 @@
 
 package ObjectOrientation;
-public class Januarytwentynineth2 {
+public class JanuaryThirtiethfirst2 {
     String Game;
     String Game2;
     String Game3;
     String Game4;
+    String Game4Explanation;
+    String Game4Genre;
+    String Game4Rull;
+    String Game4Producers;
+    String Game4Producers2;
+    String Game4Producers3;
+    String Game4MakePeriod;
+    String Game4MakePeriod2;
+    String Game4Sale;
     String Game5;
+    String Game5Explanation;
+    String Game5Genre;
+    String Game5Rull;
+    String Game5Producers;
+    String Game5Producers2;
+    String Game5Producers3;
+    String Game5MakePeriod;
+    String Game5MakePeriod2;
+    String Game5Sale;
 
-    Januarytwentynineth2(String Game, String Game2, String Game3, String Game4, String Game5) {
+    JanuaryThirtiethfirst2(String Game, String Game2, String Game3,String Game4,String Game5,String Game4Explanation,String Game4Genre,String Game4Rull,String Game4Producers,String Game4Producers2,String Game4Producers3,String Game4MakePeriod,String Game4MakePeriod2,String Game4Sale,String Game5Explanation,String Game5Genre,String Game5Rull,String Game5Producers,String Game5Producers2,String Game5Producers3,String Game5MakePeriod,String Game5MakePeriod2,String Game5Sale) {
         this.Game = Game;
         this.Game2 = Game2;
         this.Game3 = Game3;
         this.Game4 = Game4;
+        this.Game4Explanation = Game4Explanation;
+        this.Game4Genre = Game4Genre;
+        this.Game4Rull = Game4Rull;
+        this.Game4Producers = Game4Producers;
+        this.Game4Producers2 = Game4Producers2;
+        this.Game4Producers3 = Game4Producers3;
+        this.Game4MakePeriod = Game4MakePeriod;
+        this.Game4MakePeriod2 = Game4MakePeriod2;
+        this.Game4Sale = Game4Sale;
         this.Game5 = Game5;
+        this.Game5Explanation = Game5Explanation;
+        this.Game5Genre = Game5Genre;
+        this.Game5Rull = Game5Rull;
+        this.Game5Producers = Game5Producers;
+        this.Game5Producers2 = Game5Producers2;
+        this.Game5Producers3 = Game5Producers3;
+        this.Game5MakePeriod = Game5MakePeriod;
+        this.Game5MakePeriod2 = Game5MakePeriod2;
+        this.Game5Sale = Game5Sale;
     }
-
     void GameMainList() {
         //전체 게임리스트 출력
         System.out.println("\n========게임 기획서========\n1." + Game + "\n2." + Game2 + "\n3." + Game3 + "\n4." + Game4 + "\n5." + Game5 + "\n6.시스템종료\n==========================");
@@ -119,60 +154,11 @@ public class Januarytwentynineth2 {
     String Game3Sale() {
         return "예상 매출액은 게임시장을 고려하여 약 750만원";
     }
-
     void Game4ListExplanation() {
-        //4번 게임 기획서 출력
-        System.out.println("1.게임 제목 : " + Game4 + " \n2.게임 설명 : " + Game4Explanation() + " \n3.게임 장르 : " + Game4Genre() + " \n4.게임 플레이 방식 : " + Game4Rull() + " \n5.게임 제작자 : " + Game4Producers() + " \n6.게임 제작기간 : " + Game4MakePeriod() + " \n7.게임 예상 매출액 : " + Game4Sale() + "");
-    }
-    String Game4Explanation() {
-        return "본 게임은 주어진 트랙안에서 상대방과 주어진 자동차로 경주는를 하여 결승전에 먼저 통과하는 플레이어가 승리하는 게임입니다";
-    }
-
-    String Game4Genre() {
-        return "레이싱";
-    }
-
-    String Game4Rull() {
-        return "\n①.두 참가자는 제한시간 없이 필드에 주어진 트랙을 먼저 완주하는 플레이어가 승리하는 구조입니다 \n②.역주행은 할 수 없으며 드리프트를 사용하여 부스트를 사용하기위한 게이지를 모을 수 있습니다";
-    }
-
-    String Game4Producers() {
-        return "게임 제작자 : 박현주,최현우";
-    }
-
-    String Game4MakePeriod() {
-        return "게임 제작기간 : 2022.11.21 ~ 2023.1.2";
-    }
-
-    String Game4Sale() {
-        return "예상 매출액은 게임시장을 고려하여 약 1100만원";
+        System.out.println("1.게임 제목 : " + Game4 + " \n2.게임 설명 : " + Game4Explanation + " \n3.게임 장르 : " + Game4Genre + " \n4.게임 플레이 방식 : " + Game4Rull + " \n5.게임 제작자 : " + Game4Producers + " " + Game4Producers2 + " " + Game4Producers3 + " \n6.게임 제작기간 : " + Game4MakePeriod + " " + Game4MakePeriod2 + " \n7.게임 예상 매출액 : " + Game4Sale + "");
     }
 
     void Game5ListExplanation() {
-        //5번 게임 기획서 출력
-        System.out.println("1.게임 제목 : " + Game5 + " \n2.게임 설명 : " + Game5Explanation() + " \n3.게임 장르 : " + Game5Genre() + " \n4.게임 플레이 방식 : " + Game5Rull() + " \n5.게임 제작자 : " + Game5Producers() + " \n6.게임 제작기간 : " + Game5MakePeriod() + " \n7.게임 예상 매출액 : " + Game5Sale() + "");
-    }
-    String Game5Explanation() {
-        return "본 게임은 아군5명과 상대5명이 대결하며 상대의 기지 본체를 먼저 파괴하는 팀이 승리하는 팀전게임입니다";
-    }
-
-    String Game5Genre() {
-        return "AOS";
-    }
-
-    String Game5Rull() {
-        return "\n①.5:5참가자가 참가하여 제한시간이 없는 필드로 이동합니다 \n②.필드에 주어진 필드몬스터를 사냥해서 골드를 흭득하거나 상대방을 쓰러트려 레벨업과 아이템을 구매 할 수 있습니다 \n③.각각의 장비를 맞추고 상대방을 쓰러트려 상대 기지의 포탑을 모두 제거 후 본체를 먼저 파괴하는 팀이 승리합니다";
-    }
-
-    String Game5Producers() {
-        return "게임 제작자 : 공민혁,최종유,김영현,백민지";
-    }
-
-    String Game5MakePeriod() {
-        return "게임 제작기간 : 2022.11.21 ~ 2023.3.5";
-    }
-
-    String Game5Sale() {
-        return "예상 매출액은 게임시장을 고려하여 약 3천만원";
+        System.out.println("1.게임 제목 : " + Game5 + " \n2.게임 설명 : " + Game5Explanation + " \n3.게임 장르 : " + Game5Genre + " \n4.게임 플레이 방식 : " + Game5Rull + " \n5.게임 제작자 : " + Game5Producers + " " + Game5Producers2 + " " + Game5Producers3 + " \n6.게임 제작기간 : " + Game5MakePeriod + " " + Game5MakePeriod2 + " \n7.게임 예상 매출액 : " + Game5Sale + "");
     }
 }
