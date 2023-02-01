@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Februaryoneth {
+public class Februaryfirst {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String [] arr = new String[15];
