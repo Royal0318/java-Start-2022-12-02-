@@ -12,7 +12,7 @@ public class test {
         test.add(lee);
 
         for (test2 arr2 : test) {
-            arr2.dawd();
+            arr2.Information();
         }
     }
 }

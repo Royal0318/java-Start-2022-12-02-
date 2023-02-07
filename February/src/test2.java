@@ -8,7 +8,7 @@ public class test2 {
         this.Bolood = Bolood;
         this.address = address;
     }
-    void dawd () {
+    void Information () {
         System.out.println("이름 : "+Name+"");
         System.out.println("혈액형 : "+Bolood+"");
         System.out.println("주소 : "+address+"");
