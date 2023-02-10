@@ -12,6 +12,7 @@ public class InputOutputsol {
         int FoodPrice5 = sc.nextInt();
         int FoodPrice6 = sc.nextInt();
         FoodNumber(FoodPrice, FoodPrice2, FoodPrice3, FoodPrice4, FoodPrice5, FoodPrice6);
+        System.out.println();
     }
 
     public static void FoodNumber(int FoodPrice, int FoodPrice2, int FoodPrice3, int FoodPrice4, int FoodPrice5, int FoodPrice6) {
