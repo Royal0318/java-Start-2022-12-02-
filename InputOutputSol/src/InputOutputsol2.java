@@ -4,7 +4,6 @@
 문구가 나오도록 작성하여라
  */
 import java.util.Scanner;
-
 public class InputOutputsol2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
