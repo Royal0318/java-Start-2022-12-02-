@@ -43,6 +43,7 @@
 	만약, 둘 중 하나라도 5번이 아니라면
 	잘못된 입력입니다! 라는 말이 나타나야 한다.
  */
+
 import java.util.Scanner;
 public class forwhile13 {
     public static void main(String[] args) {
