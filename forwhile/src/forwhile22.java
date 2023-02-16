@@ -1,16 +1,10 @@
 
 public class forwhile22 {
     public static void main(String[] args) {
-        int Totalchance = 3;
-        int Totalmoney = 0;
-        int Accountcheck = 0;
-        int[][] Foodnameofnumber = new int[3][2];
-        //index [0] = 장어덮밥
-        //index [1] = 옥수수콘
-        //index [2] = 감자튀김
-
-        forwhile23 test = new forwhile23(Totalchance,Totalmoney,Accountcheck,Foodnameofnumber);
-        forwhile23 test2 = new forwhile23();
-        test.Age();
+        int[][] Foodarrayindex = new int[3][2];
+        //횡렬인덱스가 0이면 전체적인 가격을 나타내며 1이면 음식의개수를 나타낸다
+        forwhile23 Object = new forwhile23(3,0,0,Foodarrayindex);
+        forwhile23 Emptyobject = new forwhile23();
+        Object.Ageinput();
     }
 }
