@@ -5,11 +5,15 @@ public class forwhile38 {
         Scanner sc = new Scanner(System.in);
         int Count = 0;
         int Controlsavenumber = 0;
+        int Sequentialoutputcount = 0;
         int Peopletotalmoney = 0; //가지고있는돈 - 사용한돈
+        int[] Defttotalsum = new int[15]; //전체 빚진금액
+        int[] Borrowtotalsum = new int[15]; //전체 빌려준금액
+        int[] Paybacktotalsum = new int[15]; //전체 갚은금액
+        int[] Originalamount = new int[15]; //모든 사람이 가지고 있는 원래의 돈을 저장하는 배열
         int[][] MoneyandFoodnumber = new int[15][6]; //15명의사람이 총 5가지의 음식개수를 기억하도록함
         int[][] Deft = new int[15][15]; //빚진금액
         int[][] Borrowmoney = new int[15][15]; //빌려준금액
-        int[] Originalamount = new int[15]; //모든 사람이 가지고 있는 원래의 돈을 저장하는 배열
         //횡렬 1번 = 과자개수
         //2번 = 빵개수
         //3번 = 과일개수
@@ -98,19 +102,30 @@ public class forwhile38 {
                         if (Borrowchoice == 1) {
                             System.out.println("얼마를 빌리시겠습니까?");
                             int Borrowmoneyinput = sc.nextInt();
+
+                            Defttotalsum[i] += Borrowmoneyinput; //i번째 사람이 빚지고있는 전체금액
+                            Borrowtotalsum[i + 1 + BorrowOrdercheck] += Borrowmoneyinput; //빌려준사람이 얼마나 빌려줬는지 체크
                             MoneyandFoodnumber[i][0] += Borrowmoneyinput; //빌리는사람은 돈이 증가하며
-                            Deft[i][i + 1 + BorrowOrdercheck] += Borrowmoneyinput; //빌리는사람은 누구에게 빚이있는지 기억하는 배열
                             MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0] -= Borrowmoneyinput; //빌려주는사람은 돈을 차감한다
-                            Borrowmoney[i + BorrowOrdercheck][i] += Borrowmoneyinput; // 빌려주는사람은 누구에게 빌려줬는지 체크
+                            Deft[i][i + 1 + BorrowOrdercheck] += Borrowmoneyinput; //빌리는사람은 누구에게 빚이있는지 기억하는 배열
+                            Borrowmoney[i + 1 + BorrowOrdercheck][i] += Borrowmoneyinput; // 빌려주는사람은 누구에게 빌려줬는지 체크
 
                             if (Borrowmoneyinput > MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0]) {
                                 System.out.println("다음 사람이 가지고 있는 잔액보다 많이 빌릴 수 없습니다 다음사람 잔액 : " + MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0] + "원");
+                                Defttotalsum[i] -= Borrowmoneyinput;
+                                Borrowtotalsum[i + 1 + BorrowOrdercheck] -= Borrowmoneyinput;
                                 MoneyandFoodnumber[i][0] -= Borrowmoneyinput;
                                 MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0] += Borrowmoneyinput;
+                                Deft[i][i + 1 + BorrowOrdercheck] -= Borrowmoneyinput;
+                                Borrowmoney[i + 1 + BorrowOrdercheck][i] -= Borrowmoneyinput;
                             } else if (Borrowmoneyinput < MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0] && MoneyandFoodnumber[i][0] < 0) {
                                 System.out.println("돈이 부족합니다 다시 입력해주세요");
+                                Defttotalsum[i] -= Borrowmoneyinput;
+                                Borrowtotalsum[i + 1 + BorrowOrdercheck] -= Borrowmoneyinput;
                                 MoneyandFoodnumber[i][0] -= Borrowmoneyinput;
                                 MoneyandFoodnumber[i + 1 + BorrowOrdercheck][0] += Borrowmoneyinput;
+                                Deft[i][i + 1 + BorrowOrdercheck] -= Borrowmoneyinput;
+                                Borrowmoney[i + 1 + BorrowOrdercheck][i] -= Borrowmoneyinput;
                             } else {
                                 System.out.println("돈을 " + Borrowmoneyinput + "원을 빌려 총 " + MoneyandFoodnumber[i][0] + "원이 되었습니다 추가적으로 빌리겠습니까?  1.Yes 2.No");
                                 int Plusborrowchoice = sc.nextInt();
@@ -187,12 +202,13 @@ public class forwhile38 {
                         System.out.println("얼마를 갚겠습니까? " + (Paybackpeoplechoice + 1) + "번째 손님에게 빌린 금액 : " + Deft[i][Paybackpeoplechoice] + "원");
                         int Paybackmoney = sc.nextInt();
 
-                        if (Deft[i][Paybackpeoplechoice] == Paybackmoney) {
+                        if (Deft[i][Paybackpeoplechoice] >= Paybackmoney) {
                             Deft[i][Paybackpeoplechoice] -= Paybackmoney;
                             Borrowmoney[Paybackpeoplechoice][i] -= Paybackmoney;
                             MoneyandFoodnumber[i][0] -= Paybackmoney;
                             MoneyandFoodnumber[Paybackpeoplechoice][0] += Paybackmoney;
-                            System.out.println("돈을 갚았습니다");
+                            Paybacktotalsum[i] -= Paybackmoney;
+                            System.out.println("돈을 성공적으로 갚았습니다 해당 손님에게 남은 빚 : "+Deft[i][Paybackpeoplechoice]+"원\n");
                             break;
                         } else {
                             System.out.println("잘못된 입력입니다");
@@ -200,6 +216,7 @@ public class forwhile38 {
                     } else {
                         System.out.println("돈을 빌린내역이 없습니다");
                         i--;
+                        break;
                     }
                 }
             }
@@ -207,8 +224,10 @@ public class forwhile38 {
                 for (int j = 0; j < 15; j++) {
                     if (MoneyandFoodnumber[j][1] == 0 && MoneyandFoodnumber[j][2] == 0 && MoneyandFoodnumber[j][3] == 0 && MoneyandFoodnumber[j][4] == 0 && MoneyandFoodnumber[j][5] == 0) {
                         continue;
+                    } else {
+                        Sequentialoutputcount += 1;
                     }
-                    System.out.println("==================" + (j + 1) + "번째 손님의 주문서==================");
+                    System.out.println("=================" + Sequentialoutputcount + "번째 손님의 주문서================");
                     if (MoneyandFoodnumber[j][1] >= 1) {
                         System.out.println("과자 X " + MoneyandFoodnumber[j][1] + "개 = " + (MoneyandFoodnumber[j][1] * 1300) + "원");
                     }
@@ -224,12 +243,15 @@ public class forwhile38 {
                     if (MoneyandFoodnumber[j][5] >= 1) {
                         System.out.println("술 X " + MoneyandFoodnumber[j][5] + "개 = " + (MoneyandFoodnumber[j][5] * 10000) + "원");
                     }
-                    System.out.println("======================================================================");
-                    System.out.println("원래 가지고 있는 금액 : " + Originalamount[i] + "원");
-                    System.out.println("빌려준  금액 : " + (Originalamount[i] - MoneyandFoodnumber[i][0]) + "원");
-                    System.out.println("빚진금액 : " + (MoneyandFoodnumber[i][0] - Originalamount[i]) + "원");
-                    System.out.println("빚을 청산하고 남은 금액 : " + (MoneyandFoodnumber[i][0] - Originalamount[i]) + "원");
+                    System.out.println("=================================================");
+                    System.out.println("처음에 가지고 있던 금액 : " + Originalamount[i] + "원");
+                    System.out.println("현재 가지고 있는 금액 : "+MoneyandFoodnumber[i][0]+"원");
+                    System.out.println("전체 빌려준  금액 : " + Borrowtotalsum[i] + "원");
+                    System.out.println("전체 빚진금액 : " + Defttotalsum[i] + "원");
+                    System.out.println("빚을 청산하고 남은 금액 : " + (Defttotalsum[i] - Paybacktotalsum[i]) + "원");
+                    System.out.println("=================================================");
                 }
+                Sequentialoutputcount = 0;
             }
             if (Count == 6) {
                 System.out.println("몇번째 손님을 제어하시겠습니까?");
