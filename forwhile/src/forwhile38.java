@@ -219,6 +219,7 @@ public class forwhile38 {
                     }
                 }
             }
+            System.out.println();
             if (Count == 5) {
                 for (int j = 0; j < 15; j++) {
                     if (MoneyandFoodnumber[j][1] == 0 && MoneyandFoodnumber[j][2] == 0 && MoneyandFoodnumber[j][3] == 0 && MoneyandFoodnumber[j][4] == 0 && MoneyandFoodnumber[j][5] == 0) {
