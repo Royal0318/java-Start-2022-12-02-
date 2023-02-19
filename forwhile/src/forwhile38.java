@@ -7,12 +7,11 @@ public class forwhile38 {
         int Rememberinumber = 0; //제어를 들어가기전 현재i값을 저장하는 변수
         int iControler = 0; //제어를 할때 i값을 변환시킬수 있도록 도와주는 보조변수
         int Sequentialoutputcount = 0; //물건을 구매한 손님의 순서만출력되도록 count해주는 변수
-        int Peopletotalmoney = 0; //가지고있는돈 - 사용한돈
         int[] Defttotalsum = new int[15]; //전체 빚진금액
         int[] Borrowtotalsum = new int[15]; //전체 빌려준금액
         int[] Paybacktotalsum = new int[15]; //전체 갚은금액
         int[] Originalamount = new int[15]; //모든 사람이 가지고 있는 원래의 돈을 저장하는 배열
-        int[][] MoneyandFoodnumber = new int[15][6]; //15명의사람이 총 5가지의 음식개수를 기억하도록함
+        int[][] MoneyandFoodnumber = new int[15][6]; //15명의사람이 총 5가지의 음식개수를 기억하도록함 [i][0]은 전체적인 가격
         int[][] Deftmoney = new int[15][15]; //빚진금액
         int[][] Borrowmoney = new int[15][15]; //빌려준금액
         //횡렬 1번 = 과자개수
@@ -38,8 +37,6 @@ public class forwhile38 {
                 System.out.println("돈은 최소 1원부터 입력 가능합니다");
                 MoneyandFoodnumber[i][0] = 0;
                 i--;
-            } else {
-                Peopletotalmoney += MoneyandFoodnumber[i][0];
             }
         }
         for (int i = 0;i < 15;i++) {
@@ -47,7 +44,7 @@ public class forwhile38 {
         }
         System.out.println("<<<모든 사람의 돈 입력이 완료되었습니다>>>");
 
-        for (int i = 0; i < 14; i = iControler) {
+        for (int i = 0; i < 15; i = iControler) {
             int Foodorderpricesave = 0; //가격 저장
             int BorrowOrdercheck = 0; //계속빌리는경우 체크가 올라가서 다음사람 다다음사람에게 빌리도록함
             if (Controlconditionscheck == 0) {
@@ -210,16 +207,16 @@ public class forwhile38 {
                         System.out.println("얼마를 갚겠습니까? " + (Paybackpeoplechoice + 1) + "번째 손님에게 빌린 금액 : " + Deftmoney[i][Paybackpeoplechoice] + "원");
                         int Paybackmoney = sc.nextInt();
 
-                        if (Deftmoney[i][Paybackpeoplechoice] >= Paybackmoney && MoneyandFoodnumber[i][0] > Paybackmoney) {
+                        if (Deftmoney[i][Paybackpeoplechoice] >= Paybackmoney && MoneyandFoodnumber[i][0] >= Paybackmoney) {
                             Deftmoney[i][Paybackpeoplechoice] -= Paybackmoney;
                             Borrowmoney[Paybackpeoplechoice][i] -= Paybackmoney;
                             MoneyandFoodnumber[i][0] -= Paybackmoney;
                             MoneyandFoodnumber[Paybackpeoplechoice][0] += Paybackmoney;
-                            Paybacktotalsum[i] -= Paybackmoney;
+                            Paybacktotalsum[i] += Paybackmoney;
                             System.out.println("돈을 성공적으로 갚았습니다 해당 손님에게 남은 빚 : "+Deftmoney[i][Paybackpeoplechoice]+"원\n");
                             iControler -= 1;
                             break;
-                        } else {
+                        }  else {
                             System.out.println("갚는돈이 더 많거나 자신이 가지고있는 금액을 초과해서 갚을 수 없습니다");
                         }
                     } else {
@@ -268,6 +265,9 @@ public class forwhile38 {
                 Count = 0;
             }
         }
-        System.out.println("전체 손님의 남은돈은 총 "+Peopletotalmoney+"원 입니다");
+        for (int i = 1;i < 15;i++) {
+            MoneyandFoodnumber[0][0] += MoneyandFoodnumber[i][0];
+        }
+        System.out.println("전체 손님의 남은돈은 총 "+ MoneyandFoodnumber[0][0]+"원 입니다");
     }
 }
