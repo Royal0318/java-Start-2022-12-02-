@@ -208,7 +208,7 @@ public class forwhile40 {
     }
     void foodOrderComplete (int buyFoodIndexNumber,int buyFoodNumber,Scanner sc) {
         //주문을 완료한경우 주문한 음식의 개수가 증가하며 메뉴로 다시 리턴된다
-        foodBuyNumber[i][buyFoodIndexNumber] += buyFoodNumber; //i번째 사람이 구매한 음식의 개수를 1개 저장한다
+        foodBuyNumber[i][buyFoodIndexNumber] += buyFoodNumber;
         System.out.println("주문이 성공적으로 완료되었습니다");
         selectMenu(sc);
     }
@@ -221,27 +221,40 @@ public class forwhile40 {
         System.out.println("어떤 음식을 환불하시겠습니까?");
         System.out.println("1.과자 : "+foodBuyNumber[i][0]+"개 \n2.빵 : "+foodBuyNumber[i][1]+"개 \n3.음료수 : "+foodBuyNumber[i][2]+"개 \n4.과일 : "+foodBuyNumber[i][3]+"개 \n5.술 : "+foodBuyNumber[i][4]+"개");
         int refundListChoice = sc.nextInt();
+        System.out.println("환불 개수를 입력해주세요");
+        int refundFoodNumber = sc.nextInt();
 
         switch (refundListChoice) {
             case 1 :
-                refundComplete (0,1200,sc);
+                refundComplete (0,1200,sc,refundFoodNumber);
                 break;
             case 2 :
-                refundComplete (1,1000,sc);
+                refundComplete (1,1000,sc,refundFoodNumber);
                 break;
             case 3 :
-                refundComplete (2,1500,sc);
+                refundComplete (2,1500,sc,refundFoodNumber);
                 break;
             case 4 :
-                refundComplete (3,2500,sc);
+                refundComplete (3,2500,sc,refundFoodNumber);
                 break;
             case 5 :
-                refundComplete (4,8000,sc);
+                refundComplete (4,8000,sc,refundFoodNumber);
                 break;
             default:
                 System.out.println("잘못된 입력입니다");
                 refundMenu(sc);
                 break;
+        }
+    }
+    void refundComplete (int foodIndexNumber,int foodPrice,Scanner sc,int refundFoodNumber) {
+        if (foodBuyNumber[i][foodIndexNumber] < refundFoodNumber) {
+            System.out.println("수량을 다시 확인해주세요");
+            nextPeople(sc);
+        } else {
+            foodBuyNumber[i][foodIndexNumber] -= refundFoodNumber; //환불을 완료했으므로 해당 음식의 개수는 차감
+            personalMoney[i] += (foodPrice * refundFoodNumber); //환불하였으므로 음식가격을 전체가격에 누적시킨다
+            System.out.println(""+(foodPrice * refundFoodNumber)+"원을 돌려받았으며 환불이 완료되었습니다");
+            selectMenu(sc);
         }
     }
     void nextPeople (Scanner sc) {
@@ -291,17 +304,6 @@ public class forwhile40 {
         additionalIndex = 1;
         //다음손님으로 넘기면 다시 다음사람에게 돈을 빌리도록 초기화시킨다
         shuttingSystemcheck(sc); //전체적인 출력이끝나면 메인메뉴로 돌아간다
-    }
-    void refundComplete (int foodIndexNumber,int foodPrice,Scanner sc) {
-        if (foodBuyNumber[i][foodIndexNumber] == 0) {
-            System.out.println("수량을 다시 확인해주세요");
-            nextPeople(sc);
-        } else {
-            foodBuyNumber[i][foodIndexNumber] -= 1; //환불을 완료했으므로 해당 음식의 개수는 차감
-            personalMoney[i] += foodPrice; //환불하였으므로 음식가격을 전체가격에 누적시킨다
-            System.out.println(""+foodPrice+"원을 돌려받았으며 환불이 완료되었습니다");
-            selectMenu(sc);
-        }
     }
     void paybackPeopleChoice (Scanner sc) {
         if (personalMoney[i] == 0) {
