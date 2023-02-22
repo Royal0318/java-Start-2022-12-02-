@@ -66,13 +66,6 @@ public class forwhile40 {
     }
     void selectMenu (Scanner sc) {
         //모든 손님이 물건을 골랐을때 종료조건이 되므로 시스템 종료직전 for문으로 모든 손님의 돈을 index0에 저장함으로 써 프로그램을 종료시킨다
-        if (i == 14) {
-            for (int i = 0; i < 15; i++) {
-                personalMoney[0] += personalMoney[i];
-            }
-            System.out.println("시스템을 종료합니다 모든 손님들의 남은 돈은 " + personalMoney[0] + "원 입니다");
-            System.exit(0);
-        }
             System.out.println(""+(i + 1)+"번째 선택 남은잔액 : "+personalMoney[i]+"원");
             if (controlOnOffCheck == 0) {
                 System.out.println("1.과자[1200원] 2.빵[1000원] 3.음료수[1500원] 4.과일[2500원] 5.술[8000원] 6.다음손님 7.환불 8.시스템 종료 9.돈갚기 10.제어");
@@ -151,6 +144,7 @@ public class forwhile40 {
             //추기적으로 돈을 빌리는경우 빌리는 돈의 액수를 입력받는 메소드로 리턴시킨다
         } else if (borrowMenuChoice == 2) {
             personalMoney[i] += (foodPrice * buyFoodNumber);
+            System.out.println("추가로 돈을 빌리지 않았으므로 메인메뉴로 돌아갑니다");
             //돈을 빌리지 않는경우에는 미리 계산된 값을 반환하며 다시 고를수 있도록 메인메뉴로 리턴됩니다
         } else {
             personalMoney[i] += (foodPrice * buyFoodNumber);
@@ -166,25 +160,41 @@ public class forwhile40 {
         personalMoney[i] += borrowMoneyInput;
         //빌린돈을 i번째 사람의 전체 돈에 누적시켜 부족여부를 판단
 
-        if (personalMoney[i] < 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
-            System.out.println(""+(personalMoney[i] * -1)+"원이 부족합니다 돈을 더 빌리세요");
-            personalMoney[additionalIndex] -= borrowMoneyInput;
-            //돈을 빌려도 i번째 사람이 가지고있는 전체 돈이 음수인경우 이경우 추가적으로 빌려야한다
-        }
-        else if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] < borrowMoneyInput) {
-            System.out.println("다음사람이 가지고 있는 돈보다 초과하여 빌릴 수 없습니다");
-            personalMoney[i] -= borrowMoneyInput;
+        if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] < borrowMoneyInput) {
+            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,1);
             //돈을 빌리지만 다음사람이 가지고 있는 돈보다 더 많이 빌리는경우
         }
-        else if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
-            debtMoneyrecords[i][i + additionalIndex] += borrowMoneyInput;
-            //각 손님에게 빌린 돈을 저장하는 배열
-            personalBorrowMoney[i + additionalIndex] += borrowMoneyInput;
-            //몇번째 사람이 전체적으로 얼마를 빌려줬는지 누적받는 배열값
-            personalMoney[i + additionalIndex] -= borrowMoneyInput;
-            //돈을 빌려준 사람의 전체 금액에서 돈을 빌려준만큼 차감
-            personalDebt[i] += borrowMoneyInput;
-            //돈을 빌린사람의 전체적인 빚
+        if (personalMoney[i] < 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
+            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,2);
+        }
+        if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
+            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,3);
+        }
+    }
+    void borrowSystemcheck (Scanner sc,int buyFoodIndexNumber,int buyFoodNumber,int borrowMoneyInput,int borrowSystemindex) {
+        debtMoneyrecords[i][i + additionalIndex] += borrowMoneyInput;
+        //각 손님에게 빌린 돈을 저장하는 배열
+        personalBorrowMoney[i + additionalIndex] += borrowMoneyInput;
+        //몇번째 사람이 전체적으로 얼마를 빌려줬는지 누적받는 배열값
+        personalMoney[i + additionalIndex] -= borrowMoneyInput;
+        //돈을 빌려준 사람의 전체 금액에서 돈을 빌려준만큼 차감
+        personalDebt[i] += borrowMoneyInput;
+        //돈을 빌린사람의 전체적인 빚
+
+        if (borrowSystemindex == 1) {
+            System.out.println("다음사람이 가지고 있는 돈보다 초과하여 빌릴 수 없습니다");
+            personalMoney[i] -= borrowMoneyInput;
+            debtMoneyrecords[i][i + additionalIndex] -= borrowMoneyInput;
+            personalBorrowMoney[i + additionalIndex] -= borrowMoneyInput;
+            personalMoney[i + additionalIndex] += borrowMoneyInput;
+            personalDebt[i] -= borrowMoneyInput;
+            borrowMoneyInput(sc,buyFoodIndexNumber,buyFoodNumber);
+        }
+        else if (borrowSystemindex == 2) {
+            System.out.println(""+(personalMoney[i] * -1)+"원이 부족합니다 돈을 더 빌리세요");
+            additionalIndex += 1;
+        }
+        else {
             System.out.println(""+borrowMoneyInput+"원을 빌려 총 "+personalMoney[i]+"원이 되었습니다 추가적으로 빌리시겠습니까? 1.Yes 2.No");
             int addBorrowChoice = sc.nextInt();
 
@@ -280,7 +290,7 @@ public class forwhile40 {
         //해당 손님의 선택이 모두 끝나고 다음손님으로 넘어가기 위해 += 1을 부여
         additionalIndex = 1;
         //다음손님으로 넘기면 다시 다음사람에게 돈을 빌리도록 초기화시킨다
-        selectMenu(sc); //전체적인 출력이끝나면 메인메뉴로 돌아간다
+        shuttingSystemcheck(sc); //전체적인 출력이끝나면 메인메뉴로 돌아간다
     }
     void refundComplete (int foodIndexNumber,int foodPrice,Scanner sc) {
         if (foodBuyNumber[i][foodIndexNumber] == 0) {
@@ -340,19 +350,17 @@ public class forwhile40 {
         if (i == 0) {
             //제어를 하기 위해서는 최소 2번째 손님(index 1)부터 가능하므로 index 0번은 제어가 불가 다시 메인메뉴로 리턴한다
             System.out.println("최소 2번째 손님부터 가능합니다");
-            selectMenu(sc);
         }
         if (controlOnOffCheck == 1) {
             System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
-            selectMenu(sc);
         } else {
             System.out.println("몇번째 손님을 제어하시겠습니까?");
             int controlPeopleInput = sc.nextInt() - 1; //-1을 하는이유는 실제 손님은 index가 0에서 시작하기 때문이다
             controlIndexSave += i; //i값을 변경하기 전에 그 전 순서를 미리 저장하여 되돌아갈때 사용하기 위함
             i = controlPeopleInput;//해당손님으로 이동하기 위하여 i값을 변경
             controlOnOffCheck = 1; //제어가 켜져있는 상태 on
-            selectMenu(sc);
         }
+        selectMenu(sc);
     }
     void returnSequence (Scanner sc) {
         if (controlOnOffCheck == 1) {
@@ -366,5 +374,16 @@ public class forwhile40 {
             System.out.println("잘못된 입력입니다");
         }
         selectMenu(sc);
+    }
+    void shuttingSystemcheck (Scanner sc) {
+        if (i == 14) {
+            for (int i = 0; i < 15; i++) {
+                personalMoney[0] += personalMoney[i];
+            }
+            System.out.println("시스템을 종료합니다 모든 손님들의 남은 돈은 " + personalMoney[0] + "원 입니다");
+            System.exit(0);
+        } else {
+            selectMenu(sc);
+        }
     }
 }
