@@ -24,7 +24,7 @@ public class forwhile40 {
     int[] personalDebt;
     //각손님이 가지고 있는 빚의 총액
     int i;
-    //전체적인 for문의 index역할
+    //전체적인 손님순서를 대체
     int controlIndexSave;
     //제어를 사용할때 가장 마지막이였던 손님의 index번호를 저장해 이전손님으로 돌아갈때 사용
     int controlOnOffCheck;
@@ -66,6 +66,7 @@ public class forwhile40 {
         }
     }
     void selectMenu (Scanner sc) {
+        //메인 선택 메뉴
             System.out.println(""+(i + 1)+"번째 선택 남은잔액 : "+personalMoney[i]+"원");
             if (controlOnOffCheck == 0) {
                 //제어중인 상태가 아닌경우는 10번까지만 출력된다
@@ -78,8 +79,7 @@ public class forwhile40 {
 
             switch (foodMenuChoice) {
                 /*
-                각각의 음식을 주문했을경우에 음식의가격과 음식의 고유 indx번호 그리고 돈을 계속빌릴경우
-                손님의 index는 고정되고 빌려주는 사람은 1씩 추가되어야하므로 Additionalindex를 사용하였다
+                1번부터 5번까지 음식을 주문한 경우 numberFoodPurchases(음식가격,음식index번호,Scanner sc를 리턴한다)
                  */
                 case 1 :
                     numberFoodPurchases(1200,0,sc);
@@ -132,13 +132,13 @@ public class forwhile40 {
         System.out.println("몇개를 구매하시겠습니까?");
         int buyFoodNumber = sc.nextInt();
 
-        if (personalMoney[i] < (foodPrice * buyFoodNumber)) {
-            //돈이 부족한경우 돈을 빌리는 메소드로 리턴
-            borrowMoneyAskMenu(foodPrice,buyFoodNumber,sc,buyFoodIndexNumber);
-        } else {
+        if (personalMoney[i] >= (foodPrice * buyFoodNumber)) {
             personalMoney[i] -= (foodPrice * buyFoodNumber);
             //주문이 성공적으로 된 경우 Foodordercomplete메소드로 리턴하고 i번째 사람이 가지고 있는 돈은 (주문한 음식개수 X 가격)만큼 차감되어 계산된다
             foodOrderComplete(buyFoodIndexNumber,buyFoodNumber,sc);
+        } else {
+            //돈이 부족한경우 돈을 빌리는 메소드로 리턴
+            borrowMoneyAskMenu(foodPrice,buyFoodNumber,sc,buyFoodIndexNumber);
         }
     }
     void borrowMoneyAskMenu (int foodPrice,int buyFoodNumber,Scanner sc,int buyFoodIndexNumber) {
@@ -173,8 +173,7 @@ public class forwhile40 {
         if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] < borrowMoneyInput) {
             borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,1);
             //돈을 빌리지만 다음사람이 가지고 있는 돈보다 더 많이 빌리는경우이며 borrowSystemindex에 숫자를 넣어 각 메뉴를 실행하도록 설계
-        }
-        if (personalMoney[i] < 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
+        } else {
             borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,2);
             /*
             돈이 부족하여 돈을 빌렸지만 아직까지 추가적으로 빌려야 하는 상황일때 다시 borrowMoneyInput로 돌아와 돈을 빌린다 계속빌릴때
@@ -271,17 +270,18 @@ public class forwhile40 {
     }
     void refundComplete (int foodIndexNumber,int foodPrice,Scanner sc,int refundFoodNumber) {
         //환불여부를 결정하는 메소드
-        if (foodBuyNumber[i][foodIndexNumber] < refundFoodNumber) {
-            //가지고 있는 음식의 개수가 환불하는 수량보다 부족할경우
-            System.out.println("수량을 다시 확인해주세요");
-            nextPeople(sc);
-        } else {
+        if (foodBuyNumber[i][foodIndexNumber] > refundFoodNumber) {
+            //가지고 있는 음식의 개수가 환불하는 개수보다 많이 남은경우
             foodBuyNumber[i][foodIndexNumber] -= refundFoodNumber;
             //환불을 완료했으므로 해당 음식의 개수는 차감
             personalMoney[i] += (foodPrice * refundFoodNumber);
             //환불하였으므로 i번째 사람이 가지고 있는 전체 돈에 추가
             System.out.println(""+(foodPrice * refundFoodNumber)+"원을 돌려받았으며 환불이 완료되었습니다");
             selectMenu(sc);
+        } else {
+            //가지고 있는 음식의 개수가 환불하는 수량보다 부족할경우
+            System.out.println("수량을 다시 확인해주세요");
+            nextPeople(sc);
         }
     }
     void nextPeople (Scanner sc) {
@@ -290,10 +290,10 @@ public class forwhile40 {
             System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
             selectMenu(sc);
         }
-        int outputOrder = 0;
+        int outputTemp = 0;
         /*
-        outputOrder는 food를 아무것도 구매하지 않고 다음손님으로 넘어갈때 출력되는것을 방지하기 위한 변수이며 아무것도 구매하지 않은 j값은
-        continue문을 통해 출력되지 않으며 그 이외에 food를 구매한경우 outputOrder 변수에 1씩 누적되어 순서대로 출력이 가능하도록 구현
+        outputTemp는 food를 아무것도 구매하지 않고 다음손님으로 넘어갈때 출력되는것을 방지하기 위한 변수이며 아무것도 구매하지 않은 j값은
+        continue문을 통해 출력되지 않으며 그 이외에 food를 구매한경우 outputTemp 변수에 1씩 누적되어 순서대로 출력이 가능하도록 구현
          */
         for (int j = 0; j < 15;j++) {
             if (foodBuyNumber[j][0] == 0 && foodBuyNumber[j][1] == 0 && foodBuyNumber[j][2] == 0 && foodBuyNumber[j][3] == 0 && foodBuyNumber[j][4] == 0) {
@@ -303,9 +303,9 @@ public class forwhile40 {
                 Outputorder변수를 통해 순서대로 출력되도록 만들었다
                  */
             } else {
-                outputOrder += 1;
+                outputTemp += 1;
             }
-            System.out.println("==================="+outputOrder+"번째 손님의 주문표===================");
+            System.out.println("==================="+outputTemp+"번째 손님의 주문표===================");
             if (foodBuyNumber[j][0] >= 1) { //과자를 구매한 개수가 1개이상일경우 출력
                 System.out.println("과자 X "+foodBuyNumber[j][0]+"개 = "+(foodBuyNumber[j][0] * 1200)+"원");
             }
@@ -338,45 +338,50 @@ public class forwhile40 {
     }
     void paybackPeopleChoice (Scanner sc) {
         //특정 사람에게 빌린 돈을 갚기위한 메소드
-        if (personalMoney[i] == 0) {
+        if (personalMoney[i] != 0) {
+            System.out.println("몇번째 손님에게 갚겠습니까?");
+            int payBackPeople = sc.nextInt() - 1;
+            //실제 입력하는 손님의 번호와 index와 차이가 존재하므로 -1 을 적용
+
+            if (debtMoneyrecords[i][payBackPeople] != 0 || payBackPeople != i) {
+                //돈을 갚는 손님에게 존재하는 빚이 있거나 또는 입력한 값이 자신을 입력한 경우가 아닌경우 정상적으로 리턴된다
+                paybackMoneyInputMenu(payBackPeople,sc);
+            } else {
+                System.out.println("돈을 빌린 내역이 없거나 자신에게 갚을 수 없습니다");
+                selectMenu(sc);
+                //자신에게 갚으려고 하거나 payBackPeople 번째 손님에게 돈을 빌린 내역이 없는경우 다시 메인메뉴로 리턴
+            }
+        } else {
             //돈갚기 메소드에 진입했을때 i번째 사람이 가지고 있는 돈의액수가 0원일때 돈을 갚을수 없으므로 다시 메인메뉴로 리턴된다
             System.out.println("현재 가지고 있는 돈이 없으므로 돈을 갚을 수 없습니다");
             selectMenu(sc);
         }
-        System.out.println("몇번째 손님에게 갚겠습니까?");
-        int payBackPeople = sc.nextInt() - 1;
-
-        if (debtMoneyrecords[i][payBackPeople] == 0 || payBackPeople == i) {
-            System.out.println("돈을 빌린 내역이 없거나 자신에게 갚을 수 없습니다");
-            selectMenu(sc);
-            //자신에게 갚으려고 하거나 payBackPeople 번째 손님에게 돈을 빌린 내역이 없는경우 다시 메인메뉴로 리턴
-        } else {
-            paybackMoneyInputMenu(payBackPeople,sc);
-        }
     }
     void paybackMoneyInputMenu (int payBackPeople,Scanner sc) {
         //빚을 갚는돈을 입력하는 메소드
+        //여기부분 간략하게 고쳐보자
         System.out.println("얼마를 갚겠습니까? "+(payBackPeople + 1)+"번째 사람에게 빌린 돈 : "+debtMoneyrecords[i][payBackPeople]+"원");
         int payBackMoneyInput = sc.nextInt();
+
         personalMoney[i] -= payBackMoneyInput;
-        //i번째 사람이 돈을 갚으므로 전체 가지고 있는돈에서 payBackMoneyInput의 값만큼 차감
+        //돈을 갚는 i번째 손님은 전체돈에서 차감
         personalMoney[payBackPeople] += payBackMoneyInput;
-        //i번째 사람이 돈을 갚고 payBackPeople번째 사람이 받으므로 payBackPeople번째 사람이 가지고 있는 전체 돈에서 payBackMoneyInput만큼 추가한다
+        //빌려준 돈을 받는 payBackPeople번째 손님은 전체돈에서 추가
 
         if (debtMoneyrecords[i][payBackPeople] >= payBackMoneyInput && personalMoney[i] >= 0) {
-            //i가 payBackPeople에게 돈을 갚을때 payBackMoneyInput 보다 작거나 같고 갚는사람의 돈이 음수가 되지 않으면 성립
+            //i번째 손님이 payBackPeople손님에게 돈을 갚을때 초과되어 돈을 갚지 않았으며 && 돈을 갚은 i번째 사람이 가지고 있는돈은 0보다 커야한다는 조건이 일치할경우
             debtMoneyrecords[i][payBackPeople] -= payBackMoneyInput;
             //조건이 성립되면  debtMoneyrecords[i][payBackPeople]에 빚이 누적되어있으므로 payBackMoneyInput 갚만큼 차감해서 빚을 정산한다
             personalBorrowMoney[payBackPeople] -= payBackMoneyInput;
             //payBackPeople번째 사람은 빌려준 금액에서 payBackMoneyInput 갚만큼 차감한다
             personalPaybackMoney[i] += payBackMoneyInput;
-            //i번째 사람이 갚은 돈을 기록한다 빚을 청산하고 남은 금액을 계산하기 위해서 사용함
+            //i번째 사람이 전체적으로 갚은 돈을 누적한다 이 변수는 다음 손님으로 넘어갈때 출력으로 사용하기 위함
             System.out.println(""+payBackMoneyInput+"원을 정상적으로 갚았습니다 남은 빚 : "+debtMoneyrecords[i][payBackPeople]+"원");
             selectMenu(sc);
         } else {
+            System.out.println("빌린 금액을 정확히 확인해주세요");
             personalMoney[i] += payBackMoneyInput;
             personalMoney[i + payBackPeople] -= payBackMoneyInput;
-            System.out.println("빌린 금액을 정확히 확인해주세요");
             paybackMoneyInputMenu(payBackPeople,sc);
             //재입력을 위해 다시 payBackMoneyInput 값만큼 반환
         }
@@ -387,9 +392,7 @@ public class forwhile40 {
             //제어를 하기 위해서는 최소 2번째 손님(index 1)부터 가능하므로 index 0번은 제어가 불가 다시 메인메뉴로 리턴한다
             System.out.println("최소 2번째 손님부터 가능합니다");
         }
-        if (controlOnOffCheck == 1) {
-            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
-        } else {
+        if (controlOnOffCheck == 0) {
             System.out.println("몇번째 손님을 제어하시겠습니까?");
             int controlPeopleInput = sc.nextInt() - 1;
             //-1을 하는이유는 실제 손님은 배열에서 index 0부터 시작하기 때문
@@ -399,10 +402,13 @@ public class forwhile40 {
             //해당손님으로 이동하기 위하여 i값을 변경
             controlOnOffCheck = 1;
             //제어가 켜져있는 상태 on
+        } else {
+            System.out.println("이전 손님으로 돌아갈 수 밖에 없습니다");
         }
         selectMenu(sc);
     }
     void returnSequence (Scanner sc) {
+        //이전 손님으로 돌아가기
         if (controlOnOffCheck == 1) {
             //제어상태가 on인경우
             i = controlIndexSave;
