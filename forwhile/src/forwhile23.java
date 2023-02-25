@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class forwhile23 {
     int givenChance;
-    //각 개인정보를 입력할때 틀리게 입력했을경우 차감되는 전체 기회변수
+    //각 개인정보를 입력할때 틀리게 입력했을경우 차감되는 전체 기회변수 초기의 기회 3회
     int totalAmountMoney;
     //전체 가지고 있는 돈의 액수를 담고있는 변수
     int accountInquirycheck;
@@ -10,7 +10,11 @@ public class forwhile23 {
     계좌조회를 하려는경우 givenChance 가 차감된다
      */
     int[][] totalFoodArr;
-    //전체 음식과 관련된 배열이다 횡렬인덱스가 0이면 전체적인 가격을 나타내며 1이면 음식의개수를 나타낸다
+    /*
+    전체 음식과 관련된 배열이다
+    int [?][0] totalFoodArr  = 음식의 가격을 나타내는 횡렬 index값
+    int [?][1] totalFoodArr  = 음식의 개수를 나타내는 횡렬 index값
+     */
     forwhile23 () {
 
     }
@@ -26,18 +30,18 @@ public class forwhile23 {
         System.out.println("나이를 입력해주세요 (입력제한 : 1 ~ 200세)");
         int age = sc.nextInt();
 
-        if (age < 1 || age > 200) {
-            System.out.println("나이를 다시 입력해주세요");
-            ageInput(sc);
-        } else {
+        if (age >= 1 && age <= 200) {
             System.out.println("귀하의 나이는 " + age + "세 입니다");
             genderInput(sc);
             //나이를 조건에 맞는 범위로 입력했을 경우 입력한 나이를 출력하며 성별을 입력하는 genderInput 메소드로 리턴됨
+        } else {
+            System.out.println("나이를 다시 입력해주세요");
+            ageInput(sc);
         }
     }
     void genderInput (Scanner sc) {
         //성별을 입력할 수 있는 메소드 String으로 성별을 받으며 예시에 나와있는 문자열을 벗어나면 다시 입력하도록 설정
-        System.out.println("성별을 적어주세요 예) 남 or 여,남자 or 여자");
+        System.out.println("성별을 적어주세요 예시1) 남 or 여, 예시2) 남자 or 여자");
         String gender = sc.next();
 
         if (gender.equals("남") || gender.equals("여") || gender.equals("남자") || gender.equals("여자")) {
@@ -56,7 +60,7 @@ public class forwhile23 {
 
         if (frontNumber >= 1000 && frontNumber < 10000) {
             phoneBackNumberInput(frontNumber,sc);
-            //번호를 정상적으로 입력시 phoneBackNumberInput 메소드로 리턴됨
+            //번호를 정상적으로 입력시 phoneBackNumberInput 메소드로 (전화번호 앞 4자리를 리턴보냄)
         } else {
             System.out.println("번호를 다시 입력해주세요");
             phoneFrontNumberInput(sc);
@@ -81,11 +85,10 @@ public class forwhile23 {
         System.out.println("주민등록번호 뒤 7자리를 입력해주세요 예시) 960318-1234567 --> 1234567");
         int pesonalNumber = sc.nextInt();
 
-        if (pesonalNumber > 10000 && pesonalNumber < 9999999) {
+        if (pesonalNumber >= 1000000 && pesonalNumber <= 9999999) {
             bankMenuSelect(sc);
             //정상적으로 입력되었을 시 은행프로그램 메소드로 리턴
-        }
-        if (pesonalNumber < 1000000 || pesonalNumber > 9999999) {
+        } else {
             inCorrectGuesses(sc);
             //주민등록번호가 조건에 맞지 않는경우 inCorrectGuesses 메소드로 리턴된다
         }
@@ -153,14 +156,16 @@ public class forwhile23 {
         if (accountInquirycheck == 0) {
             System.out.println("처음에는 계좌입금과 출금만 가능합니다");
             //은행프로그램에 최초 진입시 계좌조회는 불가능하며 입금과 출금만 가능하다
-        } else if (accountInquirycheck == 1) {
+        }
+        else if (accountInquirycheck == 1) {
             System.out.println("현재 잔액은 : " + totalAmountMoney + "원 입니다");
             accountInquirycheck = 2;
             /*
             입금이나 출금을 하고 난 이후에 계좌조회는 단 1회만 가능하다 그 이후 accountInquirycheck 변수에 2를 부여하여
             다시 계좌조회를 하려고 할때 기회를 1회 차감한다
              */
-        } else {
+        }
+        else {
             givenChance -= 1;
             if (givenChance >= 1) {
                 System.out.println("계좌조회는 1회만 가능합니다 남은기회 : " + givenChance + "회");
@@ -176,15 +181,16 @@ public class forwhile23 {
         System.out.println("입금 금액을 적어주세요");
         int depositMoney = sc.nextInt();
 
-        if (depositMoney < 1) {
-            System.out.println("최소 1원부터 입금 가능합니다");
-            moneyDepositInput(sc);
-            //입금금액을 1원 미만으로 적은경우에는 최소 1원부터 가능하기 때문에 다시 입력하도록 리턴한다
-        } else {
-            System.out.println("입금이 완료되었습니다 현재 잔액 : "+ (totalAmountMoney += depositMoney) +"원");
+        if (depositMoney >= 1) {
+            totalAmountMoney += depositMoney;
+            System.out.println("입금이 완료되었습니다 현재 잔액 : "+ totalAmountMoney +"원");
             accountInquirycheck = 1;
             bankMenuSelect(sc);
             //입금이 완료된경우에는 입금했던 금액을 totalAmountMoney에 전체잔액 변수에 누적 Accountinquirycount 변수에 1을 부과하여 계좌조회를 1회만 허용되도록한다
+        } else {
+            System.out.println("최소 1원부터 입금 가능합니다");
+            moneyDepositInput(sc);
+            //입금금액을 1원 미만으로 적은경우에는 최소 1원부터 가능하기 때문에 다시 입력하도록 리턴한다
         }
     }
     void withDrawlInput (Scanner sc) {
@@ -192,14 +198,15 @@ public class forwhile23 {
         System.out.println("출금 금액을 적어주세요");
         int withDrawMoney = sc.nextInt();
 
-        if (totalAmountMoney < withDrawMoney) {
+        if (totalAmountMoney >= withDrawMoney) {
+            totalAmountMoney -= withDrawMoney;
+            System.out.println("출금이 완료되었습니다 현재 잔액 : "+totalAmountMoney+"원");
+            bankMenuSelect(sc);
+            //출금이 완료되는경우 totalAmountMoney 에서 차감된다
+        } else {
             System.out.println("출금 금액이 잔액보다 더 많습니다");
             withDrawlInput(sc);
             //출금금액이 잔액보다 많은경우에는 출금이 불가능하므로 다시 입력받도록 리턴한다
-        } else {
-            System.out.println("출금이 완료되었습니다 현재 잔액 : "+(totalAmountMoney -= withDrawMoney)+"원");
-            bankMenuSelect(sc);
-            //출금이 완료되는경우 totalAmountMoney 에서 차감된다
         }
     }
     void restaurantMenu (Scanner sc) {
@@ -209,10 +216,10 @@ public class forwhile23 {
 
         switch (foodListChoice) {
             /*
-            원하는 음식을 선택한경우에 각 음식의 index번호를 리턴시킨다
             장어덮밥index = 0번
             옥수수콘index = 1번
             감자튀김index = 2번
+            원하는 음식을 선택한 후 foodCalculation(음식 index 번호,음식이름,Scanner sc를 리턴보낸다)
              */
             case 1:
                 foodCalculation(0, "장어덮밥",sc);
@@ -225,16 +232,15 @@ public class forwhile23 {
                 break;
             case 4:
                 foodExchange(sc);
-                //음식을 교환할때 foodExchange로 리턴시킴
+                //음식을 교환하는 메소드로 리턴된다
                 break;
             case 5:
                 refundMenu(sc);
-                //음식을 환불할때 refundMenu로 리턴시킴
+                //음식을 환불하는 메소드로 리턴된다
                 break;
             case 6:
                 System.out.println("시스템을 종료합니다");
                 System.exit(0);
-                //프로그램을 종료할때는 exit로 종료한다
                 break;
             default:
                 System.out.println("잘못된 입력입니다");
@@ -244,17 +250,17 @@ public class forwhile23 {
         }
     }
     void foodCalculation (int foodIndexArr,String foodName,Scanner sc) {
-        //음식을계산하기 위해서 사용하는 메소드이다
+        //(음식 index 번호,음식이름,Scanner sc)를 리턴받아 계산을 완료하고 다시 음식점으로 돌아간다
         if (totalAmountMoney > totalFoodArr[foodIndexArr][0]) {
             //가지고 있는는 전체돈이 받은 index에따라 음식의 가격과 비교해서 충분히 남아있을때 구매를 완료시킴
             totalAmountMoney -= totalFoodArr[foodIndexArr][0];
             //구매한 음식의 가격만큼 totalAmountMoney 에서 차감한다
             totalFoodArr[foodIndexArr][1] += 1;
-            //구매한 음식의 개수를 증가시켜 교환이나 환불에 사용한다
+            //foodIndexArr의 번호에 따라 음식의 종류가 달라진다 그러므로 리턴받은 index번호에 따라 해당 음식의 개수를 1개 누적한다
             System.out.println(""+foodName+"구매가 완료되었습니다");
         } else {
             System.out.println("돈이 부족합니다");
-            //돈이부족한경우 음식점메뉴로 재리턴되어 다시선택하도록한다
+            //돈이 부족한경우 다시 음식점으로 돌아간다
         }
         restaurantMenu(sc);
     }
@@ -275,7 +281,8 @@ public class forwhile23 {
             //음식의 번호를 벗어나거나 같은 음식을 교환하는경우 교환이 불가능하므로 다시 고르도록 리턴시킴
             System.out.println("잘못된 입력입니다");
             foodExchange(sc);
-        } else {
+        }
+        else {
             if (totalFoodArr[changeFood][1] == 0) {
                 //선택한 번호의 음식을 구매한 내역이 없는경우에는 다시 입력하게 리턴되며 가지고 있는 음식의 개수를 출력해준다
                 System.out.println("수량을 다시 확인해주세요");
@@ -287,6 +294,7 @@ public class forwhile23 {
                 totalFoodArr[changeFood2][1] += 1;
                 //교환하므로 교환되는 음식의 개수가 증가
                 foodPricedIfference += (totalFoodArr[changeFood][0] - totalFoodArr[changeFood2][0]);
+                totalAmountMoney += foodPricedIfference;
                 //교환한 음식의 가격차이를 확인하여 음수가나온경우 돈을 지불하고 양수가나온경우 추가로 돈을 받는다 그 차이를 foodPricedIfference 변수에 저장후 조건을 따짐
                 if (foodPricedIfference < 0) {
                     System.out.println("교환이 완료되었습니다 " + ((totalFoodArr[changeFood][0] - totalFoodArr[changeFood2][0]) * -1) + "원을 추가로 지불했습니다");
@@ -295,7 +303,6 @@ public class forwhile23 {
                     System.out.println("교환이 완료되었습니다 " + (totalFoodArr[changeFood][0] - totalFoodArr[changeFood2][0]) + "원을 추가로 받았습니다");
                     //교환하지만 값이 싼음식으로 바꿧으므로 추가적으로 돈을 받음
                 }
-                totalAmountMoney += ((totalFoodArr[changeFood][0] - totalFoodArr[changeFood2][0]));
             }
             restaurantMenu(sc);
         }
@@ -305,7 +312,7 @@ public class forwhile23 {
         System.out.println("환불 할 음식의 번호를 적어주세요 \n1.장어덮밥  \n2.옥수수콘  \n3.감자튀김");
         int refundFoodListNumber = sc.nextInt();
 
-        //switch문을 이용하여 원하는 메뉴 입력시 String 음식이름,음식 고유index번호가 리턴된다
+        //switch문을 이용하여 원하는 메뉴 입력시 (음식이름,음식index번호,Scanner sc)을 refundSuccess로 보냄)
         switch (refundFoodListNumber) {
             case 1 :
                 refundSuccess("장어덮밥",0,sc);
