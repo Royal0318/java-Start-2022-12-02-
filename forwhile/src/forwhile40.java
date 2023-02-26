@@ -60,7 +60,10 @@ public class forwhile40 {
             }
         }
         System.out.println("<<<모든 사람의 돈이 입력되었습니다>>>");
-        //nextPeople 메소드의 처음에 가지고 있는 값을 출력하기위해 initialCapital[i]배열에 돈을 사용전 미리 저장한다
+        /*
+        nextPeople 메소드의 처음에 가지고 있는 값을 출력하기위해 initialCapital[i]배열에 돈을 사용전 미리 저장한다
+        selectMenu메소드에서 6번 다음손님으로 넘어갈 때 처음에 가지고 있는 돈을 출력하기 위함
+         */
         for (int i = 0; i < 15; i++) {
             initialCapital[i] += personalMoney[i];
         }
@@ -167,63 +170,43 @@ public class forwhile40 {
         //borrowMoneyAskMenu 메뉴에서 돈을 빌려야할때 이 메소드로 리턴된다
         System.out.println("얼마를 빌리시겠습니까?");
         int borrowMoneyInput = sc.nextInt();
-        personalMoney[i] += borrowMoneyInput;
-        //빌린돈을 i번째 사람의 전체 돈에 누적시켜 부족여부를 판단
-
-        if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] < borrowMoneyInput) {
-            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,1);
-            //돈을 빌리지만 다음사람이 가지고 있는 돈보다 더 많이 빌리는경우이며 borrowSystemindex에 숫자를 넣어 각 메뉴를 실행하도록 설계
-        } else {
-            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,2);
-            /*
-            돈이 부족하여 돈을 빌렸지만 아직까지 추가적으로 빌려야 하는 상황일때 다시 borrowMoneyInput로 돌아와 돈을 빌린다 계속빌릴때
-            additionalIndex 값이 1씩추가되어 다음사람,다다음사람 이렇게 조건이 만족할때 까지 빌릴 수 있다
-             */
-        }
-        if (personalMoney[i] >= 0 && personalMoney[i + additionalIndex] > borrowMoneyInput) {
-            borrowSystemcheck(sc,buyFoodIndexNumber,buyFoodNumber,borrowMoneyInput,3);
-            //돈을 빌려서 부족한 값을 모두 채운경우 추가적으로 더 빌리는지 여부를 확인하기 위해 리턴
-        }
+        borrowResult(borrowMoneyInput,buyFoodIndexNumber,buyFoodNumber,sc);
     }
-    void borrowSystemcheck (Scanner sc,int buyFoodIndexNumber,int buyFoodNumber,int borrowMoneyInput,int borrowSystemindex) {
-        //borrowMoneyInput 메소드에서 빌리는 돈의 액수를 입력하면 borrowSystemcheck 메소드로 넘어와 조건만족여부를 판단
-        debtMoneyrecords[i][i + additionalIndex] += borrowMoneyInput;
-        //각 손님에게 빌린 돈을 저장
-        personalBorrowMoney[i + additionalIndex] += borrowMoneyInput;
-        //(i + additionalIndex) 번째 사람이 빌려준 돈을 저장
-        personalMoney[i + additionalIndex] -= borrowMoneyInput;
-        //돈을 빌려준 사람의 전체 금액에서 borrowMoneyInput 만큼 차감
-        personalDebt[i] += borrowMoneyInput;
-        //돈을 빌린사람의 전체적인 빚
-
-        if (borrowSystemindex == 1) {
-            //다음사람이 가지고 있는 돈보다 더 빌리는경우 borrowSystemcheck 메소드로 리턴시 미리계산되었던 값들을 초기화하고 재선택하도록  리턴한다
-            System.out.println("다음사람이 가지고 있는 돈보다 초과하여 빌릴 수 없습니다");
-            personalMoney[i] -= borrowMoneyInput;
-            debtMoneyrecords[i][i + additionalIndex] -= borrowMoneyInput;
-            personalBorrowMoney[i + additionalIndex] -= borrowMoneyInput;
-            personalMoney[i + additionalIndex] += borrowMoneyInput;
-            personalDebt[i] -= borrowMoneyInput;
-            borrowMoneyInput(sc,buyFoodIndexNumber,buyFoodNumber);
+    void borrowResult (int borrowMoneyInput,int buyFoodIndexNumber,int buyFoodNumber,Scanner sc) {
+        //borrowMoneyInput 메소드에서 빌리는 돈을 입력했을때 조건에 부합한지 확인하는 메소드
+        if ((personalMoney[i + additionalIndex] - borrowMoneyInput) < 0) {
+            //다음사람이 가지고 있는 돈보다 초과하여 빌리는경우
+            System.out.println("다음사람이 가지고 있는 돈보다 초과하여 빌릴 수 없습니다 (다음 사람 잔액 : "+personalMoney[i + additionalIndex]+"원)");
         }
-        else if (borrowSystemindex == 2) {
+        if ((personalMoney[i] + borrowMoneyInput) < 0) {
             //돈을 빌렸지만 추가적으로 더 빌려야하는경우, 음수가 나오면 안되기 때문에 -1을 곱하며 더 빌리는경우 i + additionalIndex 번째 사람에게 빌리도록함
             System.out.println(""+(personalMoney[i] * -1)+"원이 부족합니다 돈을 더 빌리세요");
             additionalIndex += 1;
         }
-        else {
-            //돈을 정상적으로 빌렸으며 추가적으로 빌리는지 여부를 확인 Yes인경우 additionalIndex이 1씩올라가며 i + additionalIndex 번째 사람에게 빌림
+        if ((personalMoney[i] + borrowMoneyInput) >= 0 && (personalMoney[i + additionalIndex] - borrowMoneyInput) >= 0) {
+            //돈을 성공적으로 빌리는 경우
+            personalMoney[i] += borrowMoneyInput;
+            //빌린돈을 i번째 사람의 전체 돈에 누적시켜 부족여부를 판단
+            personalMoney[i + additionalIndex] -= borrowMoneyInput;
+            //돈을 빌려준 사람의 전체 금액에서 borrowMoneyInput 만큼 차감
+            //borrowMoneyInput 메소드에서 빌리는 돈의 액수를 입력하면 borrowSystemcheck 메소드로 넘어와 조건만족여부를 판단
+            debtMoneyrecords[i][i + additionalIndex] += borrowMoneyInput;
+            //각 손님에게 빌린 돈을 저장
+            personalBorrowMoney[i + additionalIndex] += borrowMoneyInput;
+            //(i + additionalIndex) 번째 사람이 빌려준 돈을 저장
+            personalDebt[i] += borrowMoneyInput;
+            //돈을 빌린사람의 전체적인 빚
             System.out.println(""+borrowMoneyInput+"원을 빌려 총 "+personalMoney[i]+"원이 되었습니다 추가적으로 빌리시겠습니까? 1.Yes 2.No");
             int addBorrowChoice = sc.nextInt();
 
             if (addBorrowChoice == 1) {
                 additionalIndex += 1;
+                borrowMoneyInput(sc,buyFoodIndexNumber,buyFoodNumber);
             } else {
                 //더이상 빌리지 않는경우 주문을 완료하는 메소드로 리턴하며 다시 메인메뉴로 돌아감
                 foodOrderComplete(buyFoodIndexNumber,buyFoodNumber,sc);
             }
         }
-        borrowMoneyInput(sc,buyFoodIndexNumber,buyFoodNumber);
     }
     void foodOrderComplete (int buyFoodIndexNumber,int buyFoodNumber,Scanner sc) {
         //주문을 완료한경우 주문한 음식의 개수가 증가하며 메뉴로 다시 리턴된다
@@ -333,7 +316,7 @@ public class forwhile40 {
         //구매자의 영수증을 모두 출력후 다음손님으로 넘어갈때 i 변수에 1을추가
         additionalIndex = 1;
         //초기 additionalIndex 값은 1이였으며 연속적으로 돈을 빌릴때 사용한 변수이다 다음손님으로 넘어 갈 때에는 정상적으로 초기화를 해줘야 하기 때문이다
-        shuttingSystemcheck();
+        shuttingSystemcheck(sc);
         //전체적인 출력이끝나면 메인메뉴로 돌아간다
     }
     void paybackPeopleChoice (Scanner sc) {
@@ -343,7 +326,7 @@ public class forwhile40 {
             int payBackPeople = sc.nextInt() - 1;
             //실제 입력하는 손님의 번호와 index와 차이가 존재하므로 -1 을 적용
 
-            if (debtMoneyrecords[i][payBackPeople] != 0 || payBackPeople != i) {
+            if (debtMoneyrecords[i][payBackPeople] != 0 && payBackPeople != i) {
                 //돈을 갚는 손님에게 존재하는 빚이 있거나 또는 입력한 값이 자신을 입력한 경우가 아닌경우 정상적으로 리턴된다
                 paybackMoneyInputMenu(payBackPeople,sc);
             } else {
@@ -359,17 +342,15 @@ public class forwhile40 {
     }
     void paybackMoneyInputMenu (int payBackPeople,Scanner sc) {
         //빚을 갚는돈을 입력하는 메소드
-        //여기부분 간략하게 고쳐보자
         System.out.println("얼마를 갚겠습니까? "+(payBackPeople + 1)+"번째 사람에게 빌린 돈 : "+debtMoneyrecords[i][payBackPeople]+"원");
         int payBackMoneyInput = sc.nextInt();
 
-        personalMoney[i] -= payBackMoneyInput;
-        //돈을 갚는 i번째 손님은 전체돈에서 차감
-        personalMoney[payBackPeople] += payBackMoneyInput;
-        //빌려준 돈을 받는 payBackPeople번째 손님은 전체돈에서 추가
-
-        if (debtMoneyrecords[i][payBackPeople] >= payBackMoneyInput && personalMoney[i] >= 0) {
+        if (debtMoneyrecords[i][payBackPeople] >= payBackMoneyInput && (personalMoney[i] - payBackMoneyInput) >= 0) {
             //i번째 손님이 payBackPeople손님에게 돈을 갚을때 초과되어 돈을 갚지 않았으며 && 돈을 갚은 i번째 사람이 가지고 있는돈은 0보다 커야한다는 조건이 일치할경우
+            personalMoney[i] -= payBackMoneyInput;
+            //돈을 갚는 i번째 손님은 전체돈에서 차감
+            personalMoney[payBackPeople] += payBackMoneyInput;
+            //빌려준 돈을 받는 payBackPeople번째 손님은 전체돈에서 추가
             debtMoneyrecords[i][payBackPeople] -= payBackMoneyInput;
             //조건이 성립되면  debtMoneyrecords[i][payBackPeople]에 빚이 누적되어있으므로 payBackMoneyInput 갚만큼 차감해서 빚을 정산한다
             personalBorrowMoney[payBackPeople] -= payBackMoneyInput;
@@ -377,14 +358,10 @@ public class forwhile40 {
             personalPaybackMoney[i] += payBackMoneyInput;
             //i번째 사람이 전체적으로 갚은 돈을 누적한다 이 변수는 다음 손님으로 넘어갈때 출력으로 사용하기 위함
             System.out.println(""+payBackMoneyInput+"원을 정상적으로 갚았습니다 남은 빚 : "+debtMoneyrecords[i][payBackPeople]+"원");
-            selectMenu(sc);
         } else {
             System.out.println("빌린 금액을 정확히 확인해주세요");
-            personalMoney[i] += payBackMoneyInput;
-            personalMoney[i + payBackPeople] -= payBackMoneyInput;
-            paybackMoneyInputMenu(payBackPeople,sc);
-            //재입력을 위해 다시 payBackMoneyInput 값만큼 반환
         }
+        selectMenu(sc);
     }
     void peopleControl (Scanner sc) {
         //원하는 손님으로 이동하기 위한 제어메소드
@@ -424,7 +401,7 @@ public class forwhile40 {
         }
         selectMenu(sc);
     }
-    void shuttingSystemcheck () {
+    void shuttingSystemcheck (Scanner sc) {
         //모든 사람이 물건을 구매했을때 시스템이 종료되도록 하는 메소드
         if (i == 14) {
             for (int i = 0; i < 15; i++) {
@@ -434,5 +411,6 @@ public class forwhile40 {
             System.exit(0);
             //i가 14 즉 15명이 모두 완료했을경우 15명이 가지고 있는 개인 금액을 0번 index에 for문을 통해 저장 Println 출력시 사용
         }
+        selectMenu(sc);
     }
 }
