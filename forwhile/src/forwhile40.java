@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class forwhile40 {
-    int[][] debtMoneyrecords;
-    //각 손님이 가지고있는 빚 저장배열
-    int[][] foodBuyNumber;
+    int[][] personalDebtRecord;
+    //각 손님이 가지고있는 개인 채무기록
+    int[][] personalBuyFoodNumbers;
     /*
         구매한 음식의 개수를저장한다 총 5개의 index이므로
         index[0] = 과자
@@ -15,14 +15,14 @@ public class forwhile40 {
     int[] personalMoney;
     //총 15명이 가지고 있는 돈의 총 합
     //5명은 20000원 고장 5명은 10000원 고정 나머지는 println으로 받는다
-    int[] personalBorrowMoney;
-    //빌려준 금액을 저장하는 변수
+    int[] borrowTotalAmount;
+    //nextPeople메소드에서 출력을 위한 i번째 손님의 전체 빌려준 금액
     int[] initialCapital;
     //초기에 각 손님들의 돈을 저장하는 배열
-    int[] personalPaybackMoney;
+    int[] paybackTotalAmount;
     //각 손님이 전체적으로 갚은 금액의 합
-    int[] personalDebt;
-    //각손님이 가지고 있는 빚의 총액
+    int[] DebtTotalAmount;
+    //nextPeople메소드에서 출력을 위한 i번째 손님의 전체 빚 총액
     int i;
     //전체적인 손님순서를 대체
     int controlIndexSave;
@@ -35,15 +35,15 @@ public class forwhile40 {
     forwhile40 () {
 
     }
-    forwhile40 (int[] personalMoney,int[][] foodBuyNumber,int[][] debtMoneyrecords,int[] personalBorrowMoney,int i,int[] initialCapital,int[] personalPaybackMoney,int[] personalDebt,int controlIndexSave,int controlOnOffCheck,int additionalIndex) {
+    forwhile40 (int[] personalMoney,int[][] personalBuyFoodNumbers,int[][] personalDebtRecord,int[] borrowTotalAmount,int i,int[] initialCapital,int[] paybackTotalAmount,int[] DebtTotalAmount,int controlIndexSave,int controlOnOffCheck,int additionalIndex) {
         this.personalMoney  = personalMoney;
-        this.foodBuyNumber = foodBuyNumber;
-        this.debtMoneyrecords = debtMoneyrecords;
-        this.personalBorrowMoney = personalBorrowMoney;
+        this.personalBuyFoodNumbers = personalBuyFoodNumbers;
+        this.personalDebtRecord = personalDebtRecord;
+        this.borrowTotalAmount = borrowTotalAmount;
         this.i = i;
         this.initialCapital = initialCapital;
-        this.personalPaybackMoney = personalPaybackMoney;
-        this.personalDebt = personalDebt;
+        this.paybackTotalAmount = paybackTotalAmount;
+        this.DebtTotalAmount = DebtTotalAmount;
         this.controlIndexSave = controlIndexSave;
         this.controlOnOffCheck = controlOnOffCheck;
         this.additionalIndex = additionalIndex;
@@ -190,11 +190,11 @@ public class forwhile40 {
             personalMoney[i + additionalIndex] -= borrowMoneyInput;
             //돈을 빌려준 사람의 전체 금액에서 borrowMoneyInput 만큼 차감
             //borrowMoneyInput 메소드에서 빌리는 돈의 액수를 입력하면 borrowSystemcheck 메소드로 넘어와 조건만족여부를 판단
-            debtMoneyrecords[i][i + additionalIndex] += borrowMoneyInput;
+            personalDebtRecord[i][i + additionalIndex] += borrowMoneyInput;
             //각 손님에게 빌린 돈을 저장
-            personalBorrowMoney[i + additionalIndex] += borrowMoneyInput;
+            borrowTotalAmount[i + additionalIndex] += borrowMoneyInput;
             //(i + additionalIndex) 번째 사람이 빌려준 돈을 저장
-            personalDebt[i] += borrowMoneyInput;
+            DebtTotalAmount[i] += borrowMoneyInput;
             //돈을 빌린사람의 전체적인 빚
             System.out.println(""+borrowMoneyInput+"원을 빌려 총 "+personalMoney[i]+"원이 되었습니다 추가적으로 빌리시겠습니까? 1.Yes 2.No");
             int addBorrowChoice = sc.nextInt();
@@ -210,20 +210,20 @@ public class forwhile40 {
     }
     void foodOrderComplete (int buyFoodIndexNumber,int buyFoodNumber,Scanner sc) {
         //주문을 완료한경우 주문한 음식의 개수가 증가하며 메뉴로 다시 리턴된다
-        foodBuyNumber[i][buyFoodIndexNumber] += buyFoodNumber;
+        personalBuyFoodNumbers[i][buyFoodIndexNumber] += buyFoodNumber;
         //i번째 사람이 buyFoodIndexNumber값의 여부에 따라 buyFoodNumber 개만큼 구매하였으므로 음식 구매 개수를 저장
         System.out.println("주문이 성공적으로 완료되었습니다");
         selectMenu(sc);
     }
     void refundMenu (Scanner sc) {
         //음식 환불 메소드
-        if (foodBuyNumber[i][0] == 0 && foodBuyNumber[i][1] == 0 && foodBuyNumber[i][2] == 0 && foodBuyNumber[i][3] == 0 && foodBuyNumber[i][4] == 0) {
+        if (personalBuyFoodNumbers[i][0] == 0 && personalBuyFoodNumbers[i][1] == 0 && personalBuyFoodNumbers[i][2] == 0 && personalBuyFoodNumbers[i][3] == 0 && personalBuyFoodNumbers[i][4] == 0) {
             System.out.println("음식을 구매한 내역이 없으므로 환불이 불가능합니다");
             selectMenu(sc);
             //5가지 음식을 1개도 구매하지 않은경우 환불이 불가능하므로 다시 메인메뉴로 리턴합니다
         }
         System.out.println("어떤 음식을 환불하시겠습니까?");
-        System.out.println("1.과자 : "+foodBuyNumber[i][0]+"개 \n2.빵 : "+foodBuyNumber[i][1]+"개 \n3.음료수 : "+foodBuyNumber[i][2]+"개 \n4.과일 : "+foodBuyNumber[i][3]+"개 \n5.술 : "+foodBuyNumber[i][4]+"개");
+        System.out.println("1.과자 : "+personalBuyFoodNumbers[i][0]+"개 \n2.빵 : "+personalBuyFoodNumbers[i][1]+"개 \n3.음료수 : "+personalBuyFoodNumbers[i][2]+"개 \n4.과일 : "+personalBuyFoodNumbers[i][3]+"개 \n5.술 : "+personalBuyFoodNumbers[i][4]+"개");
         int refundListChoice = sc.nextInt();
         System.out.println("환불 개수를 입력해주세요");
         int refundFoodNumber = sc.nextInt();
@@ -253,9 +253,9 @@ public class forwhile40 {
     }
     void refundComplete (int foodIndexNumber,int foodPrice,Scanner sc,int refundFoodNumber) {
         //환불여부를 결정하는 메소드
-        if (foodBuyNumber[i][foodIndexNumber] > refundFoodNumber) {
+        if (personalBuyFoodNumbers[i][foodIndexNumber] > refundFoodNumber) {
             //가지고 있는 음식의 개수가 환불하는 개수보다 많이 남은경우
-            foodBuyNumber[i][foodIndexNumber] -= refundFoodNumber;
+            personalBuyFoodNumbers[i][foodIndexNumber] -= refundFoodNumber;
             //환불을 완료했으므로 해당 음식의 개수는 차감
             personalMoney[i] += (foodPrice * refundFoodNumber);
             //환불하였으므로 i번째 사람이 가지고 있는 전체 돈에 추가
@@ -278,8 +278,9 @@ public class forwhile40 {
         outputTemp는 food를 아무것도 구매하지 않고 다음손님으로 넘어갈때 출력되는것을 방지하기 위한 변수이며 아무것도 구매하지 않은 j값은
         continue문을 통해 출력되지 않으며 그 이외에 food를 구매한경우 outputTemp 변수에 1씩 누적되어 순서대로 출력이 가능하도록 구현
          */
+
         for (int j = 0; j < 15;j++) {
-            if (foodBuyNumber[j][0] == 0 && foodBuyNumber[j][1] == 0 && foodBuyNumber[j][2] == 0 && foodBuyNumber[j][3] == 0 && foodBuyNumber[j][4] == 0) {
+            if (personalBuyFoodNumbers[j][0] == 0 && personalBuyFoodNumbers[j][1] == 0 && personalBuyFoodNumbers[j][2] == 0 && personalBuyFoodNumbers[j][3] == 0 && personalBuyFoodNumbers[j][4] == 0) {
                 continue;
                 /*
                 각 손님이 아무것도 사지 않고 다음손님을 눌렀을경우 번호는 1번부터 순서대로 출력되어야하므로 continue문을 사용하였으며 else값으로 물건을 1개라도 주문한사람은
@@ -289,28 +290,28 @@ public class forwhile40 {
                 outputTemp += 1;
             }
             System.out.println("==================="+outputTemp+"번째 손님의 주문표===================");
-            if (foodBuyNumber[j][0] >= 1) { //과자를 구매한 개수가 1개이상일경우 출력
-                System.out.println("과자 X "+foodBuyNumber[j][0]+"개 = "+(foodBuyNumber[j][0] * 1200)+"원");
+            if (personalBuyFoodNumbers[j][0] >= 1) { //과자를 구매한 개수가 1개이상일경우 출력
+                System.out.println("과자 X "+personalBuyFoodNumbers[j][0]+"개 = "+(personalBuyFoodNumbers[j][0] * 1200)+"원");
             }
-            if (foodBuyNumber[j][1] >= 1) { //빵을 구매한 개수가 1개이상일경우 출력
-                System.out.println("빵 X "+foodBuyNumber[j][1]+"개 = "+(foodBuyNumber[j][1] * 1000)+"원");
+            if (personalBuyFoodNumbers[j][1] >= 1) { //빵을 구매한 개수가 1개이상일경우 출력
+                System.out.println("빵 X "+personalBuyFoodNumbers[j][1]+"개 = "+(personalBuyFoodNumbers[j][1] * 1000)+"원");
             }
-            if (foodBuyNumber[j][2] >= 1) { //음료수를 구매한 개수가 1개이상일경우 출력
-                System.out.println("음료수 X "+foodBuyNumber[j][2]+"개 = "+(foodBuyNumber[j][2] * 1500)+"원");
+            if (personalBuyFoodNumbers[j][2] >= 1) { //음료수를 구매한 개수가 1개이상일경우 출력
+                System.out.println("음료수 X "+personalBuyFoodNumbers[j][2]+"개 = "+(personalBuyFoodNumbers[j][2] * 1500)+"원");
             }
-            if (foodBuyNumber[j][3] >= 1) { //과일을 구매한 개수가 1개이상일경우 출력
-                System.out.println("과일 X "+foodBuyNumber[j][3]+"개 = "+(foodBuyNumber[j][3] * 2500)+"원");
+            if (personalBuyFoodNumbers[j][3] >= 1) { //과일을 구매한 개수가 1개이상일경우 출력
+                System.out.println("과일 X "+personalBuyFoodNumbers[j][3]+"개 = "+(personalBuyFoodNumbers[j][3] * 2500)+"원");
             }
-            if (foodBuyNumber[j][4] >= 1) { //술을 구매한 개수가 1개이상일경우 출력
-                System.out.println("과일 X "+foodBuyNumber[j][4]+"개 = "+(foodBuyNumber[j][4] * 4000)+"원");
+            if (personalBuyFoodNumbers[j][4] >= 1) { //술을 구매한 개수가 1개이상일경우 출력
+                System.out.println("과일 X "+personalBuyFoodNumbers[j][4]+"개 = "+(personalBuyFoodNumbers[j][4] * 4000)+"원");
             }
             System.out.println("=================================================");
             System.out.println("처음에 가지고 있던 금액 : "+initialCapital[j]+"원");
             System.out.println("현재 가지고 있는 금액 : "+personalMoney[j]+"원");
-            System.out.println("전체 빚 진 금액 : "+ personalDebt[j]+"원");
-            System.out.println("빚을 청산하고 남은 금액 : "+(personalDebt[j] - personalPaybackMoney[j])+"원");
-            System.out.println("미납 된 금액 : "+(personalDebt[j] - personalPaybackMoney[j])+"원");
-            System.out.println("빌려준 금액 : "+personalBorrowMoney[j]+"원\n");
+            System.out.println("전체 빚 진 금액 : "+ DebtTotalAmount[j]+"원");
+            System.out.println("빚을 청산하고 남은 금액 : "+(DebtTotalAmount[j] - paybackTotalAmount[j])+"원");
+            System.out.println("미납 된 금액 : "+(DebtTotalAmount[j] - paybackTotalAmount[j])+"원");
+            System.out.println("빌려준 금액 : "+borrowTotalAmount[j]+"원\n");
         }
         i += 1;
         //구매자의 영수증을 모두 출력후 다음손님으로 넘어갈때 i 변수에 1을추가
@@ -326,38 +327,37 @@ public class forwhile40 {
             int payBackPeople = sc.nextInt() - 1;
             //실제 입력하는 손님의 번호와 index와 차이가 존재하므로 -1 을 적용
 
-            if (debtMoneyrecords[i][payBackPeople] != 0 && payBackPeople != i) {
+            if (personalDebtRecord[i][payBackPeople] != 0 && payBackPeople != i) {
                 //돈을 갚는 손님에게 존재하는 빚이 있거나 또는 입력한 값이 자신을 입력한 경우가 아닌경우 정상적으로 리턴된다
                 paybackMoneyInputMenu(payBackPeople,sc);
             } else {
                 System.out.println("돈을 빌린 내역이 없거나 자신에게 갚을 수 없습니다");
-                selectMenu(sc);
                 //자신에게 갚으려고 하거나 payBackPeople 번째 손님에게 돈을 빌린 내역이 없는경우 다시 메인메뉴로 리턴
             }
         } else {
             //돈갚기 메소드에 진입했을때 i번째 사람이 가지고 있는 돈의액수가 0원일때 돈을 갚을수 없으므로 다시 메인메뉴로 리턴된다
             System.out.println("현재 가지고 있는 돈이 없으므로 돈을 갚을 수 없습니다");
-            selectMenu(sc);
         }
+        selectMenu(sc);
     }
     void paybackMoneyInputMenu (int payBackPeople,Scanner sc) {
         //빚을 갚는돈을 입력하는 메소드
-        System.out.println("얼마를 갚겠습니까? "+(payBackPeople + 1)+"번째 사람에게 빌린 돈 : "+debtMoneyrecords[i][payBackPeople]+"원");
+        System.out.println("얼마를 갚겠습니까? "+(payBackPeople + 1)+"번째 사람에게 빌린 돈 : "+personalDebtRecord[i][payBackPeople]+"원");
         int payBackMoneyInput = sc.nextInt();
 
-        if (debtMoneyrecords[i][payBackPeople] >= payBackMoneyInput && (personalMoney[i] - payBackMoneyInput) >= 0) {
+        if (personalDebtRecord[i][payBackPeople] >= payBackMoneyInput && (personalMoney[i] - payBackMoneyInput) >= 0) {
             //i번째 손님이 payBackPeople손님에게 돈을 갚을때 초과되어 돈을 갚지 않았으며 && 돈을 갚은 i번째 사람이 가지고 있는돈은 0보다 커야한다는 조건이 일치할경우
             personalMoney[i] -= payBackMoneyInput;
             //돈을 갚는 i번째 손님은 전체돈에서 차감
             personalMoney[payBackPeople] += payBackMoneyInput;
             //빌려준 돈을 받는 payBackPeople번째 손님은 전체돈에서 추가
-            debtMoneyrecords[i][payBackPeople] -= payBackMoneyInput;
+            personalDebtRecord[i][payBackPeople] -= payBackMoneyInput;
             //조건이 성립되면  debtMoneyrecords[i][payBackPeople]에 빚이 누적되어있으므로 payBackMoneyInput 갚만큼 차감해서 빚을 정산한다
-            personalBorrowMoney[payBackPeople] -= payBackMoneyInput;
+            borrowTotalAmount[payBackPeople] -= payBackMoneyInput;
             //payBackPeople번째 사람은 빌려준 금액에서 payBackMoneyInput 갚만큼 차감한다
-            personalPaybackMoney[i] += payBackMoneyInput;
+            paybackTotalAmount[i] += payBackMoneyInput;
             //i번째 사람이 전체적으로 갚은 돈을 누적한다 이 변수는 다음 손님으로 넘어갈때 출력으로 사용하기 위함
-            System.out.println(""+payBackMoneyInput+"원을 정상적으로 갚았습니다 남은 빚 : "+debtMoneyrecords[i][payBackPeople]+"원");
+            System.out.println(""+payBackMoneyInput+"원을 정상적으로 갚았습니다 남은 빚 : "+personalDebtRecord[i][payBackPeople]+"원");
         } else {
             System.out.println("빌린 금액을 정확히 확인해주세요");
         }
