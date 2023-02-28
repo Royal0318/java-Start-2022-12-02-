@@ -43,14 +43,24 @@ public class Array5 {
     }
     void aptInformationChoice (Scanner sc) {
         System.out.println("입주자의 아파트 라인 번호를 적어주세요");
-        System.out.println("1.1호 Line 2.2호 Line 3.3호 Line 4.4호 Line 5.5호 Line");
+        System.out.println("1.1호 Line \n2.2호 Line \n3.3호 Line \n4.4호 Line \n5.5호 Line");
         int aptLine = sc.nextInt() - 1;
 
-        System.out.println("입주자의 아파트 호수에 맞는 번호를 적어주세요");
-        System.out.println("1."+((aptLine * 100) + 1)+"호 2."+((aptLine * 100) + 2)+"호 3."+((aptLine * 100) + 3)+"호 4."+((aptLine * 100) + 4)+"호 5."+((aptLine * 100) + 5)+"호");
-        int aptHoSelect = sc.nextInt() - 1;
+        if (aptLine >= 0 && aptLine <= 4) {
+            System.out.println("입주자의 아파트 호수에 맞는 번호를 적어주세요");
+            System.out.println("1."+(((aptLine + 1) * 100) + 1)+"호 2."+(((aptLine + 1) * 100) + 2)+"호 3."+(((aptLine + 1) * 100) + 3)+"호 4."+(((aptLine + 1) * 100) + 4)+"호 5."+(((aptLine + 1) * 100) + 5)+"호");
+            int aptHoSelect = sc.nextInt() - 1;
 
-        registration(aptLine,aptHoSelect,sc);
+            if (aptHoSelect >= 0 && aptHoSelect <= 4) {
+                registration(aptLine,aptHoSelect,sc);
+            } else {
+                System.out.println("잘못된 입력입니다");
+                aptInformationChoice(sc);
+            }
+        } else {
+            System.out.println("잘못된 입력입니다");
+            aptInformationChoice(sc);
+        }
     }
     void registration (int aptLine,int aptHoSelect,Scanner sc) {
         //입주자 이름,나이,세대수,휴대폰번호,호수
@@ -96,15 +106,15 @@ public class Array5 {
         int aptHo = sc.nextInt();
 
         if (aptHo >= 101 && aptHo <= 105) {
-            occupantMoveComplete(1,(aptHo/100),sc);
+            occupantMoveComplete(0,((aptHo%100) - 1),sc);
         } else if (aptHo >= 201 && aptHo <= 205) {
-            occupantMoveComplete(2,(aptHo/200),sc);
+            occupantMoveComplete(1,((aptHo%200) - 1),sc);
         } else if (aptHo >= 301 && aptHo <= 305) {
-            occupantMoveComplete(3,(aptHo/300),sc);
+            occupantMoveComplete(2,((aptHo%300) - 1),sc);
         } else if (aptHo >= 401 && aptHo <= 405) {
-            occupantMoveComplete(4,(aptHo/400),sc);
+            occupantMoveComplete(3,((aptHo%400) - 1),sc);
         } else {
-            occupantMoveComplete(5,(aptHo/500),sc);
+            occupantMoveComplete(4,((aptHo%500) - 1),sc);
         }
     }
     void occupantMoveComplete (int line,int ho,Scanner sc) {
@@ -145,6 +155,7 @@ public class Array5 {
             for (int j = 0; j < 5; j++) {
                 if (Objects.equals(name[i][j], "" + nameInput + "")) {
                     System.out.println("==============조회결과==============");
+                    System.out.println("세대 위치 : "+(i + 1)+"동 "+(((i + 1) * 100) + j + 1)+"호");
                     System.out.println("세대주 성명 : " + name[i][j] + "");
                     System.out.println("세대주 나이 : " + age[i][j] + "세");
                     System.out.println("세대주 가족구성원 : " + familyMembers[i][j] + "명");
@@ -159,14 +170,34 @@ public class Array5 {
         systemMainMenu(sc);
     }
     void phonenumberFind (Scanner sc) {
-
+        int checkCompleteTemp = 0;
+        System.out.println("입주민 대표 전화번호 앞,뒤 4자리를 입력해주세요 예) 010-1234-5678 --> 1234 enter 5678 enter");
+        int frontNumber = sc.nextInt();
+        int backNumber = sc.nextInt();
+        for (int i = 0 ; i < 5;i++) {
+            for (int j = 0; j < 5; j++) {
+                if (phoneFrontNumber[i][j] == frontNumber && phoneBackNumber[i][j] == backNumber) {
+                    System.out.println("==============조회결과==============");
+                    System.out.println("세대주 성명 : " + name[i][j] + "");
+                    System.out.println("세대주 나이 : " + age[i][j] + "세");
+                    System.out.println("세대주 가족구성원 : " + familyMembers[i][j] + "명");
+                    System.out.println("세대주 전화번호 : 010-" + phoneFrontNumber[i][j] + "-" + phoneBackNumber[i][j] + "\n");
+                    checkCompleteTemp = 1;
+                }
+            }
+        }
+        if (checkCompleteTemp == 0) {
+            System.out.println("검색결과가 없습니다");
+        }
+        systemMainMenu(sc);
     }
     void aptlinefind (Scanner sc) {
         System.out.println("조회할 아파트의 라인 번호를 적어주세요");
-        System.out.println("1.1호 Line 2.2호 Line 3.3호 Line 4.4호 Line 5.5호 Line");
+        System.out.println("1.1호 Line \n2.2호 Line \n3.3호 Line \n4.4호 Line \n5.5호 Line");
         int aptLine = sc.nextInt() - 1;
+
         System.out.println("조회할 아파트 호수를 적어주세요");
-        System.out.println("1."+((aptLine * 100) + 1)+"호 2."+((aptLine * 100) + 2)+"호 3."+((aptLine * 100) + 3)+"호 4."+((aptLine * 100) + 4)+"호 5."+((aptLine * 100) + 5)+"호");
+        System.out.println("1."+(((aptLine + 1) * 100) + 1)+"호 2."+(((aptLine + 1) * 100) + 2)+"호 3."+(((aptLine + 1) * 100) + 3)+"호 4."+(((aptLine + 1) * 100) + 4)+"호 5."+(((aptLine + 1) * 100) + 5)+"호");
         int aptHoSelect = sc.nextInt() - 1;
 
         if (age[aptLine][aptHoSelect] != 0) {
