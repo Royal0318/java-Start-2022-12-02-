@@ -33,7 +33,7 @@ public class Library {
         Books.add(book10);
 
         Library2 subObject = new Library2();
-        book1.systemMenu(sc,Books);
+        book1.getSystemMenu(sc,Books);
 
     }
 }
