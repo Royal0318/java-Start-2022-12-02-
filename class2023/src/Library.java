@@ -36,6 +36,6 @@ public class Library {
         Library2 subObject = new Library2();
         //서브 생성자
         book1.getSystemMenu(sc,Books);
-
     }
+
 }
