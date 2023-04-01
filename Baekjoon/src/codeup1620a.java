@@ -1,7 +1,6 @@
 import java.util.Scanner;
-
 public class codeup1620a {
-    static int result = 0;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -11,14 +10,14 @@ public class codeup1620a {
         int sum = 0;
         String str = ""+n+"";
         if (n < 10) {
-            result = n;
-            return 1;
+            return n;
         }
         for (int i = 0; i < str.length();i++) {
             sum += str.charAt(i) - '0';
         }
         n = sum;
         f(n);
-        return result;
+        return f(n);
+        //f(n이면 해당스택만출력)
     }
 }
