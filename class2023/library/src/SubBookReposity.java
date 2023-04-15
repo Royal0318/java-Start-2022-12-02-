@@ -29,13 +29,14 @@ public class SubBookReposity {
         this.releaseMonth = releaseMonth;
         this.releaseDays = releaseDays;
     }
-    void findBookTitle () { //책 제목으로도서찾기
+    void findBookTitle (Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
+        System.out.println("찾으시는 책 이름을 적어주세요");
+        //String findBookName =
+    }
+    void findBookNumber (Scanner sc, ArrayList<SubBookReposity> Books) { //책 번호으로도서찾기
 
     }
-    void findBookNumber () { //책 번호으로도서찾기
-
-    }
-    void findBookWriterName () { //책 작가이름으로도서찾기
+    void findBookWriterName (Scanner sc, ArrayList<SubBookReposity> Books) { //책 작가이름으로도서찾기
 
     }
     void inputBookRegistration (Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
@@ -120,12 +121,46 @@ public class SubBookReposity {
             if (UserRepository.memberNumber[i] == numberInspection) {
                 System.out.println("대여하는 책의 제목을 적어주세요");
                 String borrowBooks = sc.next();
-             //   checkBooksInformation(borrowBooks, Books, sc, numberInspection, 1);
+
+                checkBooksInformation(borrowBooks, Books, sc, numberInspection, 1);
             }
         }
         System.out.println("존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
     }
-    void checkBooksInformation () {
+    void checkBooksInformation (String borrowBooks, ArrayList<SubBookReposity> Books, Scanner sc,int numberInspection, int select) {
+        for (SubBookReposity bookBorrow : Books) {
+            if (bookBorrow.bookName.equals(borrowBooks)) { //해당 북이 일치하는경우 즉 존재하는경우
+                int indexTemp = Books.indexOf(bookBorrow); //해당 제목에 있는 인덱스 추출
+                SubBookReposity informationResult = Books.get(indexTemp);
 
+                System.out.println("책 정보를 다시한번 확인해주세요");
+                System.out.println("========================================================");
+                System.out.println("번호 : " + informationResult.bookNumber + "번");
+                System.out.println("이름 : " + informationResult.bookName + "");
+                System.out.println("작가 : " + informationResult.bookWriter + "");
+                System.out.println("출판사 : " + informationResult.publisher + "");
+                System.out.println("발매일 : " + informationResult.releaseYear + "년 " + informationResult.releaseMonth + "월 " + informationResult.releaseDays + "일");
+                System.out.println("===================================");
+                System.out.println("<<<해당 책 정보가 맞으시면 1번을 틀리다면 2번을 눌러주세요>>>");
+
+                int borrowChoice = sc.nextInt();
+
+                if (select == 1) {
+                    if (borrowChoice == 1) {
+                        System.out.println("대여가 성공적으로 완료되었습니다");
+                        UserRepository.borrowBookList[numberInspection][indexTemp] = 1; //1을 부여함으로 써 빌린것 체크
+                        //                                num번째 사람이    책번호index를 빌림
+                    } else if (borrowChoice == 2) {
+                        System.out.println("메인 메뉴로 돌아갑니다");
+                        //리턴구현
+                    } else {
+                        System.out.println("잘못된 입력입니다");
+                        checkBooksInformation(borrowBooks, Books, sc, numberInspection, select);
+                    }
+                } else { //반납
+
+                }
+            }
+        }
     }
 }

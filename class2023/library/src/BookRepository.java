@@ -14,7 +14,7 @@ public class BookRepository {
         int[][] borrowBookList = new int[1000][1000];
 
 
-        UserRepository Information = new UserRepository(memberName,memberNumber,memberAddress,memberPhoneNumber,borrowBookList);
+        UserRepository Information = new UserRepository(memberName, memberNumber, memberAddress, memberPhoneNumber, borrowBookList);
         peopleInformation.add(Information);
 
         SubBookReposity book1 = new SubBookReposity(1, "세상의 마지막 기차역", "무라세 다케시", "모모", 2022, 5, 9);
@@ -35,30 +35,30 @@ public class BookRepository {
                     int findBookMenuChoice = sc.nextInt();
 
                     if (findBookMenuChoice == 1) {
-                        book1.findBookTitle();
+                        book1.findBookTitle(sc,Books);
                     } else if (findBookMenuChoice == 2) {
-                        book1.findBookNumber();
+                        book1.findBookNumber(sc,Books);
                     } else if (findBookMenuChoice == 3) {
-                        book1.findBookWriterName();
+                        book1.findBookWriterName(sc,Books);
                     } else {
                         System.out.println("잘못된 입력입니다");
                         break;
                     }
                 case 2:
                     System.out.println("책 등록절차를 시작합니다");
-                    book1.inputBookRegistration(sc,Books);
+                    book1.inputBookRegistration(sc, Books);
                     break;
                 case 3:
                     book1.returnBook(sc);
                     break;
                 case 4:
-                    book1.borrowBook(sc,Books);
+                    book1.borrowBook(sc, Books);
                     break;
                 case 5:
-                    Information.memberRegistration();
+                    UserRepository.memberRegistration();
                     break;
                 case 6:
-                    Information.findPeopleInformation();
+                    UserRepository.findPeopleInformation();
                     break;
                 case 7:
                     break;
@@ -70,6 +70,5 @@ public class BookRepository {
                     break;
             }
         }
-
     }
 }
