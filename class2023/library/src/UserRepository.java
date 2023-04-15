@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 class UserRepository {
-    public static String[] memberName;
+    public static String memberName;
     //회원의 이름
     public static int[] memberNumber;
     //회원번호
@@ -12,17 +15,35 @@ class UserRepository {
     //회원이 빌린 책을 저장하는 변수 1차원에는 회원의번호가 2차원에는 회원이 빌린 책의 번호가 저장된다
 
     UserRepository (String[] memberName,int[] memberNumber, String[] memberAddress, int[][] memberPhoneNumber, int[][] borrowBookList) {
-        UserRepository.memberName = memberName;
+        UserRepository.memberName = Arrays.toString(memberName);
         UserRepository.memberNumber = memberNumber;
         UserRepository.memberAddress = memberAddress;
         UserRepository.memberPhoneNumber = memberPhoneNumber;
         UserRepository.borrowBookList = borrowBookList;
     }
-    static void memberRegistration() {
-
+    static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation) {
+        System.out.println("회원등록 절차를 시작합니다");
+        System.out.println("회원의 이름을 적어주세요");
+        memberName = sc.next();
+        System.out.println("회원 이름이 정상적으로 등록되었습니다");
+        memberRegistrationNumber(sc,memberName,peopleInformation);
     }
+    static void memberRegistrationNumber (Scanner sc,String memberName,ArrayList<UserRepository> peopleInformation) {
+        System.out.println("원하시는 회원번호를 입력해주세요");
+        int Number = sc.nextInt();
 
-    public static void findPeopleInformation() {
+       for (int i = 0; i < Number;i++) {
+           if (UserRepository.memberNumber[i] != Number) {
+               System.out.println("회원번호를 정상적으로 등록하였습니다");
+               memberRegistrationAddress(sc,memberName,peopleInformation,Number);
+           }
+       }
+        System.out.println("중복되는 회원번호입니다");
+    }
+    static void memberRegistrationAddress (Scanner sc,String memberName,ArrayList<UserRepository> peopleInformation,int Number) {
+        System.out.println("여기부터");
+    }
+    public static void findPeopleInformation(Scanner sc,ArrayList<UserRepository> peopleInformation) {
 
     }
 }

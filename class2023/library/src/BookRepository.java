@@ -49,18 +49,19 @@ public class BookRepository {
                     book1.inputBookRegistration(sc, Books);
                     break;
                 case 3:
-                    book1.returnBook(sc);
+                    book1.returnBook(sc,Books);
                     break;
                 case 4:
                     book1.borrowBook(sc, Books);
                     break;
                 case 5:
-                    UserRepository.memberRegistration();
+                    UserRepository.memberRegistrationName(sc,peopleInformation);
                     break;
                 case 6:
-                    UserRepository.findPeopleInformation();
+                    UserRepository.findPeopleInformation(sc,peopleInformation);
                     break;
                 case 7:
+                    book1.findTotalBookInformation(Books);
                     break;
                 case 8:
                     System.out.println("프로그램을 종료합니다");
