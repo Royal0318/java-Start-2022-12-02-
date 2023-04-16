@@ -7,14 +7,8 @@ public class BookRepository {
         ArrayList<SubBookReposity> Books = new ArrayList<>(); //책정보관리 Array
         ArrayList<UserRepository> peopleInformation = new ArrayList<>(); //회원정보
 
-        String[] memberName = new String[1000];
-        int[] memberNumber = new int[1000];
-        String[] memberAddress = new String[1000];
-        int[][] memberPhoneNumber = new int[1000][2];
-        int[][] borrowBookList = new int[1000][1000];
-
-
-        UserRepository Information = new UserRepository(memberName, memberNumber, memberAddress, memberPhoneNumber, borrowBookList);
+        int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지
+        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218, borrowBookList);
         peopleInformation.add(Information);
 
         SubBookReposity book1 = new SubBookReposity(1, "세상의 마지막 기차역", "무라세 다케시", "모모", 2022, 5, 9);
@@ -36,10 +30,13 @@ public class BookRepository {
 
                     if (findBookMenuChoice == 1) {
                         book1.findBookTitle(sc,Books);
+                        break;
                     } else if (findBookMenuChoice == 2) {
                         book1.findBookNumber(sc,Books);
+                        break;
                     } else if (findBookMenuChoice == 3) {
                         book1.findBookWriterName(sc,Books);
+                        break;
                     } else {
                         System.out.println("잘못된 입력입니다");
                         break;
@@ -55,7 +52,7 @@ public class BookRepository {
                     book1.borrowBook(sc, Books);
                     break;
                 case 5:
-                    UserRepository.memberRegistrationName(sc,peopleInformation);
+                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
                     break;
                 case 6:
                     UserRepository.findPeopleInformation(sc,peopleInformation);
