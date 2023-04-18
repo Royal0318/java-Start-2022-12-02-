@@ -11,7 +11,7 @@ public class BookRepository {
         UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218, borrowBookList);
         peopleInformation.add(Information);
 
-        SubBookReposity book1 = new SubBookReposity(1, "세상의 마지막 기차역", "무라세 다케시", "모모", 2022, 5, 9);
+        SubBookReposity book1 = new SubBookReposity(1, "세상의마지막기차역", "무라세 다케시", "모모", 2022, 5, 9);
         SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3);
         Books.add(book1);
         Books.add(book2);
@@ -46,16 +46,16 @@ public class BookRepository {
                     book1.inputBookRegistration(sc, Books);
                     break;
                 case 3:
-                    book1.returnBook(sc,Books);
+                    book1.returnBook(sc,Books,peopleInformation);
                     break;
                 case 4:
-                    book1.borrowBook(sc, Books);
+                    book1.borrowBook(sc, Books,peopleInformation);
                     break;
                 case 5:
                     UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
                     break;
                 case 6:
-                    UserRepository.findPeopleInformation(sc,peopleInformation);
+                    UserRepository.findPeopleInformation(sc,Books);
                     break;
                 case 7:
                     book1.findTotalBookInformation(Books);

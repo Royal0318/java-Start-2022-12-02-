@@ -83,7 +83,7 @@ class UserRepository {
         }
     }
 
-    public static void findPeopleInformation(Scanner sc, ArrayList<UserRepository> peopleInformation) {
+    public static void findPeopleInformation(Scanner sc,ArrayList<SubBookReposity> Books) {
         System.out.println("회원 이름을 적어주세요");
         sc.nextLine();
         String findMemberName = sc.nextLine();
@@ -91,14 +91,15 @@ class UserRepository {
 
         if (Objects.equals(memberName, findMemberName)) { //해당 멤버가 존재한다면
             System.out.println("=============================");
-            System.out.println("회원 번호 : " + UserRepository.memberNumber + "");
+            System.out.println("회원 번호 : " + UserRepository.memberNumber + "번");
             System.out.println("회원 이름 : " + UserRepository.memberName + "");
             System.out.println("회원 주소 : " + UserRepository.memberAddress + "");
             System.out.println("회원 전화번호 : 010 - " + UserRepository.memberPhoneFrontNumber + " - " + UserRepository.memberPhoneBackNumber + "");
             System.out.println("빌린 책 목록");
-            for (int i = 0; i < UserRepository.memberNumber; i++) {
-                if (borrowBookList[memberNumber][i] == 1) { //1인것은 빌렸을경우 나타낸다
-                    System.out.println("" + (i + 1) + ". " + borrowBookList[memberNumber][i] + "");
+            for (SubBookReposity nave : Books) {
+                if (borrowBookList[memberNumber][nave.bookNumber] == 1) { //1인것은 빌렸을경우 나타낸다
+                    System.out.println("" + nave.bookName + "");
+                    System.out.println("==========================");
                 }
             }
             checkTemp = 1;
