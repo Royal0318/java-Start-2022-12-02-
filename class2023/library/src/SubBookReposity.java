@@ -33,70 +33,76 @@ public class SubBookReposity {
 
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
         System.out.println("찾으시는 책 이름을 적어주세요");
-        String findBookName = sc.next();
+        sc.nextLine();
+        String findBookName = sc.nextLine();
 
-        for (SubBookReposity bookName : Books) {
-            if (bookName.bookName.equals(findBookName)) {
-                int findBookIndex = Books.indexOf(bookName);
-                SubBookReposity index = Books.get(findBookIndex);
-                findBookInformation(index);
+        for (SubBookReposity indexNumber : Books) {
+            if (indexNumber.bookName.equals(findBookName)) {
+                findBookInformation(indexNumber,1);
+                break;
             }
         }
-        System.out.println("해당 책은 존재하지 않습니다");
     }
 
     public void findBookNumber(Scanner sc, ArrayList<SubBookReposity> Books) { //책 번호으로도서찾기
         System.out.println("찾으시는 책 번호를 적어주세요");
         int findBookNumber = sc.nextInt();
 
-        for (SubBookReposity bookName : Books) {
-            if (bookName.bookNumber == findBookNumber) {
-                int findBookIndex = Books.indexOf(bookName);
-                SubBookReposity index = Books.get(findBookIndex);
-                findBookInformation(index);
+        for (SubBookReposity indexNumber : Books) {
+            if (indexNumber.bookNumber == findBookNumber) {
+                findBookInformation(indexNumber,1);
                 break;
             }
         }
-        System.out.println("해당 책은 존재하지 않습니다");
     }
 
     public void findBookWriterName(Scanner sc, ArrayList<SubBookReposity> Books) { //책 작가이름으로도서찾기
         System.out.println("찾으시는 책의 작가 이름을 적어주세요");
         String bookWriter = sc.next();
 
-        for (SubBookReposity bookName : Books) {
-            if (bookName.bookName.equals(bookWriter)) {
-                int findBookIndex = Books.indexOf(bookName);
-                SubBookReposity index = Books.get(findBookIndex);
-                findBookInformation(index);
+        for (SubBookReposity indexNumber : Books) {
+            if (indexNumber.bookName.equals(bookWriter)) {
+                findBookInformation(indexNumber,1);
                 break;
             }
         }
-        System.out.println("해당 책은 존재하지 않습니다");
     }
 
-    public void findBookInformation(SubBookReposity bookIndex) {
-        System.out.println("책을 찾았습니다!!!");
-        System.out.println("책 번호 : " + bookIndex.bookNumber + "");
-        System.out.println("책 이름 : " + bookIndex.bookName + "");
-        System.out.println("작가 : " + bookIndex.bookWriter + "");
-        System.out.println("출판사 : " + bookIndex.publisher + "");
-        System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
+    public void findBookInformation(SubBookReposity bookIndex,int s) {
+        if (s == 1) {
+            System.out.println("책을 찾았습니다!!!");
+            System.out.println("책 번호 : " + bookIndex.bookNumber + "");
+            System.out.println("책 이름 : " + bookIndex.bookName + "");
+            System.out.println("작가 : " + bookIndex.bookWriter + "");
+            System.out.println("출판사 : " + bookIndex.publisher + "");
+            System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
+        } else {
+            System.out.println("원하시는 책이 존재하지 않습니다");
+        }
     }
 
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
-        System.out.println("책 등록번호를 입력해주세요 (1 ~ 200번까지)");
-        int registrationBookNumber = sc.nextInt();
+        while (true) {
+            int checkTemp = 0;
+            System.out.println("책 등록번호를 입력해주세요 (1 ~ 200번까지)");
+            int registrationBookNumber = sc.nextInt();
 
-        if (registrationBookNumber >= 1 && registrationBookNumber <= 200) {
-            for (SubBookReposity findbook : Books) {
-                if (findbook.bookNumber == registrationBookNumber) { //이미 등록된 번호인경우
-                    System.out.println("이미 등록된 번호입니다 다른 번호를 입력해주세요");
-                    inputBookRegistration(sc, Books);
+            if (registrationBookNumber >= 1 && registrationBookNumber <= 200) {
+                for (SubBookReposity findbook : Books) {
+                    if (findbook.bookNumber == registrationBookNumber) { //이미 등록된 번호인경우
+                        checkTemp = 1;
+                        break;
+                    }
                 }
             }
+            if (checkTemp == 1) {
+                System.out.println("이미 등록된 번호입니다 다른 번호를 입력해주세요");
+            } else {
+                System.out.println("책 번호가 성공적으로 등록되었습니다");
+                inputBookRegistration2(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
+                break;
+            }
         }
-        inputBookRegistration2(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
     }
 
     public void inputBookRegistration2(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber) {
@@ -171,12 +177,10 @@ public class SubBookReposity {
             if (UserRepository.memberNumber == numberInspection) {
                 System.out.println("반납하는 책의 제목을 적어주세요");
                 String returnBookName = sc.next();
-
-                checkBooksInformation(returnBookName, Books, sc, numberInspection, 1);
+                checkBooksInformation(returnBookName, Books, sc, numberInspection, 2);
+                break;
             }
         }
-        System.out.println("존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
-
     }
 
     public void borrowBook(Scanner sc, ArrayList<SubBookReposity> Books) {
@@ -187,60 +191,52 @@ public class SubBookReposity {
             if (UserRepository.memberNumber == numberInspection) {
                 System.out.println("대여하는 책의 제목을 적어주세요");
                 String borrowBooks = sc.next();
-
                 checkBooksInformation(borrowBooks, Books, sc, numberInspection, 1);
+                break;
             }
         }
-        System.out.println("존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
     }
 
     public void checkBooksInformation(String borrowBooks, ArrayList<SubBookReposity> Books, Scanner sc, int numberInspection, int select) {
-        for (SubBookReposity bookBorrow : Books) {
-            if (bookBorrow.bookName.equals(borrowBooks)) { //해당 북이 일치하는경우 즉 존재하는경우
-                int indexTemp = Books.indexOf(bookBorrow); //해당 제목에 있는 인덱스 추출
-                SubBookReposity informationResult = Books.get(indexTemp);
+        if (select >= 1) {
+            for (SubBookReposity bookBorrow : Books) {
+                if (bookBorrow.bookName.equals(borrowBooks)) { //해당 북이 일치하는경우 즉 존재하는경우
+                    System.out.println("책 정보를 다시한번 확인해주세요");
+                    System.out.println("========================================================");
+                    System.out.println("번호 : " + bookBorrow.bookNumber + "번");
+                    System.out.println("이름 : " + bookBorrow.bookName + "");
+                    System.out.println("작가 : " + bookBorrow.bookWriter + "");
+                    System.out.println("출판사 : " + bookBorrow.publisher + "");
+                    System.out.println("발매일 : " + bookBorrow.releaseYear + "년 " + bookBorrow.releaseMonth + "월 " + bookBorrow.releaseDays + "일");
+                    System.out.println("===================================");
+                    System.out.println("<<<해당 책 정보가 맞으시면 1번을 틀리다면 2번을 눌러주세요>>>");
 
-                System.out.println("책 정보를 다시한번 확인해주세요");
-                System.out.println("========================================================");
-                System.out.println("번호 : " + informationResult.bookNumber + "번");
-                System.out.println("이름 : " + informationResult.bookName + "");
-                System.out.println("작가 : " + informationResult.bookWriter + "");
-                System.out.println("출판사 : " + informationResult.publisher + "");
-                System.out.println("발매일 : " + informationResult.releaseYear + "년 " + informationResult.releaseMonth + "월 " + informationResult.releaseDays + "일");
-                System.out.println("===================================");
-                System.out.println("<<<해당 책 정보가 맞으시면 1번을 틀리다면 2번을 눌러주세요>>>");
+                    int borrowChoice = sc.nextInt();
 
-                int borrowChoice = sc.nextInt();
-
-                if (select == 1) {
-                    if (borrowChoice == 1) {
-                        System.out.println("대여가 성공적으로 완료되었습니다");
-                        UserRepository.borrowBookList[numberInspection][indexTemp] = 1; //1을 부여함으로 써 빌린것 체크
-                        //                                num번째 사람이    책번호index를 빌림
-                        break;
-                    } else if (borrowChoice == 2) {
-                        System.out.println("메인 메뉴로 돌아갑니다");
-                        break;
-                        //리턴구현
+                    if (select == 1) {
+                        if (borrowChoice == 1) {
+                            System.out.println("대여가 성공적으로 완료되었습니다");
+                            UserRepository.borrowBookList[numberInspection - 1][bookBorrow.bookNumber] = 1; //1을 부여함으로 써 빌린것 체크
+                        } else if (borrowChoice == 2) {
+                            System.out.println("메인 메뉴로 돌아갑니다");
+                        } else {
+                            System.out.println("잘못된 입력입니다");
+                        }
                     } else {
-                        System.out.println("잘못된 입력입니다");
+                        if (borrowChoice == 1) {
+                            System.out.println("반납이 성공적으로 완료되었습니다");
+                            UserRepository.borrowBookList[numberInspection - 1][bookBorrow.bookNumber] = 0;
+                        } else if (borrowChoice == 2) {
+                            System.out.println("메인 메뉴로 돌아갑니다");
+                        } else {
+                            System.out.println("잘못된 입력입니다");
+                        }
                     }
-                } else { //반납
-                    if (borrowChoice == 1) {
-                        System.out.println("반납이 성공적으로 완료되었습니다");
-                        UserRepository.borrowBookList[numberInspection][indexTemp] = 0;
-                        break;
-                    } else if (borrowChoice == 2) {
-                        System.out.println("메인 메뉴로 돌아갑니다");
-                        break;
-                    } else {
-                        System.out.println("잘못된 입력입니다");
-                    }
+                    break;
                 }
-            } else {
-                System.out.println("해당 책을 찾지 못하였습니다 다시 시도해주세요");
-                break;
             }
+        } else {
+            System.out.println("존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
         }
     }
 
