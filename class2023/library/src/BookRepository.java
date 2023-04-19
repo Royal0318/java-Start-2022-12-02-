@@ -8,18 +8,20 @@ public class BookRepository {
         ArrayList<UserRepository> peopleInformation = new ArrayList<>(); //회원정보
 
         int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지
-        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218, borrowBookList);
-        peopleInformation.add(Information);
 
-        SubBookReposity book1 = new SubBookReposity(1, "세상의마지막기차역", "무라세 다케시", "모모", 2022, 5, 9);
-        SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3);
+        SubBookReposity book1 = new SubBookReposity(1, "세상의마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false);
+        SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3,false);
         Books.add(book1);
         Books.add(book2);
 
+        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList);
+        peopleInformation.add(Information);
+
         SubBookReposity subInformation = new SubBookReposity();
+        UserRepository subUserRepository = new UserRepository();
 
         while (true) {
-            System.out.println("================A 도서관 관리프로그램입니다================");
+            System.out.println("\n================A 도서관 관리프로그램입니다================");
             System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.회원등록 6.회원조회 7.전체 책 조회 8.시스템 종료");
             int menuChoice = sc.nextInt();
 

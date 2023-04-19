@@ -15,13 +15,14 @@ public class SubBookReposity {
     public int releaseMonth;
     //책 발매 월
     public int releaseDays;
+    public boolean checkTemp;
     //책 발매 일
 
     SubBookReposity() {
 
     }
 
-    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays) {
+    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays,boolean checkTemp) {
         this.bookNumber = bookNumber;
         this.bookName = bookName;
         this.bookWriter = bookWriter;
@@ -29,145 +30,162 @@ public class SubBookReposity {
         this.releaseYear = releaseYear;
         this.releaseMonth = releaseMonth;
         this.releaseDays = releaseDays;
+        this.checkTemp = checkTemp;
     }
-/*
-오늘 해야할일
-1.책등록과 빌린부분꼬인곳고치기
-2.변수명바꾸기
-3.전체 테스트
- */
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
-        System.out.println("찾으시는 책 이름을 적어주세요");
-        sc.nextLine();
-        String findBookName = sc.nextLine();
+        while (true) {
+            System.out.println("찾으시는 책 이름을 적어주세요");
+            sc.nextLine();
+            String findBookName = sc.nextLine();
 
-        for (SubBookReposity indexNumber : Books) {
-            if (indexNumber.bookName.equals(findBookName)) {
-                findBookInformation(indexNumber,1);
+            for (SubBookReposity indexNumber : Books) {
+                if (indexNumber.bookName.equals(findBookName)) {
+                    findBookInformation(indexNumber, true);
+                    break;
+                }
+            }
+            if (!checkTemp) {
+                System.out.println("존재하지 않는 책입니다");
                 break;
             }
         }
     }
 
     public void findBookNumber(Scanner sc, ArrayList<SubBookReposity> Books) { //책 번호으로도서찾기
-        System.out.println("찾으시는 책 번호를 적어주세요");
-        int findBookNumber = sc.nextInt();
+        while (true) {
+            System.out.println("찾으시는 책 번호를 적어주세요");
+            int bookSerialNumber = sc.nextInt();
 
-        for (SubBookReposity indexNumber : Books) {
-            if (indexNumber.bookNumber == findBookNumber) {
-                findBookInformation(indexNumber,1);
+            for (SubBookReposity indexNumber : Books) {
+                if (indexNumber.bookNumber == bookSerialNumber) {
+                    findBookInformation(indexNumber, true);
+                    break;
+                }
+            }
+            if (!checkTemp) {
+                System.out.println("존재하지 않는 책입니다");
                 break;
             }
         }
-
     }
 
     public void findBookWriterName(Scanner sc, ArrayList<SubBookReposity> Books) { //책 작가이름으로도서찾기
-        System.out.println("찾으시는 책의 작가 이름을 적어주세요");
-        String bookWriter = sc.next();
+        while (true) {
+            System.out.println("찾으시는 책의 작가 이름을 적어주세요");
+            String bookWriter = sc.next();
 
-        for (SubBookReposity indexNumber : Books) {
-            if (indexNumber.bookName.equals(bookWriter)) {
-                findBookInformation(indexNumber,1);
+            for (SubBookReposity indexNumber : Books) {
+                if (indexNumber.bookWriter.equals(bookWriter)) {
+                    findBookInformation(indexNumber, true);
+                    break;
+                }
+            }
+            if (!checkTemp) {
+                System.out.println("존재하지 않는 책입니다");
                 break;
             }
         }
     }
 
-    public void findBookInformation(SubBookReposity bookIndex,int s) {
-        if (s == 1) {
-            System.out.println("책을 찾았습니다!!!");
-            System.out.println("책 번호 : " + bookIndex.bookNumber + "");
-            System.out.println("책 이름 : " + bookIndex.bookName + "");
-            System.out.println("작가 : " + bookIndex.bookWriter + "");
-            System.out.println("출판사 : " + bookIndex.publisher + "");
-            System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
-        } else {
-            System.out.println("원하시는 책이 존재하지 않습니다");
+    public void findBookInformation(SubBookReposity bookIndex,boolean checkTemp) {
+        while (true) {
+            if (checkTemp) {
+                System.out.println("책을 찾았습니다!!!");
+                System.out.println("책 번호 : " + bookIndex.bookNumber + "");
+                System.out.println("책 이름 : " + bookIndex.bookName + "");
+                System.out.println("작가 : " + bookIndex.bookWriter + "");
+                System.out.println("출판사 : " + bookIndex.publisher + "");
+                System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
+                break;
+            }
+            //break로 나가면 왜 존재하지않는책이나옴?
         }
     }
 
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
-        System.out.println("dwq : "+Books.size()+"");
         while (true) {
-            int checkTemp = 0;
             System.out.println("책 등록번호를 입력해주세요 (1 ~ 200번까지)");
             int registrationBookNumber = sc.nextInt();
 
             if (registrationBookNumber >= 1 && registrationBookNumber <= 200) {
                 for (SubBookReposity findbook : Books) {
                     if (findbook.bookNumber == registrationBookNumber) { //이미 등록된 번호인경우
-                        checkTemp = 1;
+                        checkTemp = true;
                         break;
                     }
                 }
             }
-            if (checkTemp == 1) {
+            if (checkTemp) {
                 System.out.println("이미 등록된 번호입니다 다른 번호를 입력해주세요");
+                checkTemp = false;
             } else {
-                System.out.println("책 번호가 성공적으로 등록되었습니다");
-                inputBookRegistration2(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
+                System.out.println("정상적으로 등록되었습니다");
+                inputBookName(sc, Books,registrationBookNumber); //통과되면 다음 순서로 넘김
                 break;
             }
         }
     }
 
-    public void inputBookRegistration2(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber) {
+    public void inputBookName(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber) {
         System.out.println("등록할 책의 이름을 적어주세요");
         sc.nextLine();
-        bookName = sc.nextLine();
-        System.out.println("책 이름이 정상적으로 등록되었습니다");
-        inputBookRegistration3(sc, Books, registrationBookNumber, bookName);
+        String registrationBookName = sc.next();
+        System.out.println("정상적으로 등록되었습니다");
+        inputBookWriter(sc, Books,registrationBookNumber,registrationBookName);
     }
 
-    public void inputBookRegistration3(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String bookName) {
+    public void inputBookWriter(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber,String registrationBookName) {
         System.out.println("작가 이름을 적어주세요");
-        bookWriter = sc.nextLine();
-        System.out.println("작가 이름이 정상적으로 등록되었습니다");
-        inputBookRegistration4(sc, Books, registrationBookNumber, bookName, bookWriter);
+        String registrationWriterName = sc.next();
+        System.out.println("정상적으로 등록되었습니다");
+        inputBookPublisher(sc, Books,registrationBookNumber,registrationBookName,registrationWriterName);
     }
 
-    public void inputBookRegistration4(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String bookName, String bookWriter) {
+    public void inputBookPublisher(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber,String registrationBookName,String registrationWriterName) {
         System.out.println("책 출판사를 적어주세요");
-        publisher = sc.nextLine();
+        String registrationPublisherName = sc.next();
         System.out.println("책 출판사를 정상적으로 등록하였습니다");
-        inputBookRegistration5(sc, Books, registrationBookNumber, bookName, bookWriter, publisher);
+        inputBookReleaseYear(sc, Books,registrationBookNumber,registrationBookName,registrationWriterName,registrationPublisherName);
     }
 
-    public void inputBookRegistration5(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String bookName, String bookWriter, String publisher) {
-        System.out.println("책 발매 연도를 적어주세요 (1900년 ~ 2023년까지 입력가능)");
-        releaseYear = sc.nextInt();
+    public void inputBookReleaseYear(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber,String registrationBookName,String registrationWriterName,String registrationPublisherName) {
+        while (true) {
+            System.out.println("책 발매 연도를 적어주세요 (1900년 ~ 2023년까지 입력가능)");
+            int releaseYear = sc.nextInt();
 
-        if (releaseYear >= 1900 && releaseYear <= 2023) {
-            System.out.println("연도 등록이 완료되었습니다");
-            inputBookRegistration6(sc, Books, registrationBookNumber, bookName, bookWriter, publisher, releaseYear);
-        } else {
-            System.out.println("잘못된 입력입니다");
-            inputBookRegistration5(sc, Books, registrationBookNumber, bookName, bookWriter, publisher);
+            if (releaseYear >= 1900 && releaseYear <= 2023) {
+                System.out.println("연도 등록이 완료되었습니다");
+                inpuyBookReleaseMonth(sc, Books,registrationBookNumber,registrationBookName,registrationWriterName,registrationPublisherName,releaseYear);
+                break;
+            } else {
+                System.out.println("잘못된 입력입니다");
+            }
         }
     }
 
-    public void inputBookRegistration6(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String bookName, String bookWriter, String publisher, int releaseYear) {
-        System.out.println("책 발매 월을 적어주세요");
-        releaseMonth = sc.nextInt();
+    public void  inpuyBookReleaseMonth(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber,String registrationBookName,String registrationWriterName,String registrationPublisherName,int releaseYear) {
+        while (true) {
+            System.out.println("책 발매 월을 적어주세요");
+            int releaseMonth = sc.nextInt();
 
-        if (releaseMonth >= 1 && releaseMonth <= 12) {
-            System.out.println("월 등록이 완료되었습니다");
-            inputBookRegistration7(sc, Books, registrationBookNumber, bookName, bookWriter, publisher, releaseYear, releaseMonth);
-        } else {
-            System.out.println("잘못된 입력입니다");
-            inputBookRegistration6(sc, Books, registrationBookNumber, bookName, bookWriter, publisher, releaseYear);
+            if (releaseMonth >= 1 && releaseMonth <= 12) {
+                System.out.println("월 등록이 완료되었습니다");
+                inputBookReleaseDays(sc, Books,registrationBookNumber,registrationBookName,registrationWriterName,registrationPublisherName,releaseYear,releaseMonth);
+                break;
+            } else {
+                System.out.println("잘못된 입력입니다");
+            }
         }
     }
 
-    public void inputBookRegistration7(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth) {
+    public void inputBookReleaseDays(Scanner sc, ArrayList<SubBookReposity> Books,int registrationBookNumber,String registrationBookName,String registrationWriterName,String registrationPublisherName,int releaseYear,int releaseMonth) {
         while (true) {
             System.out.println("책 발매 일을 적어주세요");
-            releaseDays = sc.nextInt();
+            int releaseDays = sc.nextInt();
 
             if (releaseDays >= 1 && releaseDays <= 31) {
                 System.out.println("책 등록절차가 모두 완료되었습니다 ");
-                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, bookName, bookWriter, publisher, releaseYear, releaseMonth, releaseDays);
+                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays,checkTemp);
                 Books.add(addBookcomplete);
                 break;
             } else {
@@ -246,7 +264,6 @@ public class SubBookReposity {
             System.out.println("===============================================");
             System.out.println("번호 : " + bookListResult.bookNumber + "번");
             System.out.println("이름 : " + bookListResult.bookName + "");
-            System.out.println("작가 : " + bookListResult.bookWriter + "");
             System.out.println("작가 : " + bookListResult.bookWriter + "");
             System.out.println("출판사 : " + bookListResult.publisher + "");
             System.out.println("발매일 : " + bookListResult.releaseYear + "년 " + bookListResult.releaseMonth + "월 " + bookListResult.releaseDays + "일");
