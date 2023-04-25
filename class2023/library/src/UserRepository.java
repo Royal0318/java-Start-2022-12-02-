@@ -3,27 +3,27 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class UserRepository {
-    public static String memberName;
+    public  String memberName;
     //회원의 이름
-    public static int memberNumber;
+    public  int memberNumber;
     //회원번호
-    public static String memberAddress;
+    public  String memberAddress;
     //회원주소
-    public static int memberPhoneFrontNumber;
-    public static int memberPhoneBackNumber;
+    public  int memberPhoneFrontNumber;
+    public  int memberPhoneBackNumber;
     //회원의 휴대폰번호 (앞4자리와 뒤4자리를 받아야 하기 때문에 2차원 배열을 사용 [][0]은 앞4자리를 받으며 [][1]은 뒤4자리를 받는다)
     public static int[][] borrowBookList;
     //회원이 빌린 책을 저장하는 변수 1차원에는 회원의번호가 2차원에는 회원이 빌린 책의 번호가 저장된다
     public UserRepository() {
-
+        //예비생성자
     }
     UserRepository(String memberName, int memberNumber, String memberAddress, int memberPhoneFrontNumber, int memberPhoneBackNumber, int[][] borrowBookList) {
-        UserRepository.memberName = memberName;
-        UserRepository.memberNumber = memberNumber;
-        UserRepository.memberAddress = memberAddress;
-        UserRepository.memberPhoneFrontNumber = memberPhoneFrontNumber;
-        UserRepository.memberPhoneBackNumber = memberPhoneBackNumber;
-        UserRepository.borrowBookList = borrowBookList;
+        this.memberName = memberName;
+        this.memberNumber = memberNumber;
+        this.memberAddress = memberAddress;
+        this.memberPhoneFrontNumber = memberPhoneFrontNumber;
+        this.memberPhoneBackNumber = memberPhoneBackNumber;
+        this.borrowBookList = borrowBookList;
     }
 
     static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
@@ -40,9 +40,11 @@ public class UserRepository {
         System.out.println("원하시는 회원번호를 입력해주세요");
         int signupMemberNumber = sc.nextInt();
 
-        if (UserRepository.memberNumber != signupMemberNumber) {
-            System.out.println("회원번호를 정상적으로 등록하였습니다");
-            memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, signupMemberNumber);
+        for (UserRepository peopleIndex : peopleInformation) { //수정
+            if (peopleIndex.memberNumber != signupMemberNumber) {
+                System.out.println("회원번호를 정상적으로 등록하였습니다");
+                memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, signupMemberNumber);
+            }
         }
         System.out.println("중복되는 회원번호입니다");
     }
@@ -70,29 +72,31 @@ public class UserRepository {
     }
 
 
-    public static void findPeopleInformation(Scanner sc,ArrayList<SubBookReposity> Books) {
+    public static void findPeopleInformation(Scanner sc,ArrayList<SubBookReposity> Books,ArrayList<UserRepository> peopleInformation) {
         System.out.println("회원 이름을 적어주세요");
         sc.nextLine();
         String findMemberName = sc.nextLine();
         int checkTemp = 0;
 
-        if (Objects.equals(memberName, findMemberName)) { //해당 멤버가 존재한다면
-            System.out.println("=============================");
-            System.out.println("회원 번호 : " + UserRepository.memberNumber + "번");
-            System.out.println("회원 이름 : " + UserRepository.memberName + "");
-            System.out.println("회원 주소 : " + UserRepository.memberAddress + "");
-            System.out.println("회원 전화번호 : 010 - " + UserRepository.memberPhoneFrontNumber + " - " + UserRepository.memberPhoneBackNumber + "");
-            System.out.println("빌린 책 목록 : ");
-            for (SubBookReposity nave : Books) {
-                if (borrowBookList[memberNumber][nave.bookNumber] == 1) { //1인것은 빌렸을경우 나타낸다
-                    System.out.println("대여중 : " + nave.bookName + "");
-                    System.out.println("==============");
+        for (UserRepository memberIndex : peopleInformation) { //회원찾기용
+            if (Objects.equals(memberIndex.memberName, findMemberName)) { //peopleInformation의 인스턴스에 저장된 이름이 입력한변수와 같은경우
+                System.out.println("=============================");
+                System.out.println("회원 번호 : " + memberIndex.memberNumber + "번");
+                System.out.println("회원 이름 : " + memberIndex.memberName + "");
+                System.out.println("회원 주소 : " + memberIndex.memberAddress + "");
+                System.out.println("회원 전화번호 : 010 - " + memberIndex.memberPhoneFrontNumber + " - " + memberIndex.memberPhoneBackNumber + "");
+                System.out.println("빌린 책 목록 : ");
+                for (int i = 0; i < Books.size();i++) { //Book이 등록된 번호까지 for문을 돌면서 빌린것이있으면 출력함
+                    if (memberIndex.borrowBookList[memberIndex.memberNumber][i] == 1) { //[멤버번호][책번호]]
+                        System.out.println("대여중 : " + SubBookReposity.bookName + ""); //bookName
+                        System.out.println("==============");
+                    }
                 }
+                checkTemp = 1;
             }
-            checkTemp = 1;
-        }
-        if (checkTemp == 0) {
-            System.out.println("존재하지 않는 회원입니다");
+            if (checkTemp == 0) {
+                System.out.println("존재하지 않는 회원입니다");
+            }
         }
     }
     static void memberPhoneBackNumber(Scanner sc, ArrayList<UserRepository> peopleInformation,int[][] borrowBookList,String signupMemberName,int signupMemberNumber,String signupMemberAddress,int signupFrontNumber) {

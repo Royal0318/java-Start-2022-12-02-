@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class BookRepository {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<SubBookReposity> Books = new ArrayList<>(); //책정보관리 Array
-        ArrayList<UserRepository> peopleInformation = new ArrayList<>(); //회원정보
+        ArrayList<SubBookReposity> Books = new ArrayList<>(); //책정보 관련 Arraylist
+        ArrayList<UserRepository> peopleInformation = new ArrayList<>(); //회원정보 관련 Arraylist
 
         int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지
 
@@ -13,16 +13,18 @@ public class BookRepository {
         SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3,false);
         Books.add(book1);
         Books.add(book2);
-
         UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList);
+
         peopleInformation.add(Information);
 
-        SubBookReposity subInformation = new SubBookReposity();
+
         UserRepository subUserRepository = new UserRepository();
+        SubBookReposity subInformation = new SubBookReposity();
+
 
         while (true) {
             System.out.println("\n================A 도서관 관리프로그램입니다================");
-            System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.회원등록 6.회원조회 7.전체 책 조회 8.시스템 종료");
+            System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.도서 삭제 6.회원등록 7.회원조회 8.전체 책 조회 9.시스템 종료");
             int menuChoice = sc.nextInt();
 
             switch (menuChoice) {
@@ -54,15 +56,17 @@ public class BookRepository {
                     book1.borrowBook(sc, Books,peopleInformation);
                     break;
                 case 5:
+                    book1.bookRemove(sc,Books);
+                case 6:
                     UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
                     break;
-                case 6:
-                    UserRepository.findPeopleInformation(sc,Books);
-                    break;
                 case 7:
-                    book1.findTotalBookInformation(Books);
+                    UserRepository.findPeopleInformation(sc,Books,peopleInformation);
                     break;
                 case 8:
+                    book1.findTotalBookInformation(Books);
+                    break;
+                case 9:
                     System.out.println("프로그램을 종료합니다");
                     return;
                 default:
