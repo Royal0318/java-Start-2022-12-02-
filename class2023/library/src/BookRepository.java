@@ -52,7 +52,7 @@ public class BookRepository {
                 case 3:
                     book1.returnBook(sc,Books,peopleInformation);
                     break;
-                case 4:
+                 case 4:
                     book1.borrowBook(sc, Books,peopleInformation);
                     break;
                 case 5:

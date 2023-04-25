@@ -23,7 +23,7 @@ public class UserRepository {
         this.memberAddress = memberAddress;
         this.memberPhoneFrontNumber = memberPhoneFrontNumber;
         this.memberPhoneBackNumber = memberPhoneBackNumber;
-        this.borrowBookList = borrowBookList;
+        UserRepository.borrowBookList = borrowBookList;
     }
 
     static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
@@ -87,7 +87,7 @@ public class UserRepository {
                 System.out.println("회원 전화번호 : 010 - " + memberIndex.memberPhoneFrontNumber + " - " + memberIndex.memberPhoneBackNumber + "");
                 System.out.println("빌린 책 목록 : ");
                 for (int i = 0; i < Books.size();i++) { //Book이 등록된 번호까지 for문을 돌면서 빌린것이있으면 출력함
-                    if (memberIndex.borrowBookList[memberIndex.memberNumber][i] == 1) { //[멤버번호][책번호]]
+                    if (borrowBookList[memberIndex.memberNumber][i] == 1) { //[멤버번호][책번호]]
                         System.out.println("대여중 : " + SubBookReposity.bookName + ""); //bookName
                         System.out.println("==============");
                     }
