@@ -12,9 +12,6 @@ public class Question10025 {
         int testCase = Integer.parseInt(st.nextToken()); //양동이 개수
         int distance = Integer.parseInt(st.nextToken()); //곰이 양쪽으로 닿는거리
 
-        int temp = 0;
-        int max = 0;
-
         int[] arr = new int[1000001]; //거리가 100만까지 존재하기때문
 
         for (int i = 0; i < testCase;i++) {
@@ -23,13 +20,24 @@ public class Question10025 {
             int xi = Integer.parseInt(st.nextToken()); //떨어진 거리
             arr[xi] = gi; //거리를 배열에 담아 그 거리에 도달하면 얼음무게를 계산
         }
-        while (true) { //while을이용하여 각각의 값을 비교하는방법 구상하자
-            //양끝까지 거리는 2k + 1
-            for (int i = 0; i <= ((distance * 2) + 1) && i <= 1000000; i++) { //곰의 오른쪽 거리만큼이며 한계가 100만까지
-                temp += arr[i]; //배열에 저장했던 얼음무게를 result에 저장
-                System.out.println(temp);
+
+        int temp = ((distance * 2) + 1); //엘버트가 닿을수있는 거리의합
+        int max = 0;
+        int sum = 0;
+
+        for (int i = 0;i <= 1000000;i++) { // 1부터 100만까지 탐색
+            if (i >= temp) { //i가 늘어나면서 앞에꺼는 하나씩삭제해간다 //즉 범위는 변하지 않고 그대로 움직이되 위치만 바뀌는것
+                sum -= arr[i - temp];
             }
-            //0부터 distance가 3이라면 i < 7까지
+            sum += arr[i]; //
+            if (max < sum) { //sum이 클때마다 계속 max값이 변함
+                max = sum;
+            }
         }
+        System.out.println(max);
+        /*
+        예를들어 i가 7에 도달했을때 temp가 7이라면은 슬라이드를 움직일때이다 i >= temp 즉 7 >=7 에 만족하므로 sum -= arr[i - temp] 즉 sum -= arr[7 - 7] 0이 되므로
+        arr[0]부터 삭제하고 if문밑에 sum += arr[i]번을 추가하면서 뒤에는 삭제 앞에서는 추가 하는 방식으로 진행됨
+         */
     }
 }
