@@ -9,7 +9,7 @@ public class BookRepository {
 
         int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지
 
-        SubBookReposity book1 = new SubBookReposity(1, "세상의마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false);
+        SubBookReposity book1 = new SubBookReposity(1, "마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false);
         SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3,false);
         Books.add(book1);
         Books.add(book2);
@@ -50,10 +50,10 @@ public class BookRepository {
                     book1.inputBookRegistration(sc, Books);
                     break;
                 case 3:
-                    book1.returnBook(sc,Books,peopleInformation);
+                    book1.returnBook(sc,peopleInformation,Books);
                     break;
                  case 4:
-                    book1.borrowBook(sc, Books,peopleInformation);
+                    book1.borrowBook(sc,peopleInformation,Books);
                     break;
                 case 5:
                     book1.bookRemove(sc,Books);
@@ -61,6 +61,7 @@ public class BookRepository {
                     UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
                     break;
                 case 7:
+
                     UserRepository.findPeopleInformation(sc,Books,peopleInformation);
                     break;
                 case 8:
