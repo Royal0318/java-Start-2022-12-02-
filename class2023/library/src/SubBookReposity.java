@@ -17,8 +17,9 @@ public class SubBookReposity {
     public int releaseMonth;
     //책 발매 월
     public int releaseDays;
-    public boolean checkTemp;
     //책 발매 일
+    public boolean checkTemp;
+    //책의 존재여부 밎 회원번호 매치 확인을 위해 사용
 
     SubBookReposity() {
         //서브생성자
@@ -37,8 +38,7 @@ public class SubBookReposity {
 
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
         System.out.println("찾으시는 책 이름을 적어주세요");
-        sc.nextLine();
-        String findBookName = sc.nextLine();
+        String findBookName = sc.next();
 
         for (SubBookReposity indexNumber : Books) {
             if (bookName.equals(findBookName)) {
@@ -215,7 +215,7 @@ public class SubBookReposity {
                 System.out.println("발매일 : " + findBook.releaseYear + "년 " + findBook.releaseMonth + "월 " + findBook.releaseDays + "일");
                 System.out.println("===================================");
                 System.out.println("<<<해당 책 정보가 맞으시면 1번을 틀리다면 2번을 눌러주세요>>>");
-
+                checkTemp = true;
                 int borrowChoice = sc.nextInt();
 
                 if (select == 1) {
@@ -239,6 +239,9 @@ public class SubBookReposity {
                 }
                 break;
             }
+        }
+        if (!checkTemp) {
+            System.out.println("존재하지 않는 책입니다 다시 시도해주세요");
         }
     }
 

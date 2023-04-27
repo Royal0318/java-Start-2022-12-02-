@@ -29,25 +29,19 @@ public class UserRepository {
     /*
     현재 문제점 2가지
     1.책을 삭제하고 회원가입으로 넘어가는 문제
-    2.빌린책 목록 나오게하는것 구현
+    2.빌린책 목록 나오게하는것 구현 (구현완료)
     3.변수명 재수정
     4.위 3가지 고친 후 리테스트
      */
     static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
         System.out.println("===========회원등록 절차를 시작합니다===========");
         System.out.println("회원의 이름을 적어주세요");
-
-        sc.nextLine();
-        String signupMemberName = sc.nextLine();
-        System.out.println("회원 이름이 정상적으로 등록되었습니다");
-        memberRegistrationNumber(sc, peopleInformation, borrowBookList,signupMemberName);
-    }
-
-    static void memberRegistrationNumber(Scanner sc,ArrayList<UserRepository> peopleInformation, int[][] borrowBookList,String signupMemberName) {
+        String signupMemberName = sc.next();
+        System.out.println("안내 : 회원 이름이 정상적으로 등록되었습니다");
+        //여기서 책을삭제하고 재등록하면 그자리에 책이 들어갈수있도록 구현한다
         System.out.println("고객님의 회원번호는 " + (peopleInformation.size() + 1) + "번 입니다");
         memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, (peopleInformation.size() + 1));
     }
-
     static void memberRegistrationAddress(Scanner sc,ArrayList<UserRepository> peopleInformation,int[][] borrowBookList,String signupMemberName,int signupMemberNumber) {
         System.out.println("주소를 입력해주세요");
         String signupMemberAddress = sc.nextLine();
@@ -85,10 +79,12 @@ public class UserRepository {
                 System.out.println("회원 주소 : " + memberIndex.memberAddress + "");
                 System.out.println("회원 전화번호 : 010 - " + memberIndex.memberPhoneFrontNumber + " - " + memberIndex.memberPhoneBackNumber + "");
                 System.out.println("빌린 책 목록 : ");
-                for (int i = 0; i < Books.size();i++) { //Book이 등록된 번호까지 for문을 돌면서 빌린것이있으면 출력함
-                    if (borrowBookList[memberIndex.memberNumber][i] == 1) { //[멤버번호][책번호]]
-                       // System.out.println("대여중 : " + bookName + ""); //bookName
-                        System.out.println("==============");
+
+                for (SubBookReposity borrowBookOutput : Books) {
+                    //빌린 책을 기록한 2차원배열 : [멤버인덱스넘버][책번호] 가 1인경우 빌린흔적이므로 그 index 책네임출력
+                    if (borrowBookList[memberIndex.memberNumber][borrowBookOutput.bookNumber] == 1) {
+                        System.out.println("대여중 : " + borrowBookOutput.bookName + ""); //bookName
+                        System.out.println("================");
                     }
                 }
             }
