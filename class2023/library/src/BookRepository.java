@@ -61,7 +61,7 @@ public class BookRepository {
                 case 5:
                     book1.bookRemove(sc,Books);
                 case 6:
-                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
+                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList,Books);
                     break;
                 case 7:
 

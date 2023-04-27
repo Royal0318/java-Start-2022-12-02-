@@ -29,16 +29,15 @@ public class UserRepository {
     /*
     현재 문제점 2가지
     1.책을 삭제하고 회원가입으로 넘어가는 문제
-    2.빌린책 목록 나오게하는것 구현 (구현완료)
+    2.책을 삭제하고 등록시 번호를 순서대로 나오게 구현
     3.변수명 재수정
     4.위 3가지 고친 후 리테스트
      */
-    static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
+    static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList,ArrayList<SubBookReposity> Books) {
         System.out.println("===========회원등록 절차를 시작합니다===========");
         System.out.println("회원의 이름을 적어주세요");
         String signupMemberName = sc.next();
         System.out.println("안내 : 회원 이름이 정상적으로 등록되었습니다");
-        //여기서 책을삭제하고 재등록하면 그자리에 책이 들어갈수있도록 구현한다
         System.out.println("고객님의 회원번호는 " + (peopleInformation.size() + 1) + "번 입니다");
         memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, (peopleInformation.size() + 1));
     }

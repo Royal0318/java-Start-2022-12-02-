@@ -100,9 +100,13 @@ public class SubBookReposity {
     }
 
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
-        System.out.println("새로 등록될 책 번호는 : " + (Books.size() + 1) + "번 입니다");
-        int registrationBookNumber = (Books.size() + 1);
-        inputBookName(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
+        for (SubBookReposity newRegisterNumber : Books) { //삭제한 경우가 있기때문에 그 부분을 채우기 위함
+            if (newRegisterNumber.bookNumber == 0) { //만약 책 넘버가 0인경우가 존재한다면 그 부분이 삭제된 부분이기때문에 다시 채운다
+                System.out.println("새로 등록될 책 번호는 : " + newRegisterNumber.bookNumber + "번 입니다");
+                int registrationBookNumber = newRegisterNumber.bookNumber;
+                inputBookName(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
+            }
+        }
     }
 
     public void inputBookName(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber) {
