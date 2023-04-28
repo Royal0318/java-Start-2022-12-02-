@@ -6,7 +6,6 @@ public class BookRepository {
         Scanner sc = new Scanner(System.in);
         ArrayList<SubBookReposity> Books = new ArrayList<>(); //책정보 관련 Arraylist
         ArrayList<UserRepository> peopleInformation = new ArrayList<>(); //회원정보 관련 Arraylist
-
         int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지 생성가능하도록 2차원 배열로 구현
 
         SubBookReposity book1 = new SubBookReposity(1, "마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false,0);
@@ -14,7 +13,7 @@ public class BookRepository {
         Books.add(book1);
         Books.add(book2);
 
-        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList);
+        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList,0,false);
 
         peopleInformation.add(Information);
 
@@ -26,8 +25,8 @@ public class BookRepository {
 
         //메인메뉴
         while (true) {
-            System.out.println("\n================A 도서관 관리프로그램입니다================");
-            System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.도서 삭제 6.회원등록 7.회원조회 8.전체 책 조회 9.시스템 종료");
+            System.out.println("\n===========================A 도서관 관리프로그램입니다===========================");
+            System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.도서 삭제 6.회원관리 7.전체 책 조회 8.시스템 종료");
             int menuChoice = sc.nextInt();
 
             switch (menuChoice) {
@@ -59,18 +58,30 @@ public class BookRepository {
                     book1.borrowBook(sc,peopleInformation,Books);
                     break;
                 case 5:
-                    book1.bookRemove(sc,Books);
+                    book1.deleteBook(sc,Books);
                 case 6:
-                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
+                    System.out.println("1.회원조회 2.회원등록 3.회원삭제 4.돌아가기");
+                    int managementMenuChoice = sc.nextInt();
+
+                    if (managementMenuChoice == 1) {
+                        UserRepository.findPeopleInformation(sc,Books,peopleInformation);
+                        break;
+                    } else if (managementMenuChoice == 2) {
+                        UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
+                        break;
+                    } else if (managementMenuChoice == 3) {
+                        UserRepository.memberDelete(sc,peopleInformation);
+                    } else if (managementMenuChoice == 4) {
+                        break;
+                    } else {
+                        System.out.println("잘못된 입력입니다");
+                        break;
+                    }
                     break;
                 case 7:
-
-                    UserRepository.findPeopleInformation(sc,Books,peopleInformation);
-                    break;
-                case 8:
                     book1.findTotalBookInformation(Books);
                     break;
-                case 9:
+                case 8:
                     System.out.println("프로그램을 종료합니다");
                     return;
                 default:
