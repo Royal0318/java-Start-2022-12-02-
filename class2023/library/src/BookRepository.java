@@ -50,6 +50,7 @@ public class BookRepository {
                 case 2:
                     System.out.println("책 등록절차를 시작합니다");
                     book1.inputBookRegistration(sc, Books);
+
                     break;
                 case 3:
                     book1.returnBook(sc,peopleInformation,Books);
@@ -60,24 +61,25 @@ public class BookRepository {
                 case 5:
                     book1.deleteBook(sc,Books);
                 case 6:
-                    System.out.println("1.회원조회 2.회원등록 3.회원삭제 4.돌아가기");
-                    int managementMenuChoice = sc.nextInt();
+                    while (true) {
+                        System.out.println("1.회원조회 2.회원등록 3.회원삭제 4.돌아가기");
+                        int managementMenuChoice = sc.nextInt();
 
-                    if (managementMenuChoice == 1) {
-                        UserRepository.findPeopleInformation(sc,Books,peopleInformation);
-                        break;
-                    } else if (managementMenuChoice == 2) {
-                        UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
-                        break;
-                    } else if (managementMenuChoice == 3) {
-                        UserRepository.memberDelete(sc,peopleInformation);
-                    } else if (managementMenuChoice == 4) {
-                        break;
-                    } else {
-                        System.out.println("잘못된 입력입니다");
-                        break;
+                        if (managementMenuChoice == 1) {
+                            UserRepository.findPeopleInformation(sc, Books, peopleInformation);
+                            break;
+                        } else if (managementMenuChoice == 2) {
+                            UserRepository.memberRegistrationName(sc, peopleInformation, borrowBookList);
+                            break;
+                        } else if (managementMenuChoice == 3) {
+                            UserRepository.memberDelete(sc, peopleInformation);
+                        } else if (managementMenuChoice == 4) {
+                            break;
+                        } else {
+                            System.out.println("잘못된 입력입니다 다시 입력해주세요");
+                            break;
+                        }
                     }
-                    break;
                 case 7:
                     book1.findTotalBookInformation(Books);
                     break;

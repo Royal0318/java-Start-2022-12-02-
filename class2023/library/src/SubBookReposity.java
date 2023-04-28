@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -38,13 +39,14 @@ public class SubBookReposity {
     }
 
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
+        checkTemp = false; //책을 찾기위해 재진입할경우 초기화시키기 위함
         System.out.println("찾으시는 책 이름을 적어주세요");
         String findBookName = sc.next();
 
         for (SubBookReposity indexNumber : Books) {
             if (Objects.equals(indexNumber.bookName, findBookName)) {
-                findBookInformation(indexNumber, true);
-                break;
+                checkTemp = true;
+                findBookInformation(indexNumber);
             }
         }
         if (!checkTemp) {
@@ -53,13 +55,14 @@ public class SubBookReposity {
     }
 
     public void findBookNumber(Scanner sc, ArrayList<SubBookReposity> Books) { //책 번호으로도서찾기
+        checkTemp = false;
         System.out.println("찾으시는 책 번호를 적어주세요");
         int bookSerialNumber = sc.nextInt();
 
         for (SubBookReposity indexNumber : Books) {
             if (indexNumber.bookNumber == bookSerialNumber) {
-                findBookInformation(indexNumber, true);
-                break;
+                checkTemp = true;
+                findBookInformation(indexNumber);
             }
         }
         if (!checkTemp) {
@@ -68,13 +71,14 @@ public class SubBookReposity {
     }
 
     public void findBookWriterName(Scanner sc, ArrayList<SubBookReposity> Books) { //책 작가이름으로도서찾기
+        checkTemp = false;
         System.out.println("찾으시는 책의 작가 이름을 적어주세요");
         String bookWriter = sc.next();
 
         for (SubBookReposity indexNumber : Books) {
             if (indexNumber.bookWriter.equals(bookWriter)) {
-                findBookInformation(indexNumber, true);
-                break;
+                checkTemp = true;
+                findBookInformation(indexNumber);
             }
         }
         if (!checkTemp) {
@@ -82,18 +86,13 @@ public class SubBookReposity {
         }
     }
 
-    public void findBookInformation(SubBookReposity bookIndex, boolean checkTemp) {
-        while (true) {
-            if (checkTemp) {
-                System.out.println("책을 찾았습니다!!!");
-                System.out.println("책 번호 : " + bookIndex.bookNumber + "");
-                System.out.println("책 이름 : " + bookIndex.bookName + ""); //문제
-                System.out.println("작가 : " + bookIndex.bookWriter + "");
-                System.out.println("출판사 : " + bookIndex.publisher + "");
-                System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
-                break;
-            }
-        }
+    public void findBookInformation(SubBookReposity bookIndex) {
+        System.out.println("책을 찾았습니다!!!");
+        System.out.println("책 번호 : " + bookIndex.bookNumber + "");
+        System.out.println("책 이름 : " + bookIndex.bookName + "");
+        System.out.println("작가 : " + bookIndex.bookWriter + "");
+        System.out.println("출판사 : " + bookIndex.publisher + "");
+        System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
     }
 
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
@@ -134,7 +133,7 @@ public class SubBookReposity {
 
             if (releaseYear >= 1900 && releaseYear <= 2023) {
                 System.out.println("연도 등록이 완료되었습니다");
-                inpuyBookReleaseMonth(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear);
+                inputBookReleaseMonth(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear);
                 break;
             } else {
                 System.out.println("잘못된 입력입니다");
@@ -142,7 +141,7 @@ public class SubBookReposity {
         }
     }
 
-    public void inpuyBookReleaseMonth(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear) {
+    public void inputBookReleaseMonth(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear) {
         while (true) {
             System.out.println("책 발매 월을 적어주세요");
             int releaseMonth = sc.nextInt();
@@ -265,20 +264,20 @@ public class SubBookReposity {
             }
         }
     }
-
     public void deleteBook (Scanner sc, ArrayList<SubBookReposity> Books) { //책이 삭제되면 회원가입으로 넘어가지는 현상 고침
-        System.out.println("삭제하고싶은 책 번호를 적어주세요");
-        int removeBookNumber = sc.nextInt();
-
-        for (SubBookReposity deleteBookIndex : Books) {
-            if (deleteBookIndex.bookNumber == removeBookNumber) {
-                System.out.println("책이 정상적으로 삭제되었습니다");
-                checkTemp = true;
-                deleteBookSave = deleteBookIndex.bookNumber;
-                Books.remove(deleteBookIndex);
-                break;
-            }
+        checkTemp = false;
+        for (SubBookReposity bookListResult : Books) {
+            System.out.println("===============================================");
+            System.out.println("번호 : " + bookListResult.bookNumber + "번");
+            System.out.println("이름 : " + bookListResult.bookName + "");
         }
+        System.out.println("===============================================");
+        System.out.println("삭제하고싶은 책 이름을 적어주세요");
+        String removeBookName = sc.next();
+
+
+        //지금 Arraylist에서 삭제하는경우 ConcurrentModificationException오류가 발생하기때문에 이 오류를 해결하는 방법을 생각해야한다
+
         if (!checkTemp) {
             System.out.println("책 번호를 다시한번 확인해주세요");
         }
