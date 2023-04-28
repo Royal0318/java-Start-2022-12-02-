@@ -20,12 +20,12 @@ public class SubBookReposity {
     //책 발매 일
     public boolean checkTemp;
     //책의 존재여부 밎 회원번호 매치 확인을 위해 사용
-
+    public int deleteBookSave;
     SubBookReposity() {
         //서브생성자
     }
 
-    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays, boolean checkTemp) {
+    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays, boolean checkTemp,int deleteBookSave) {
         this.bookNumber = bookNumber;
         this.bookName = bookName;
         this.bookWriter = bookWriter;
@@ -34,6 +34,7 @@ public class SubBookReposity {
         this.releaseMonth = releaseMonth;
         this.releaseDays = releaseDays;
         this.checkTemp = checkTemp;
+        this.deleteBookSave = deleteBookSave;
     }
 
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) { //책 제목으로도서찾기
@@ -94,18 +95,17 @@ public class SubBookReposity {
                 System.out.println("출판사 : " + bookIndex.publisher + "");
                 System.out.println("발매 연월일 : " + bookIndex.releaseYear + "년 " + bookIndex.releaseMonth + "월 " + bookIndex.releaseDays + "일");
                 break;
-                //break로 나가면 왜 존재하지않는책이나옴?
             }
         }
     }
 
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) { //책등록
-        for (SubBookReposity newRegisterNumber : Books) { //삭제한 경우가 있기때문에 그 부분을 채우기 위함
-            if (newRegisterNumber.bookNumber == 0) { //만약 책 넘버가 0인경우가 존재한다면 그 부분이 삭제된 부분이기때문에 다시 채운다
-                System.out.println("새로 등록될 책 번호는 : " + newRegisterNumber.bookNumber + "번 입니다");
-                int registrationBookNumber = newRegisterNumber.bookNumber;
-                inputBookName(sc, Books, registrationBookNumber); //통과되면 다음 순서로 넘김
-            }
+        if (deleteBookSave != 0) { //책을 지운경우 새로운 책을등록하는경우 다시 그 번호를 사용한다
+            System.out.println("새로 등록될 책 번호는 : " + deleteBookSave + "번 입니다");
+            inputBookName(sc, Books, deleteBookSave);
+        } else { //지우지않은경우 그대로 등록
+            System.out.println("새로 등록될 책 번호는 : " + (Books.size() + 1) + "번 입니다");
+            inputBookName(sc, Books, (Books.size() + 1));
         }
     }
 
@@ -167,8 +167,9 @@ public class SubBookReposity {
 
             if (releaseDays >= 1 && releaseDays <= 31) {
                 System.out.println("책 등록절차가 모두 완료되었습니다 ");
-                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays, checkTemp);
+                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays, checkTemp,deleteBookSave);
                 Books.add(addBookcomplete);
+                deleteBookSave = 0;
                 break;
             } else {
                 System.out.println("잘못된 입력입니다");
@@ -255,8 +256,9 @@ public class SubBookReposity {
 
         for (SubBookReposity deleteBookIndex : Books) {
             if (deleteBookIndex.bookNumber == removeBookNumber) {
-                System.out.println("책이 삭제되었습니다");
+                System.out.println("책이 정상적으로 삭제되었습니다");
                 checkTemp = true;
+                deleteBookSave = deleteBookIndex.bookNumber;
                 Books.remove(deleteBookIndex);
                 break;
             }
@@ -268,6 +270,7 @@ public class SubBookReposity {
 
     public void findTotalBookInformation(ArrayList<SubBookReposity> Books) {
         System.out.println("<<<현재까지 등록된 A도서관의 전체 잭 정보입니다>>>");
+
 
         for (SubBookReposity bookListResult : Books) {
             System.out.println("===============================================");

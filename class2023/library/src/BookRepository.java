@@ -9,8 +9,8 @@ public class BookRepository {
 
         int[][] borrowBookList = new int[1000][1000]; //1000명이 1000권까지 생성가능하도록 2차원 배열로 구현
 
-        SubBookReposity book1 = new SubBookReposity(1, "마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false);
-        SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3,false);
+        SubBookReposity book1 = new SubBookReposity(1, "마지막기차역", "무라세 다케시", "모모", 2022, 5, 9,false,0);
+        SubBookReposity book2 = new SubBookReposity(2, "홍길동전", "김철수", "신세계출판사", 2015, 2, 3,false,0);
         Books.add(book1);
         Books.add(book2);
 
@@ -19,10 +19,10 @@ public class BookRepository {
         peopleInformation.add(Information);
 
 
-        /*
+
         UserRepository subUserRepository = new UserRepository();
         SubBookReposity subInformation = new SubBookReposity();
-         */
+
 
         //메인메뉴
         while (true) {
@@ -61,7 +61,7 @@ public class BookRepository {
                 case 5:
                     book1.bookRemove(sc,Books);
                 case 6:
-                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList,Books);
+                    UserRepository.memberRegistrationName(sc,peopleInformation,borrowBookList);
                     break;
                 case 7:
 

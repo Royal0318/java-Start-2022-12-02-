@@ -29,11 +29,11 @@ public class UserRepository {
     /*
     현재 문제점 2가지
     1.책을 삭제하고 회원가입으로 넘어가는 문제
-    2.책을 삭제하고 등록시 번호를 순서대로 나오게 구현
+    2.책을 삭제하고 등록시 번호를 순서대로 나오게 구현 (완료)
     3.변수명 재수정
     4.위 3가지 고친 후 리테스트
      */
-    static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList,ArrayList<SubBookReposity> Books) {
+    static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
         System.out.println("===========회원등록 절차를 시작합니다===========");
         System.out.println("회원의 이름을 적어주세요");
         String signupMemberName = sc.next();
