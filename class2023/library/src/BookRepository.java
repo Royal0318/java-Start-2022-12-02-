@@ -17,11 +17,8 @@ public class BookRepository {
 
         peopleInformation.add(Information);
 
-
-
         UserRepository subUserRepository = new UserRepository();
         SubBookReposity subInformation = new SubBookReposity();
-
 
         //메인메뉴
         while (true) {
@@ -29,6 +26,66 @@ public class BookRepository {
             System.out.println("1.도서 찾기 2.도서 등록 3.도서 반납 4.도서 대여 5.도서 삭제 6.회원관리 7.전체 책 조회 8.시스템 종료");
             int menuChoice = sc.nextInt();
 
+            /*
+            Q.왜 if문으로 할때는 문제가없는데 swich를 쓸때에는 왜 다른메소드로 넘어가는 문제가 생길까?
+             */
+                if (menuChoice == 1) {
+                    System.out.println("1.책 제목으로 검색 2.책 번호로 검색 3.책 작가 이름으로 검색");
+                    int findBookMenuChoice = sc.nextInt();
+
+                    switch (findBookMenuChoice) {
+                        case 1 :
+                            book1.findBookTitle(sc,Books);
+                            break;
+                        case 2 :
+                            book1.findBookNumber(sc,Books);
+                            break;
+                        case 3 :
+                            book1.findBookWriterName(sc,Books);
+                            break;
+                        default :
+                            System.out.println("안내 : 잘못된 입력입니다");
+                            break;
+                    }
+                } else if (menuChoice == 2) {
+                    System.out.println("책 등록절차를 시작합니다");
+                    book1.inputBookRegistration(sc, Books);
+                } else if (menuChoice == 3) {
+                    book1.returnBook(sc,peopleInformation,Books);
+                } else if (menuChoice == 4) {
+                    book1.borrowBook(sc,peopleInformation,Books);
+                } else if (menuChoice == 5) {
+                    book1.deleteBook(sc,Books);
+                } else if (menuChoice == 6) {
+                        System.out.println("1.회원조회 2.회원등록 3.회원삭제 4.돌아가기");
+                        int managementMenuChoice = sc.nextInt();
+
+                        switch (managementMenuChoice) {
+                            case 1:
+                                UserRepository.findPeopleInformation(sc, Books, peopleInformation);
+                                break;
+                            case 2:
+                                UserRepository.memberRegistrationName(sc, peopleInformation, borrowBookList);
+                                break;
+                            case 3:
+                                UserRepository.deleteMemberInformation(sc, peopleInformation);
+                                break;
+                            case 4:
+                                System.out.println("안내 : 메인메뉴로 돌아갑니다");
+                                break;
+                            default:
+                                System.out.println("잘못된 입력입니다 다시 입력해주세요");
+                                break;
+                        }
+                } else if (menuChoice == 7) {
+                    book1.findTotalBookInformation(Books);
+                } else if (menuChoice == 8) {
+                    System.out.println("프로그램을 종료합니다");
+                    break;
+                } else {
+                    System.out.println("잘못된 입력입니다");
+                }
+                /*
             switch (menuChoice) {
                 case 1:
                     System.out.println("1.책 제목으로 검색 2.책 번호로 검색 3.책 작가 이름으로 검색");
@@ -61,6 +118,7 @@ public class BookRepository {
                 case 5:
                     book1.deleteBook(sc,Books);
                 case 6:
+                    //여기에서 실행이끝나면 전체 잭이 조회되는 문제가 발생
                     while (true) {
                         System.out.println("1.회원조회 2.회원등록 3.회원삭제 4.돌아가기");
                         int managementMenuChoice = sc.nextInt();
@@ -72,8 +130,9 @@ public class BookRepository {
                             UserRepository.memberRegistrationName(sc, peopleInformation, borrowBookList);
                             break;
                         } else if (managementMenuChoice == 3) {
-                            UserRepository.memberDelete(sc, peopleInformation);
+                            UserRepository.deleteMemberInformation(sc, peopleInformation);
                         } else if (managementMenuChoice == 4) {
+                            //
                             break;
                         } else {
                             System.out.println("잘못된 입력입니다 다시 입력해주세요");
@@ -90,6 +149,8 @@ public class BookRepository {
                     System.out.println("잘못된 입력입니다");
                     break;
             }
+
+                 */
         }
     }
 }
