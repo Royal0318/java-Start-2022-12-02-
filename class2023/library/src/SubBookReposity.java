@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -108,67 +107,67 @@ public class SubBookReposity {
     public void inputBookName(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber) {
         System.out.println("등록할 책의 이름을 적어주세요");
         String registrationBookName = sc.next();
-        System.out.println("정상적으로 등록되었습니다");
+        System.out.println("안내 : 정상적으로 등록되었습니다");
         inputBookWriter(sc, Books, registrationBookNumber, registrationBookName);
     }
 
     public void inputBookWriter(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName) {
         System.out.println("작가 이름을 적어주세요");
         String registrationWriterName = sc.next();
-        System.out.println("정상적으로 등록되었습니다");
+        System.out.println("안내 : 정상적으로 등록되었습니다");
         inputBookPublisher(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName);
     }
 
     public void inputBookPublisher(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName) {
         System.out.println("책 출판사를 적어주세요");
         String registrationPublisherName = sc.next();
-        System.out.println("책 출판사를 정상적으로 등록하였습니다");
+        System.out.println("안내 : 책 출판사를 정상적으로 등록하였습니다");
         inputBookReleaseYear(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName);
     }
 
     public void inputBookReleaseYear(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName) {
         while (true) {
-            System.out.println("책 발매 연도를 적어주세요 (1900년 ~ 2023년까지 입력가능)");
+            System.out.println("책 발매 연도(Year)을 적어주세요 (1900년 ~ 2023년까지 입력가능)");
             int releaseYear = sc.nextInt();
 
             if (releaseYear >= 1900 && releaseYear <= 2023) {
-                System.out.println("연도 등록이 완료되었습니다");
+                System.out.println("안내 : 연도 등록이 완료되었습니다");
                 inputBookReleaseMonth(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear);
                 break;
             } else {
-                System.out.println("잘못된 입력입니다");
+                System.out.println("안내 : 잘못된 입력입니다");
             }
         }
     }
 
     public void inputBookReleaseMonth(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear) {
         while (true) {
-            System.out.println("책 발매 월을 적어주세요");
+            System.out.println("책 발매 월(Month)을 적어주세요");
             int releaseMonth = sc.nextInt();
 
             if (releaseMonth >= 1 && releaseMonth <= 12) {
-                System.out.println("월 등록이 완료되었습니다");
+                System.out.println("안내 : 월 등록이 완료되었습니다");
                 inputBookReleaseDays(sc, Books, registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth);
                 break;
             } else {
-                System.out.println("잘못된 입력입니다");
+                System.out.println("안내 : 잘못된 입력입니다");
             }
         }
     }
 
     public void inputBookReleaseDays(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear, int releaseMonth) {
         while (true) {
-            System.out.println("책 발매 일을 적어주세요");
+            System.out.println("책 발매 일(Days)을 적어주세요");
             int releaseDays = sc.nextInt();
 
             if (releaseDays >= 1 && releaseDays <= 31) {
-                System.out.println("책 등록절차가 모두 완료되었습니다 ");
+                System.out.println("안내 : 책 등록절차가 모두 완료되었습니다");
                 SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays, checkTemp,deleteBookSave);
                 Books.add(addBookcomplete);
                 deleteBookSave = 0;
                 break;
             } else {
-                System.out.println("잘못된 입력입니다");
+                System.out.println("안내 : 잘못된 입력입니다");
             }
         }
     }
@@ -184,11 +183,10 @@ public class SubBookReposity {
                 if (Objects.equals(returnBookCheck.bookName, returnBookName)) {
                     checkTemp = true;
                     hasBooksInformation(returnBookName, sc, numberInspection, 2, Books);
-                    break;
                 }
             }
             if (!checkTemp) {
-                System.out.println("존재하지 않는 책입니다 다시 확인해주세요");
+                System.out.println("안내 : 존재하지 않는 책입니다 다시 확인해주세요");
             }
         } else {
             System.out.println("안내 : 존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
@@ -207,14 +205,13 @@ public class SubBookReposity {
                 if (Objects.equals(returnBookCheck.bookName, borrowBooks)) {
                     checkTemp = true;
                     hasBooksInformation(borrowBooks, sc, numberInspection, 1, Books);
-                    break;
                 }
             }
             if (!checkTemp) {
-                System.out.println("존재하지 않는 책입니다 다시 확인해주세요");
+                System.out.println("안내 : 존재하지 않는 책입니다 다시 시도해주세요");
             }
         } else {
-            System.out.println("안내 : 존재하지 않는 회원 번호입니다 다시한번 확인해주세요");
+            System.out.println("안내 : 존재하지 않는 회원 번호입니다 다시 시도해주세요");
         }
     }
 
@@ -234,30 +231,30 @@ public class SubBookReposity {
 
                 if (select == 1) {
                     if (borrowChoice == 1) {
-                        System.out.println("대여가 성공적으로 완료되었습니다");
+                        System.out.println("안내 : 대여가 성공적으로 완료되었습니다");
                         UserRepository.borrowBookList[numberInspection][findBook.bookNumber] = 1; //1을 부여함으로 써 빌린것 체크
                         break;
                     } else if (borrowChoice == 2) {
-                        System.out.println("메인 메뉴로 돌아갑니다");
+                        System.out.println("안내 : 메인 메뉴로 돌아갑니다");
                         break;
                     } else {
-                        System.out.println("잘못된 입력입니다");
+                        System.out.println("안내 : 잘못된 입력입니다");
                         break;
                     }
                 } else {
                     if (borrowChoice == 1) {
                         if (UserRepository.borrowBookList[numberInspection][findBook.bookNumber] == 1) {
-                            System.out.println("반납이 성공적으로 완료되었습니다");
+                            System.out.println("안내 : 반납이 성공적으로 완료되었습니다");
                             UserRepository.borrowBookList[numberInspection][findBook.bookNumber] = 0;
                         } else {
-                            System.out.println("책을 빌린 내역이 없습니다");
+                            System.out.println("안내 : 책을 빌린 내역이 없습니다");
                         }
                         break;
                     } else if (borrowChoice == 2) {
-                        System.out.println("메인 메뉴로 돌아갑니다");
+                        System.out.println("안내 : 메인 메뉴로 돌아갑니다");
                         break;
                     } else {
-                        System.out.println("잘못된 입력입니다");
+                        System.out.println("안내 : 잘못된 입력입니다");
                         break;
                     }
                 }
@@ -272,14 +269,21 @@ public class SubBookReposity {
             System.out.println("이름 : " + bookListResult.bookName + "");
         }
         System.out.println("===============================================");
-        System.out.println("삭제하고싶은 책 이름을 적어주세요");
-        String removeBookName = sc.next();
+        System.out.println("삭제하고싶은 책 번호를 입력해주세요");
+        int removeBookSerialNumber = sc.nextInt();
 
-
+        for (SubBookReposity deleteBookIndex : Books) {
+            if (deleteBookIndex.bookNumber == removeBookSerialNumber) {
+                System.out.println("안내 : 책 정보가 모두 삭제되었습니다");
+                deleteBookSave = (removeBookSerialNumber - 1); //실제 입력값과 Arraylist에 등록된 index의 차이가 -1만큼 존재하기 때문
+                Books.remove(deleteBookSave);
+                checkTemp = true;
+                break;
+            }
+        }
         //지금 Arraylist에서 삭제하는경우 ConcurrentModificationException오류가 발생하기때문에 이 오류를 해결하는 방법을 생각해야한다
-
         if (!checkTemp) {
-            System.out.println("책 번호를 다시한번 확인해주세요");
+            System.out.println("안내 : 책 번호를 다시한번 확인해주세요");
         }
     }
 

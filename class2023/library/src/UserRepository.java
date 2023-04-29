@@ -33,11 +33,11 @@ public class UserRepository {
         UserRepository.borrowBookList = borrowBookList;
     }
     /*
-    현재 문제점 2가지
+    4월 30일 해결할것
     1.책을 삭제하고 회원가입으로 넘어가는 문제 (swich문을 if문으로 변경했을때 해당 문제가 사라짐 왜그러지?)
-    2.책을 삭제하고 등록시 번호를 순서대로 나오게 구현 (완료)
-    3.변수명 재수정 (수정중)
-    4.위 3가지 고친 후 리테스트
+    원인을 알아보자
+    2.변수명이나 메소드명 재검사
+    3.전체적인 테스트
      */
     static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
         System.out.println("===========회원등록 절차를 시작합니다===========");
