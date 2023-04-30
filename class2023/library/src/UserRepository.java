@@ -14,51 +14,44 @@ public class UserRepository {
     //회원의 휴대폰번호 (앞4자리와 뒤4자리를 받아야 하기 때문에 2차원 배열을 사용 [][0]은 앞4자리를 받으며 [][1]은 뒤4자리를 받는다)
     public static int[][] borrowBookList;
     //회원이 빌린 책을 저장하는 변수 1차원에는 회원의번호가 2차원에는 회원이 빌린 책의 번호가 저장된다
-    public static boolean informationCorrectCheck;
+    public static boolean informationisCheck;
     //빌림,반납,회원번호 조회 등등 확인이 필요한 작업에 boolean을사용하여 존재여부를 판단한다
-    public static int saveDeleteMemberIndex;
-    //회원정보나 책을 삭제한경우 index 번호를 save전역변수에 저장하여 다음에 등록할경우 빈 index번호를 채우기 위함
     public UserRepository() {
         //예비생성자
     }
 
-    UserRepository(String memberName, int memberNumber, String memberAddress, int memberPhoneFrontNumber, int memberPhoneBackNumber, int[][] borrowBookList, boolean informationCorrectCheck,int saveDeleteMemberIndex) {
+    UserRepository(String memberName, int memberNumber, String memberAddress, int memberPhoneFrontNumber, int memberPhoneBackNumber, int[][] borrowBookList, boolean informationisCheck) {
         this.memberName = memberName;
         this.memberNumber = memberNumber;
         this.memberAddress = memberAddress;
         this.memberPhoneFrontNumber = memberPhoneFrontNumber;
         this.memberPhoneBackNumber = memberPhoneBackNumber;
-        UserRepository.informationCorrectCheck = informationCorrectCheck;
+        UserRepository.informationisCheck = informationisCheck;
         UserRepository.borrowBookList = borrowBookList;
-        UserRepository.saveDeleteMemberIndex = saveDeleteMemberIndex;
     }
-    /*
-    4월 30일 해결할것
-    1.책을 삭제하고 회원가입으로 넘어가는 문제 (swich문을 if문으로 변경했을때 해당 문제가 사라짐 왜그러지?)
-    원인을 알아보자
-    2.변수명이나 메소드명 재검사
-    3.전체적인 테스트
-     */
     static void memberRegistrationName(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList) {
          /*
         메소드 역할 : 회원등록 1번째 절차이며 회원번호 부여, 이름 입력
-        메소드 기능 : 회원등록을 시작함과 동시에 회원번호가 자동 부여된다 만약에 이전에 회원을 삭제한 내역이 존재하면
-        saveDeleteMemberIndex에 삭제된 index번호가 담겨있으므로
-        삭제한경우 : saveDeleteMemberIndex 전역변수에서 회원번호 부여
-        삭제하지않은경우 : Arraylist.size + 1을 saveDeleteMemberIndex에 담아 부여한다
-        그 이후 String으로 회원의 이름을 입력받은 후 주소를 입력받는 메소드로 이동
+        메소드 기능 : 회원번호는 for-each로 판단한다 왜냐하면 중간에 회원을 삭제하는경우,삭제하지않고 또등록하는경우
+        2가지의 경우의수가 존재하기 때문이다 그렇기때문에 for-each문을 돌면서 비어있는 번호를 찾아 먼저 등록하고 비어있지않고 모두 존재하는경우
+        다음번호를 부여하는 알고리즘을 생각했다
          */
         System.out.println("===========회원등록 절차를 시작합니다===========");
-        if (saveDeleteMemberIndex != 0) { //회원을 삭제한 경우가 있는경우
-            System.out.println("새로운 회원번호는 " + saveDeleteMemberIndex + "번 입니다");
-        } else { //회원을 삭제한경우가 없는경우
-            saveDeleteMemberIndex = (peopleInformation.size() + 1); //size + 1을 한 이유는 실제 번호와 List의 index차이가 1만큼 존재하기 때문이다
-            System.out.println("새로운 회원번호는 " + saveDeleteMemberIndex + "번 입니다");
+
+        int newSerialNumber = 1;
+        for (UserRepository findEmptyIndex : peopleInformation) {
+            if (findEmptyIndex.memberNumber == newSerialNumber) {
+                newSerialNumber += 1;
+            } else {
+                break;
+            }
         }
+        System.out.println("새로운 회원번호는 : "+newSerialNumber+"번 입니다");
         System.out.println("회원의 이름을 적어주세요");
         String signupMemberName = sc.next();
+
         System.out.println("안내 : 회원 이름이 정상적으로 등록되었습니다");
-        memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, saveDeleteMemberIndex);
+        memberRegistrationAddress(sc, peopleInformation, borrowBookList, signupMemberName, newSerialNumber);
     }
 
     static void memberRegistrationAddress(Scanner sc, ArrayList<UserRepository> peopleInformation, int[][] borrowBookList, String signupMemberName, int signupMemberNumber) {
@@ -104,9 +97,8 @@ public class UserRepository {
 
             if (phoneBackNumber >= 1000 && phoneBackNumber <= 9999) {
                 System.out.println("안내 : 회원등록이 성공적으로 완료되었습니다!!");
-                UserRepository success = new UserRepository(signupMemberName, signupMemberNumber, signupMemberAddress, signupFrontNumber, phoneBackNumber, borrowBookList,informationCorrectCheck,saveDeleteMemberIndex);
+                UserRepository success = new UserRepository(signupMemberName, signupMemberNumber, signupMemberAddress, signupFrontNumber, phoneBackNumber, borrowBookList,informationisCheck);
                 peopleInformation.add(success);
-                saveDeleteMemberIndex = 0;
                 break;
             } else {
                 System.out.println("안내 : 잘못된 입력입니다");
@@ -132,22 +124,31 @@ public class UserRepository {
                 System.out.println("회원 주소 : " + memberIndex.memberAddress + "");
                 System.out.println("회원 전화번호 : 010 - " + memberIndex.memberPhoneFrontNumber + " - " + memberIndex.memberPhoneBackNumber + "");
                 System.out.println("빌린 책 목록 : ");
-                informationCorrectCheck = true; //일치하는경우는 존재하는 회원이므로 true로 바꿈
+                informationisCheck = true; //일치하는경우는 존재하는 회원이므로 true로 바꿈
 
                 for (SubBookReposity borrowBookOutput : Books) {
                     //빌린 책을 기록한 2차원배열 : [멤버인덱스넘버][책번호] 가 1인경우 이미 빌린책이므로 책 이름을 출력
                     if (borrowBookList[memberIndex.memberNumber][borrowBookOutput.bookNumber] == 1) {
                         System.out.println("대여중 : " + borrowBookOutput.bookName + ""); //bookName
-                        System.out.println("================");
+                        System.out.println("===================");
                     }
                 }
             }
         }
-        if (!informationCorrectCheck) {
+        if (!informationisCheck) {
             System.out.println("안내 : 존재하지 않는 회원입니다");
         }
     }
-
+    public static void loadMemberInformation (ArrayList<UserRepository> peopleInformation) {
+        for (UserRepository findMember : peopleInformation) {
+            System.out.println("===============================================");
+            System.out.println("회원 번호 : " + findMember.memberNumber + "번");
+            System.out.println("회원 이름 : " + findMember.memberName + "");
+            System.out.println("회원 주소 : " + findMember.memberAddress + "");
+            System.out.println("회원 전화번호 : 010 - " + findMember.memberPhoneFrontNumber + " - " + findMember.memberPhoneBackNumber + "");
+        }
+        System.out.println();
+    }
     public static void deleteMemberInformation(Scanner sc, ArrayList<UserRepository> peopleInformation) {
          /*
          메소드 역할 : 회원번호 조회 후 회원정보 모두 삭제
@@ -159,14 +160,14 @@ public class UserRepository {
 
         for (UserRepository memberIndex : peopleInformation) {
             if (memberIndex.memberNumber == memberNumber) {
+                int listIndex = peopleInformation.indexOf(memberIndex); //고유 list의 index번호를 저장
                 System.out.println("안내 : 회원정보가 모두 삭제되었습니다");
-                saveDeleteMemberIndex = memberNumber;
-                peopleInformation.remove((memberNumber - 1));
-                informationCorrectCheck = true; //회원을 찾았으므로 true로 바꿈
+                peopleInformation.remove(listIndex);
+                informationisCheck = true; //회원을 찾았으므로 true로 바꿈
                 break;
             }
         }
-        if (!informationCorrectCheck) {
+        if (!informationisCheck) {
             System.out.println("안내 : 존재하지 않는 회원번호입니다");
         }
     }

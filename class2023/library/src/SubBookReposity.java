@@ -17,15 +17,13 @@ public class SubBookReposity {
     //책 발매 월
     public int releaseDays;
     //책 발매 일
-    public boolean checkTemp;
+    public boolean informationisCheck;
     //책의 존재여부 밎 회원번호 매치 확인을 위해 사용
-    public int deleteBookSave;
-    //회원정보나 책을 삭제한경우 index 번호를 전역변수에 저장하여 다음에 등록할경우 빈 index번호를 채우기 위함
     SubBookReposity() {
         //서브생성자
     }
 
-    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays, boolean checkTemp,int deleteBookSave) {
+    SubBookReposity(int bookNumber, String bookName, String bookWriter, String publisher, int releaseYear, int releaseMonth, int releaseDays, boolean informationisCheck) {
         this.bookNumber = bookNumber;
         this.bookName = bookName;
         this.bookWriter = bookWriter;
@@ -33,8 +31,7 @@ public class SubBookReposity {
         this.releaseYear = releaseYear;
         this.releaseMonth = releaseMonth;
         this.releaseDays = releaseDays;
-        this.checkTemp = checkTemp;
-        this.deleteBookSave = deleteBookSave;
+        this.informationisCheck = informationisCheck;
     }
 
     public void findBookTitle(Scanner sc, ArrayList<SubBookReposity> Books) {
@@ -43,17 +40,17 @@ public class SubBookReposity {
          메소드 기능 : 책이름을 입력받은 후 for-each문을 돌려 일치하는경우
          책정보를 출력해주는 findBookInformation메소드로 이동
          */
-        checkTemp = false; //책을 찾기위해 재진입할경우 초기화시키기 위함
+        informationisCheck = false; //책을 찾기위해 재진입할경우 초기화시키기 위함
         System.out.println("찾고있는 책 이름을 적어주세요");
         String findBookName = sc.next();
 
         for (SubBookReposity indexNumber : Books) {
             if (Objects.equals(indexNumber.bookName, findBookName)) {
-                checkTemp = true;
+                informationisCheck = true;
                 findBookInformation(indexNumber);
             }
         }
-        if (!checkTemp) {
+        if (!informationisCheck) {
             System.out.println("안내 : 책의 정보가 존재하지 않습니다 다시 시도해주세요");
         }
     }
@@ -63,17 +60,17 @@ public class SubBookReposity {
          메소드 역할 : 책 번호를 입력받고 일치여부를 확인 후 결과메소드인 findBookInformation로 이동
          메소드 기능 : 위 메소드와 마찬가지로 책번호가 일치하는경우 책 결과를 출력해주는 findBookInformation메소드로 이동시킴
          */
-        checkTemp = false;
+        informationisCheck = false;
         System.out.println("찾으시는 책 번호를 적어주세요");
         int bookSerialNumber = sc.nextInt();
 
         for (SubBookReposity indexNumber : Books) {
             if (indexNumber.bookNumber == bookSerialNumber) {
-                checkTemp = true;
+                informationisCheck = true;
                 findBookInformation(indexNumber);
             }
         }
-        if (!checkTemp) {
+        if (!informationisCheck) {
             System.out.println("안내 : 책의 정보가 존재하지 않습니다 다시 시도해주세요");
         }
     }
@@ -83,17 +80,17 @@ public class SubBookReposity {
          메소드 역할 : 책 작가이름을 입력받고 일치여부를 확인 후 결과메소드인 findBookInformation로 이동
          메소드 기능 : 위 메소드와 마찬가지로 작가 이름이 일치하는경우 책 결과를 출력해주는 findBookInformation메소드로 이동시킴
          */
-        checkTemp = false;
+        informationisCheck = false;
         System.out.println("찾으시는 책의 작가 이름을 적어주세요");
         String bookWriter = sc.next();
 
         for (SubBookReposity indexNumber : Books) {
             if (indexNumber.bookWriter.equals(bookWriter)) {
-                checkTemp = true;
+                informationisCheck = true;
                 findBookInformation(indexNumber);
             }
         }
-        if (!checkTemp) {
+        if (!informationisCheck) {
             System.out.println("안내 : 책의 정보가 존재하지 않습니다 다시 시도해주세요");
         }
     }
@@ -114,17 +111,20 @@ public class SubBookReposity {
     public void inputBookRegistration(Scanner sc, ArrayList<SubBookReposity> Books) {
          /*
          메소드 역할 : 책 등록을 위한 1번째 절차이며 책번호를 부여함
-         메소드 기능 : UserRepository클래스와 같은 방법이며 책을 지웠을때는 deleteBookSave변수에 담겨있는 리터럴이 존재할경우
-         list에 빈 번호를 채우기위해 바로 부여하며
-         삭제한 기록이 없는경우에는 list.size + 1을 파라미터에 담는다
+         메소드 기능 : newSerialNumber변수를 1번부터 시작한다 즉 책은 1번부터 번호가 부여되어있기 때문이다
+         만약에 책을 삭제하지 않은경우에는 for문을돌면서 비어있으면 탈출하여 해당 번호를 찾지만
+         책을 삭제한경우 다음에 책을 등록할때 비어있는 책의 번호를 채워야하기 때문에 for-each문을 사용
          */
-        if (deleteBookSave != 0) { //책을 지운경우 새로운 책을등록하는경우 다시 그 번호를 사용한다
-            System.out.println("새로 등록될 책 번호는 : " + deleteBookSave + "번 입니다");
-            inputBookName(sc, Books, deleteBookSave);
-        } else { //지우지않은경우 그대로 등록
-            System.out.println("새로 등록될 책 번호는 : " + (Books.size() + 1) + "번 입니다");
-            inputBookName(sc, Books, (Books.size() + 1));
+        int newSerialNumber = 1;
+        for (SubBookReposity findEmptyIndex : Books) {
+            if (findEmptyIndex.bookNumber == newSerialNumber) {
+                newSerialNumber += 1;
+            } else {
+                break;
+            }
         }
+        System.out.println("새로 등록될 책 번호는 : " + newSerialNumber + "번 입니다");
+        inputBookName(sc, Books, newSerialNumber);
     }
 
     public void inputBookName(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber) {
@@ -210,9 +210,8 @@ public class SubBookReposity {
 
             if (releaseDays >= 1 && releaseDays <= 31) {
                 System.out.println("안내 : 책 등록절차가 모두 완료되었습니다");
-                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays, checkTemp,deleteBookSave);
+                SubBookReposity addBookcomplete = new SubBookReposity(registrationBookNumber, registrationBookName, registrationWriterName, registrationPublisherName, releaseYear, releaseMonth, releaseDays, informationisCheck);
                 Books.add(addBookcomplete);
-                deleteBookSave = 0;
                 break;
             } else {
                 System.out.println("안내 : 잘못된 입력입니다");
@@ -227,6 +226,7 @@ public class SubBookReposity {
          빌리는 메소드와 반납메소드에 따로따로 넣는다면 코드가 길어지기때문에 따로 분리를 시켰다
          hasBooksInformation메소드로 넘기는 파라미터중에 2번은 반납이고 1번은 빌리는것이다
          */
+        informationisCheck = false;
         System.out.println("회원번호를 입력해주세요 안내 : 회원번호를 입력해야 반납이 가능합니다");
         int numberInspection = sc.nextInt();
 
@@ -236,11 +236,12 @@ public class SubBookReposity {
 
             for (SubBookReposity returnBookCheck : Books) {
                 if (Objects.equals(returnBookCheck.bookName, returnBookName)) {
-                    checkTemp = true;
+                    informationisCheck = true;
                     hasBooksInformation(returnBookName, sc, numberInspection, 2, Books);
+                    break;
                 }
             }
-            if (!checkTemp) {
+            if (!informationisCheck) {
                 System.out.println("안내 : 존재하지 않는 책입니다 다시 확인해주세요");
             }
         } else {
@@ -248,13 +249,14 @@ public class SubBookReposity {
         }
     }
 
-    public void borrowBook(Scanner sc, ArrayList<UserRepository> peopleInformation, ArrayList<SubBookReposity> Books) {
+    public void inputBorrowBook(Scanner sc, ArrayList<UserRepository> peopleInformation, ArrayList<SubBookReposity> Books) {
          /*
          메소드 역할 : 책을 빌리는경우 회원번호와 제목을 입력받아 hasBooksInformation메소드로 보낸다
          hasBooksInformation메소드에서 정보가 일치하면 다시 책정보를 확인하고 최종 빌림 확인
          메소드 기능 : returnBook메소드와 마찬가지고 회원번호,책 제목을 입력받고 hasBooksInformation메소드로
          파라미터를 넘겨준다
          */
+        informationisCheck = false;
         System.out.println("회원번호를 입력해주세요 안내 : 회원번호를 입력해야 빌리기가 가능합니다");
         int numberInspection = sc.nextInt();
 
@@ -264,11 +266,12 @@ public class SubBookReposity {
 
             for (SubBookReposity returnBookCheck : Books) {
                 if (Objects.equals(returnBookCheck.bookName, borrowBooks)) {
-                    checkTemp = true;
+                    informationisCheck = true;
                     hasBooksInformation(borrowBooks, sc, numberInspection, 1, Books);
+                    break;
                 }
             }
-            if (!checkTemp) {
+            if (!informationisCheck) {
                 System.out.println("안내 : 존재하지 않는 책입니다 다시 시도해주세요");
             }
         } else {
@@ -322,11 +325,10 @@ public class SubBookReposity {
     public void deleteBook (Scanner sc, ArrayList<SubBookReposity> Books) {
          /*
          메소드 역할 : 등록된 책을 삭제
-         메소드 기능 : 처음에 등록되어있는 책을 모두 출력한 후 삭제하고싶은 책의 번호를 입력받는다
-         그 후 일치하는경우 deleteBookSave변수에 삭제한 책의 index를 담는다 왜냐하면 다음에 책을 새로 등록할때 삭제된 번호를
-         채워야 하기 때문이다 그 후에 list.remove를 이용하여 정보를 모두 지운다
+         메소드 기능 : 바로 삭제하고싶은 책을 찾아서 삭제하기 쉽도록 등록된 책을 모두 출력하며
+         listindex 변수에 Arraylist의 번호를 추출한 후 Arraylist remove를 통해 삭제한다
          */
-        checkTemp = false;
+        informationisCheck = false;
         for (SubBookReposity bookListResult : Books) {
             System.out.println("===============================================");
             System.out.println("번호 : " + bookListResult.bookNumber + "번");
@@ -338,19 +340,19 @@ public class SubBookReposity {
 
         for (SubBookReposity deleteBookIndex : Books) {
             if (deleteBookIndex.bookNumber == removeBookSerialNumber) {
+                int listIndex = Books.indexOf(deleteBookIndex); //고유 list의 index번호를 저장
                 System.out.println("안내 : 책 정보가 모두 삭제되었습니다");
-                deleteBookSave = (removeBookSerialNumber - 1); //실제 입력값과 Arraylist에 등록된 index의 차이가 -1만큼 존재하기 때문
-                Books.remove(deleteBookSave);
-                checkTemp = true;
+                Books.remove(listIndex);
+                informationisCheck = true;
                 break;
             }
         }
-        if (!checkTemp) {
+        if (!informationisCheck) {
             System.out.println("안내 : 책 번호를 다시한번 확인해주세요");
         }
     }
 
-    public void findTotalBookInformation(ArrayList<SubBookReposity> Books) {
+    public void loadTotalBookInformation(ArrayList<SubBookReposity> Books) {
          /*
          메소드 역할 : 도서관에 등록되어있는 책을 모두 출력
          메소드 기능 : 도서관에 등록되어있는 책을 for-each문을 통해 출력함
