@@ -13,7 +13,7 @@ public class BookRepository {
         Books.add(book1);
         Books.add(book2);
 
-        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList,0,false);
+        UserRepository Information = new UserRepository("도현우", 1, "경기도 성남시", 2042,3218,borrowBookList,false,0);
 
         peopleInformation.add(Information);
 
