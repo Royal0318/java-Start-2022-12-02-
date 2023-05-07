@@ -129,7 +129,7 @@ public class UserRepository {
                 for (SubBookReposity borrowBookOutput : Books) {
                     //빌린 책을 기록한 2차원배열 : [멤버인덱스넘버][책번호] 가 1인경우 이미 빌린책이므로 책 이름을 출력
                     if (borrowBookList[memberIndex.memberNumber][borrowBookOutput.bookNumber] == 1) {
-                        System.out.println("대여중 : " + borrowBookOutput.bookName + ""); //bookName
+                        System.out.println("대여중 : " + borrowBookOutput.bookName + " \n수량 : "+borrowBookList[memberIndex.memberNumber][borrowBookOutput.bookNumber]+"권"); //bookName
                         System.out.println("===================");
                     }
                 }

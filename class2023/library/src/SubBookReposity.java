@@ -166,7 +166,7 @@ public class SubBookReposity {
          메소드 기능 : 등록할 책 발매연도를 출력하기위해 연도를 입력받아 파라미터에 넣고 다음메소드로 이동 출시연도는 1900 ~ 2023년까지 제한하였다
          */
         while (true) {
-            System.out.println("책 발매 연도(Year)을 적어주세요 (1900년 ~ 2023년까지 입력가능)");
+            System.out.println("책 발매 연도(年)을 적어주세요 (1900년 ~ 2023년까지 입력가능)");
             int releaseYear = sc.nextInt();
 
             if (releaseYear >= 1900 && releaseYear <= 2023) {
@@ -185,7 +185,7 @@ public class SubBookReposity {
          메소드 기능 : 등록할 책 발매 월을 출력하기위해 월를 입력받아 파라미터에 넣고 다음메소드로 이동
          */
         while (true) {
-            System.out.println("책 발매 월(Month)을 적어주세요");
+            System.out.println("책 발매 월(月)을 적어주세요");
             int releaseMonth = sc.nextInt();
 
             if (releaseMonth >= 1 && releaseMonth <= 12) {
@@ -205,7 +205,7 @@ public class SubBookReposity {
          삭제한 내역이 있으면 deleteBookSave변수의 리터럴값을 초기화
          */
         while (true) {
-            System.out.println("책 발매 일(Days)을 적어주세요");
+            System.out.println("책 발매 일(日)을 적어주세요");
             int releaseDays = sc.nextInt();
 
             if (releaseDays >= 1 && releaseDays <= 31) {
@@ -256,26 +256,35 @@ public class SubBookReposity {
          메소드 기능 : returnBook메소드와 마찬가지고 회원번호,책 제목을 입력받고 hasBooksInformation메소드로
          파라미터를 넘겨준다
          */
+        int bookNumberSum = 0; //전체 책이 몇권인지 확인하기 위한 변수이다 책은 총 2권까지 빌릴 수 있기 때문이다
         informationisCheck = false;
-        System.out.println("회원번호를 입력해주세요 안내 : 회원번호를 입력해야 빌리기가 가능합니다");
+        System.out.println("회원번호를 입력해주세요");
+        System.out.println("안내 : 회원번호를 입력해야 빌리기가 가능하며 1인당 최대 2권만 빌릴수 있습니다");
         int numberInspection = sc.nextInt();
 
-        if (peopleInformation.size() >= numberInspection) {
-            System.out.println("대여하는 책의 제목을 적어주세요");
-            String borrowBooks = sc.next();
-
-            for (SubBookReposity returnBookCheck : Books) {
-                if (Objects.equals(returnBookCheck.bookName, borrowBooks)) {
-                    informationisCheck = true;
-                    hasBooksInformation(borrowBooks, sc, numberInspection, 1, Books);
-                    break;
-                }
-            }
-            if (!informationisCheck) {
-                System.out.println("안내 : 존재하지 않는 책입니다 다시 시도해주세요");
-            }
+        for (SubBookReposity borrowBookOutput : Books) {    //회원이 책을 몇권빌렸는지 체크하기위한 for-each문
+            bookNumberSum += UserRepository.borrowBookList[numberInspection][borrowBookOutput.bookNumber];
+        }
+        if (bookNumberSum == 2) {
+            System.out.println("책은 최대 2권까지만 빌릴 수 있습니다");
         } else {
-            System.out.println("안내 : 존재하지 않는 회원 번호입니다 다시 시도해주세요");
+            if (peopleInformation.size() >= numberInspection) {
+                System.out.println("대여하는 책의 제목을 적어주세요");
+                String borrowBooks = sc.next();
+
+                for (SubBookReposity returnBookCheck : Books) {
+                    if (Objects.equals(returnBookCheck.bookName, borrowBooks) && UserRepository.borrowBookList[numberInspection][returnBookCheck.bookNumber] == 0) {
+                        informationisCheck = true;
+                        hasBooksInformation(borrowBooks, sc, numberInspection, 1, Books);
+                        break;
+                    }
+                }
+                if (!informationisCheck) {
+                    System.out.println("안내 : 존재하지 않는 책이거나 이미 대여한 책입니다 다시 확인해주세요");
+                }
+            } else {
+                System.out.println("안내 : 존재하지 않는 회원 번호입니다 다시 시도해주세요");
+            }
         }
     }
 
@@ -349,6 +358,87 @@ public class SubBookReposity {
         }
         if (!informationisCheck) {
             System.out.println("안내 : 책 번호를 다시한번 확인해주세요");
+        }
+    }
+    public void modifyBookInformation (Scanner sc,ArrayList<SubBookReposity> Books) {
+        /*
+         메소드 역할 : 등록되어있는 책 정보를 수정
+         메소드 기능 : 책번호를 입력받으면 for-each문을 통해 그 책이 존재하는지 여부를 확인하고
+         책이 존재할 시 boolean에 true를 부여 존재하지 않은경우 false를 부여한다
+         그 후 각각의 수정을 원하는 메뉴에 접근하여 수정 정보를 입력하면 수정이 완료되고 each문을 탈출해 다시 메인메뉴로 돌아간다
+         */
+        informationisCheck = false;
+        System.out.println("수정을 원하는 책 번호를 적어주세요");
+        int modifySelectNumber = sc.nextInt();
+
+        for (SubBookReposity modify : Books) {
+            if (modify.bookNumber == modifySelectNumber) {
+                informationisCheck = true;
+                System.out.println("1.책 이름 수정 2.책 작가 수정 3.책 출판사 수정 4.책 발매연도(年) 수정 5.책 발매 월(月) 수정 6.책 발매 일(日) 수정 7.이전으로 돌아가기");
+                int modifyChoice = sc.nextInt();
+
+                if (modifyChoice == 1) {
+                    System.out.println("새로 수정할 이름을 적어주세요");
+                    String newBookName = sc.next();
+                    modify.bookName = ""+newBookName+"";
+                    System.out.println("수정이 완료되었습니다");
+                    break;
+                } else if (modifyChoice == 2) {
+                    System.out.println("새로 수정할 작가 이름을 적어주세요");
+                    String newWriterName = sc.next();
+                    modify.bookWriter = ""+newWriterName+"";
+                    System.out.println("수정이 완료되었습니다");
+                    break;
+                } else if (modifyChoice == 3) {
+                    System.out.println("새로 수정할 출판사 이름을 적어주세요");
+                    String newpublisherName = sc.next();
+                    modify.bookWriter = ""+newpublisherName+"";
+                    System.out.println("수정이 완료되었습니다");
+                    break;
+                } else if (modifyChoice == 4) {
+                    System.out.println("새로 수정할 발매연도(年)를 적어주세요");
+                    int newReleaseYear = sc.nextInt();
+
+                    if (newReleaseYear >= 1900 && newReleaseYear <= 2023) {
+                        System.out.println("수정이 완료되었습니다");
+                        modify.releaseYear = newReleaseYear;
+                    } else {
+                        System.out.println("안내 : 잘못된 입력입니다");
+                    }
+                    break;
+                } else if (modifyChoice == 5) {
+                    System.out.println("새로 수정할 발매 월(月)를 적어주세요");
+                    int newReleaseMonth = sc.nextInt();
+
+                    if (newReleaseMonth >= 1 && newReleaseMonth <= 12) {
+                        System.out.println("수정이 완료되었습니다");
+                        modify.releaseMonth = newReleaseMonth;
+                    } else {
+                        System.out.println("안내 : 잘못된 입력입니다");
+                    }
+                    break;
+                } else if (modifyChoice == 6) {
+                    System.out.println("새로 수정할 발매 일(日)를 적어주세요");
+                    int newReleaseDays = sc.nextInt();
+
+                    if (newReleaseDays >= 1 && newReleaseDays <= 31) {
+                        System.out.println("수정이 완료되었습니다");
+                        modify.releaseDays = newReleaseDays;
+                    } else {
+                        System.out.println("안내 : 잘못된 입력입니다");
+                    }
+                    break;
+                } else if (modifyChoice == 7) {
+                    System.out.println("메인메뉴로 돌아갑니다");
+                    break;
+                } else {
+                    System.out.println("잘못된 입력입니다");
+                    break;
+                }
+            }
+        }
+        if (!informationisCheck) {
+            System.out.println("존재하지 않는 책입니다 다시 확인해주세요");
         }
     }
 
