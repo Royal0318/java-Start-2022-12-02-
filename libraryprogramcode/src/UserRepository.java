@@ -162,7 +162,7 @@ public class UserRepository {
             if (memberIndex.memberNumber == memberNumber) {
                 int listIndex = peopleInformation.indexOf(memberIndex); //고유 list의 index번호를 저장
                 System.out.println("안내 : 회원정보가 모두 삭제되었습니다");
-                peopleInformation.remove(listIndex);
+                peopleInformation.remove(listIndex); //저장된 index를 remove
                 informationisCheck = true; //회원을 찾았으므로 true로 바꿈
                 break;
             }
