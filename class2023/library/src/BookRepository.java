@@ -19,7 +19,7 @@ public class BookRepository {
         UserRepository subUserRepository = new UserRepository();
         SubBookReposity subInformation = new SubBookReposity();
 
-        //메인메뉴
+        //메인메뉴 UI
         while (true) {
             System.out.println("\n===========================A 도서관 관리프로그램입니다===========================");
             System.out.println("안내 : 원하는 메뉴의 번호를 입력해주세요");
