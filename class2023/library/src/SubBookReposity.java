@@ -100,7 +100,7 @@ public class SubBookReposity {
          메소드 역할 : 위 3개의 메소드에서 입력한 결과값을 출력시켜준다
          메소드 기능 : 일치하는 index 파라미터를 받아서 그 index번호에 속하는 list내용을 모두 출력시킨다
          */
-        System.out.println("책을 찾았습니다!!!");
+        System.out.println("책을 찾았습니다!");
         System.out.println("책 번호 : " + bookIndex.bookNumber + "");
         System.out.println("책 이름 : " + bookIndex.bookName + "");
         System.out.println("작가 : " + bookIndex.bookWriter + "");
@@ -162,7 +162,7 @@ public class SubBookReposity {
 
     public void inputBookReleaseYear(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName) {
         /*
-         메소드 역할 :  책 등록을 위한 5번째 절차이며 책 발매 연도를 받음
+         메소드 역할 :  책 등록을 위한 5번째 절차이며 책 발매 연도(年) 받음
          메소드 기능 : 등록할 책 발매연도를 출력하기위해 연도를 입력받아 파라미터에 넣고 다음메소드로 이동 출시연도는 1900 ~ 2023년까지 제한하였다
          */
         while (true) {
@@ -181,7 +181,7 @@ public class SubBookReposity {
 
     public void inputBookReleaseMonth(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear) {
          /*
-         메소드 역할 :  책 등록을 위한 6번째 절차이며 책 발매 월를 받음
+         메소드 역할 :  책 등록을 위한 6번째 절차이며 책 발매 월(月) 받음
          메소드 기능 : 등록할 책 발매 월을 출력하기위해 월를 입력받아 파라미터에 넣고 다음메소드로 이동
          */
         while (true) {
@@ -200,7 +200,7 @@ public class SubBookReposity {
 
     public void inputBookReleaseDays(Scanner sc, ArrayList<SubBookReposity> Books, int registrationBookNumber, String registrationBookName, String registrationWriterName, String registrationPublisherName, int releaseYear, int releaseMonth) {
          /*
-         메소드 역할 : 책 등록을 위한 마지막 절차이며 책 발매 요일을 받고 책을 등록시킴
+         메소드 역할 : 책 등록을 위한 마지막 절차이며 책 발매 일(日) 받고 책을 등록시킴
          메소드 기능 : 등록할 책 발매 요일을 출력하기위해 요일을 1일 ~ 31일로 입력받고 넘겨받은파라미터를 모두 list에 등록한다
          삭제한 내역이 있으면 deleteBookSave변수의 리터럴값을 초기화
          */
