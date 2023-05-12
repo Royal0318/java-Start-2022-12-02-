@@ -30,7 +30,7 @@ public class SubfoodReposity {
         String newFoodName = sc.next();
 
         for (SubfoodReposity duplicateCheck : food) { //중복되는 음식을 등록하는경우
-            if (Objects.equals(duplicateCheck.foodName, newFoodName)) {
+            if (Objects.equals(duplicateCheck.getFoodName(), newFoodName)) {
                 System.out.println("중복되는 음식이 존재합니다 다른 음식을 등록해주세요");
                 duplicateNameCheck = true;
                 break;
@@ -61,7 +61,7 @@ public class SubfoodReposity {
         String deleteFoodName = sc.next();
 
         for (SubfoodReposity findFoodName : food) {
-            if (Objects.equals(findFoodName.foodName, deleteFoodName)) {
+            if (Objects.equals(findFoodName.getFoodName(), deleteFoodName)) { //캡슐화를 위해서 get으로 바꾸었다!!
                 System.out.println("정말로 삭제하시겠습니까? \n안내 : 삭제하신 음식 메뉴는 복구 할 수 없습니다 \n 1.삭제 2.취소");
                 int deleteChoice = sc.nextInt();
                 foodNameCheck = true;
@@ -90,7 +90,7 @@ public class SubfoodReposity {
             String inputFoodName = sc.next();
 
             for (SubfoodReposity findFoodName : food) {
-                if (Objects.equals(findFoodName.foodName, inputFoodName)) {
+                if (Objects.equals(findFoodName.getFoodName(), inputFoodName)) {
 
                     System.out.println("1.음식 이름 변경 2.음식 가격 변경");
 
@@ -99,12 +99,12 @@ public class SubfoodReposity {
                     if (modifyMenuChoice == 1) {
                         System.out.println("새로운 음식 이름을 적어주세요");
 
-                        findFoodName.foodName = sc.next();
+                        findFoodName.setFoodName(sc.next());
                     }
                     else if (modifyMenuChoice == 2) {
                         System.out.println("변동 후 가격을 적어주세요");
 
-                        findFoodName.foodPrice = sc.nextInt();
+                        findFoodName.setFoodPrice(sc.nextInt()); //캡슐화를 위해서 set을 이용하여 받는다
                     }
                     System.out.println("정상적으로 수정이 완료되었습니다");
                     changeFoodCheck = true;
@@ -118,7 +118,7 @@ public class SubfoodReposity {
     public void outputMenu (ArrayList<SubfoodReposity> food) { //전체등록된 메뉴 출력
         int listNumber = 1;
         for (SubfoodReposity totalFoodMenu : food) {
-            System.out.println(""+listNumber+"."+totalFoodMenu.foodName+" \n가격 : "+totalFoodMenu.foodPrice+"");
+            System.out.println(""+listNumber+"."+totalFoodMenu.getFoodName()+" \n가격 : "+totalFoodMenu.getFoodPrice()+"");
             listNumber += 1;
             System.out.println("=============================================");
         }
