@@ -14,8 +14,6 @@ public class lottoMain {
                 System.out.println("=============로또 프로그램을 시작합니다=============");
                 lottoInterface.inputMyMoney();
                 lottoInterface.buyLotto();
-                lottoInterface.randomResultNumber();
-                lottoInterface.inputMyInputNumber();
             } else if (menuChoice == 2) {
                 System.out.println("프로그램을 종료합니다");
                 break;
