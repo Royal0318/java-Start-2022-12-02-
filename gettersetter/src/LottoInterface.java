@@ -7,6 +7,8 @@ public interface LottoInterface  {
     void inputMyMoney ();
 
     void buyLotto();
+    void randomResultNumber();
 
     void inputMyInputNumber();
+
 }
