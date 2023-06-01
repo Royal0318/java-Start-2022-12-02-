@@ -1,7 +1,8 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 
 public class LottoProgram implements LottoInterface {
-    static boolean[] duplicateCheck = new boolean[46]; //중복검사를 위해 boolean형 선언
     static int[] correctNumberRanking = new int[5]; //해당 등수를 몇번 맞았는지 세는 배열값
     static int winnerAmount = 0; //당첨금액
     /*
@@ -11,10 +12,15 @@ public class LottoProgram implements LottoInterface {
     4등 : 30000원
     5등 : 5000원
      */
-    static int[] resultNumber; //로또 당첨번호
-    static int inputNumberCheck = 0; //중복이 나오는경우 다시 입력받도록 하고 6개를 입력시 탈출시키도록 도와줌
+    static HashSet<Integer> resultNumberSave = new HashSet<>(); //정답 로또번호
+    static ArrayList<Integer> resultNumber = new ArrayList<>(resultNumberSave);
+
+    static int[][] myLottoNumber;
+    static boolean[] duplicateCheck = new boolean[46]; //중복체크
+
     static int buyLottoNumber = 0; //로또 구매한 장수
-    static Random random; //랜덤 번호를 위해 static으로선언
+
+    static int correctCount = 0;
     private int myMoney; //나의 돈
     private int inputNumber; //숫자입력 개수
 
@@ -46,12 +52,41 @@ public class LottoProgram implements LottoInterface {
         int tempCal = (5000 * buyLottoNumber); //로또 구매시 총 가격
 
         if (tempCal <= getMyMoney()) {
-            System.out.println("구매가 완료되었습니다 잔액은 "+(tempCal - getMyMoney())+"원 입니다");
-            inputMyInputNumber();
+            System.out.println("구매가 완료되었습니다 잔액은 "+(getMyMoney() - tempCal)+"원 입니다");
+            randomResultNumber();
         }
         else {
             System.out.println("가진돈이 구매가격보다 더 적습니다 다시 입력해주세요");
         }
+    }
+    public void randomResultNumber() {
+        //로또번호 미리 저장
+        int temp;
+        while (resultNumberSave.size() != 6) {
+            temp = (int)(Math.random() * 45) + 1;
+            resultNumberSave.add(temp);
+        }
+        //정답 랜덤으로 저장
+        myLottoNumber = new int[5 * buyLottoNumber][6 * buyLottoNumber];
+
+           for (int i = 0; i < (5 * buyLottoNumber);i++) {
+               for (int j = 0; j < 6;j++) {
+                   temp = (int)(Math.random() * 45) + 1;
+
+                   if (!duplicateCheck[temp]) {
+                       duplicateCheck[temp] = true;
+                       myLottoNumber[i][j] = temp;
+                   } else {
+                       j -= 1;
+                   }
+               }
+               for (int j = 1; j < 46;j++) {
+                   duplicateCheck[j] = false;
+               }
+           }
+
+        //나의번호를 랜덤으로 미리 저장
+        inputMyInputNumber();
     }
     public void inputMyInputNumber() {
         System.out.println("몇개의 숫자를 입력하시겠습니까? (1 ~ 6까지 입력하세요)");
@@ -65,44 +100,69 @@ public class LottoProgram implements LottoInterface {
         else if (number == lottoMaxNumber) {
             System.out.println("전체 수동으로 입력합니다");
             setInputNumber(number);
+            manualProgram();
             semiAutoProgram();
         }
         else if (number >= 1 && number < lottoMaxNumber) { //1 ~ 5까지
             System.out.println(""+number+"개를 입력하므로 "+(number - getInputNumber())+"개는 반자동으로 입력됩니다");
             setInputNumber(number);
-            manualProgram();
+            semiAutoProgram();
         }
         else {
             System.out.println("범위를 벗어났습니다 다시 입력해주세요");
         }
-        randomResultNumber();
-    }
-    public void randomResultNumber() {
-        //로또번호 미리 저장
-        while (inputNumberCheck < 7) { //6일때 탈출 그전까지 입력받음
-            int temp = (random.nextInt(45) + 1); //랜덤넘버 1 ~ 45
-
-            if (!duplicateCheck[temp]) { //해당문자가 false라면 통과
-                resultNumber[inputNumberCheck] += temp; //통과한값은 배열값에 저장
-                duplicateCheck[temp] = true;//중복방지를위해 true로 바꿈
-                inputNumberCheck += 1;
-            }
-        }
-        for (int i = 1; i < 46;i++) {
-            duplicateCheck[i] = false;
-        }
     }
     public void AutoProgram() { //올 자동
-        while (buyLottoNumber -- > 0) {
-            for (int i = 0 ; i < 5;i++) {
-                int correctCount = 0; //한줄에 맞는 개수 저장
-                for (int j = 0 ; j < 6;j++) {
-                    int temp = (random.nextInt(45) + 1); //랜덤넘버 1 ~ 45
+        for (int i = 0; i < 5 * buyLottoNumber;i++) {
+            for (int j = 0; j < 6;j++) {
+                for (int k = 0; k < 6; k++) {
+                    if (myLottoNumber[i][k] == resultNumber.get(j)) {
+                        correctCount += 1; //한줄에 맞는 개수 저장
+                    }
+                }
+            }
+            if (correctCount == 6) { //1등
+                correctNumberRanking[0] += 1;
+                winnerAmount += 100000;
+            }
+            else if (correctCount == 5) { //2등
+                correctNumberRanking[1] += 1;
+                winnerAmount += 70000;
+            }
+            else if (correctCount == 4) { //3등
+                correctNumberRanking[2] += 1;
+                winnerAmount += 50000;
+            }
+            else if (correctCount == 3) { //4등
+                correctNumberRanking[3] += 1;
+                winnerAmount += 30000;
+            }
+            else { //꽝
+                correctNumberRanking[4] += 1;
+                winnerAmount += 5000;
+            }
+        }
+        outputResult();
+    }
+    public void semiAutoProgram () { //반자동
+        System.out.println("test");
+    }
+    public void manualProgram () { //수동
+        while (buyLottoNumber--> 0) {
 
-                    if (!duplicateCheck[temp]) {
-                        duplicateCheck[temp] = true;
+            for (int i = 0; i < 5; i++) {
+                char str = (char)(i+65);
+                int correctCount = 0;
+
+                for (int j = 0; j < 6; j++) {
+                    System.out.println(""+str+"수동 "+(j + 1)+"번째 숫자를 입력해주세요");
+                    int inputNumber = sc.nextInt();
+
+                    if (!duplicateCheck[inputNumber]) {
+                        duplicateCheck[inputNumber] = true;
                         correctCount += 1;
                     } else { //중복인경우 다시
+                        System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
                         j-= 1;
                     }
                 }
@@ -126,15 +186,12 @@ public class LottoProgram implements LottoInterface {
                     correctNumberRanking[4] += 1;
                     winnerAmount += 5000;
                 }
+                for (int k = 1; k < 46;k++) {
+                    duplicateCheck[k] = false;
+                }
             }
         }
         outputResult();
-    }
-    public void semiAutoProgram () { //반자동
-
-    }
-    public void manualProgram () { //수동
-
     }
     public void outputResult () { //총 결과값
         System.out.println("==========로또 당첨결과==========");
