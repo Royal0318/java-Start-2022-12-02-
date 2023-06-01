@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class LottoProgram implements LottoInterface {
     static int[] correctNumberRanking = new int[5]; //해당 등수를 몇번 맞았는지 세는 배열값
@@ -8,9 +7,9 @@ public class LottoProgram implements LottoInterface {
     /*
     1등 : 100000원
     2등 : 70000원
-    3등 : 50000원
-    4등 : 30000원
-    5등 : 5000원
+    3등 : 30000원
+    4등 : 5000원
+    5등 : 0원
      */
     static HashSet<Integer> resultNumberSave = new HashSet<>(); //정답 로또번호
     static ArrayList<Integer> resultNumber;
@@ -81,23 +80,21 @@ public class LottoProgram implements LottoInterface {
         //정답 랜덤으로 저장
         myLottoNumber = new int[5 * buyLottoNumber][6 * buyLottoNumber]; //2차원배열 디폴트값 X 구매한 로또 장수
 
-        for (int i = 0; i < buyLottoNumber;i++) {
-            for (int j = 0; j < 5 ; j++) {
-                for (int k = 0; k < 6; k++) {
-                    temp = (int) (Math.random() * 45) + 1;
+           for (int i = 0; i < (5 * buyLottoNumber);i++) {
+               for (int j = 0; j < 6;j++) {
+                   temp = (int)(Math.random() * 45) + 1;
 
-                    if (!duplicateCheck[temp]) {
-                        duplicateCheck[temp] = true;
-                        myLottoNumber[i][j] = temp;
-                    } else {
-                        k -= 1;
-                    }
-                }
-                for (int k = 1; k < 46; k++) {
-                    duplicateCheck[j] = false;
-                }
-            }
-        }
+                   if (!duplicateCheck[temp]) {
+                       duplicateCheck[temp] = true;
+                       myLottoNumber[i][j] += temp;
+                   } else {
+                       j -= 1;
+                   }
+               }
+               for (int j = 1; j < 46;j++) {
+                   duplicateCheck[j] = false;
+               }
+           }
         //나의번호를 랜덤으로 미리 저장
         inputMyInputNumber();
     }
@@ -126,79 +123,96 @@ public class LottoProgram implements LottoInterface {
         }
     }
     public void AutoProgram() { //올 자동
-        for (int i = 0; i < buyLottoNumber;i++) {
-            for (int j = 0; j < 5;j++) {
-                for (int k = 0; k < 6; k++) {
-                    if (myLottoNumber[i][k] == resultNumber.get(j)) {
-                        correctCount += 1; //한줄에 맞는 개수 저장
+            for (int i = 0; i < 5 * buyLottoNumber;i++) {
+                for (int j = 0; j < 6; j++) {
+                    for (int k = 0; k < 6;k++) {
+                        if (myLottoNumber[i][k] == resultNumber.get(j) && !duplicateCheck[myLottoNumber[i][k]]) {
+                            duplicateCheck[myLottoNumber[i][j]] = true;
+                            correctCount += 1; //한줄에 맞는 개수 저장
+                        }
                     }
                 }
                 if (correctCount == 6) { //1등
                     correctNumberRanking[0] += 1;
                     winnerAmount += 100000;
                 }
-                else if (correctCount == 5) { //2등
+                else if (correctCount == 5 || correctCount == 4) { //2등
                     correctNumberRanking[1] += 1;
                     winnerAmount += 70000;
                 }
-                else if (correctCount == 4) { //3등
+                else if (correctCount == 3) { //3등
                     correctNumberRanking[2] += 1;
-                    winnerAmount += 50000;
-                }
-                else if (correctCount == 3) { //4등
-                    correctNumberRanking[3] += 1;
                     winnerAmount += 30000;
-                }
-                else { //꽝
+                } else if (correctCount == 2) { //4등
+                    correctNumberRanking[3] += 1;
+                    winnerAmount += 5000;
+                } else { //꽝
                     correctNumberRanking[4] += 1;
+                }
+                for (int j = 1;j < 46;j++) {
+                    duplicateCheck[j] = false;
                 }
                 correctCount = 0;
             }
-        }
         outputResult();
     }
     public void semiAutoProgram () { //반자동
-        System.out.println("test");
+
     }
     public void manualProgram () { //수동
         for (int i = 0; i < buyLottoNumber;i++) {
 
             for (int j = 0; j < 5; j++) {
-                char str = (char) (i + 65);
-                int correctCount = 0;
+                char str = (char) (j + 65);
 
                 for (int k = 0; k < 6; k++) {
-                    System.out.println("" + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
-                    int inputNumber = sc.nextInt();
+                    System.out.println(""+(i + 1)+"번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
+                    int lottoNumber = sc.nextInt();
 
-                    if (!duplicateCheck[inputNumber]) {
-                        duplicateCheck[inputNumber] = true;
-                        correctCount += 1;
+                    if (!duplicateCheck[lottoNumber]) {
+                        duplicateCheck[lottoNumber] = true;
                     } else { //중복인경우 다시
                         System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
                         k -= 1;
                     }
                 }
-                if (correctCount == 6) { //1등
-                    correctNumberRanking[0] += 1;
-                    winnerAmount += 100000;
-                } else if (correctCount == 5) { //2등
-                    correctNumberRanking[1] += 1;
-                    winnerAmount += 70000;
-                } else if (correctCount == 4) { //3등
-                    correctNumberRanking[2] += 1;
-                    winnerAmount += 50000;
-                } else if (correctCount == 3) { //4등
-                    correctNumberRanking[3] += 1;
-                    winnerAmount += 30000;
-                } else { //꽝
-                    correctNumberRanking[4] += 1;
-                    winnerAmount += 5000;
-                }
-                for (int k = 1; k < 46; k++) {
+                for (int k = 1;k < 46;k++) {
                     duplicateCheck[k] = false;
                 }
             }
+        }
+        System.out.println("로또 번호를 맞추는 중 입니다 조금만 기다려주세요...");
+
+        for (int i = 0; i < 5 * buyLottoNumber;i++) {
+            for (int j = 0; j < 6; j++) {
+                for (int k = 0; k < 6;k++) {
+                    if (myLottoNumber[i][k] == resultNumber.get(j) && !duplicateCheck[myLottoNumber[i][k]]) {
+                        duplicateCheck[myLottoNumber[i][j]] = true;
+                        correctCount += 1; //한줄에 맞는 개수 저장
+                    }
+                }
+            }
+            if (correctCount == 6) { //1등
+                correctNumberRanking[0] += 1;
+                winnerAmount += 100000;
+            }
+            else if (correctCount == 5 || correctCount == 4) { //2등
+                correctNumberRanking[1] += 1;
+                winnerAmount += 70000;
+            }
+            else if (correctCount == 3) { //3등
+                correctNumberRanking[2] += 1;
+                winnerAmount += 30000;
+            } else if (correctCount == 2) { //4등
+                correctNumberRanking[3] += 1;
+                winnerAmount += 5000;
+            } else { //꽝
+                correctNumberRanking[4] += 1;
+            }
+            for (int j = 1;j < 46;j++) {
+                duplicateCheck[j] = false;
+            }
+            correctCount = 0;
         }
         outputResult();
     }
@@ -215,8 +229,10 @@ public class LottoProgram implements LottoInterface {
 
         if (((buyLottoNumber * 5000)) < winnerAmount) {
             System.out.println("차익은 총 "+(winnerAmount - (buyLottoNumber * 5000))+"원 이므로 "+(winnerAmount - (buyLottoNumber * 5000))+"원 더 흭득하였습니다");
-        } else {
+        } else if (((buyLottoNumber * 5000)) > winnerAmount) {
             System.out.println("차익은 총 "+((buyLottoNumber * 5000) - winnerAmount)+"원 이므로 "+((buyLottoNumber * 5000) - winnerAmount)+"원 더 손해입니다");
+        } else {
+            System.out.println("사용한 돈과 당첨금액이 일치하므로 차익은 0원입니다");
         }
     }
 }
