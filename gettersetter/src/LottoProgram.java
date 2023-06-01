@@ -47,12 +47,21 @@ public class LottoProgram implements LottoInterface {
 
             if (initialAmount >= 5000) {
                 setMyMoney(initialAmount);
-                buyLotto();
+               save();
                 break;
             } else {
                 System.out.println("최소금액은 5000원부터 가능합니다");
             }
         }
+    }
+    public void save () {
+        //로또번호 미리 저장
+        while (resultNumberSave.size() != 6) {
+            temp = (int)(Math.random() * 45) + 1;
+            resultNumberSave.add(temp);
+        }
+        resultNumber = new ArrayList<>(resultNumberSave); //Hashmap을 Arraylist로 변환
+        buyLotto();
     }
     public void buyLotto() {
         while (true) {
@@ -71,38 +80,37 @@ public class LottoProgram implements LottoInterface {
         }
     }
     public void inputMyInputNumber() {
-        System.out.println("몇개의 숫자를 입력하시겠습니까? (1 ~ 6까지 입력하세요)");
-        int number = sc.nextInt();
+        myLottoNumber = new int[5 * buyLottoNumber][6 * buyLottoNumber]; //2차원배열 디폴트값 X 구매한 로또 장수
 
-        if (number == 0) {
-            System.out.println("0개를 입력하였으므로 전체 자동으로 입력됩니다");
-            setInputNumber(number);
-            inputAutoNumber();
-        }
-        else if (number == lottoMaxNumber) {
-            System.out.println("전체 수동으로 입력합니다");
-            setInputNumber(number);
-            manualProgram();
-        }
-        else if (number >= 1 && number < lottoMaxNumber) { //1 ~ 5까지
-            System.out.println(""+number+"개를 입력하므로 나머지 번호는 모두 반자동으로 입력됩니다");
-            setInputNumber(number);
-            semiAutoProgram();
-        }
-        else {
-            System.out.println("범위를 벗어났습니다 다시 입력해주세요");
+        while (true) {
+            System.out.println("몇개의 숫자를 입력하시겠습니까? (1 ~ 6까지 입력하세요)");
+            int number = sc.nextInt();
+
+            if (number == 0) { //자동
+                System.out.println("0개를 입력하였으므로 전체 자동으로 입력됩니다");
+                setInputNumber(number);
+                inputAutoNumber();
+                break;
+            }
+            else if (number == lottoMaxNumber) { //수동
+                System.out.println("전체 수동으로 입력합니다");
+                setInputNumber(number);
+                manualProgram();
+                break;
+            }
+            else if (number >= 1 && number < lottoMaxNumber) { //반자동
+                System.out.println("" + number + "개를 입력하므로 나머지 번호는 모두 반자동으로 입력됩니다");
+                setInputNumber(number);
+                semiAutoProgram();
+                break;
+            }
+            else {
+                System.out.println("범위를 벗어났습니다 다시 입력해주세요");
+            }
         }
     }
     public void inputAutoNumber() {
-        //로또번호 미리 저장
-        while (resultNumberSave.size() != 6) {
-            temp = (int)(Math.random() * 45) + 1;
-            resultNumberSave.add(temp);
-        }
-        resultNumber = new ArrayList<>(resultNumberSave); //Hashmap을 Arraylist로 변환
         //정답 랜덤으로 저장
-        myLottoNumber = new int[5 * buyLottoNumber][6 * buyLottoNumber]; //2차원배열 디폴트값 X 구매한 로또 장수
-
         for (int i = 0; i < (5 * buyLottoNumber);i++) {
             for (int j = 0; j < 6;j++) {
                 temp = (int)(Math.random() * 45) + 1;
@@ -118,7 +126,6 @@ public class LottoProgram implements LottoInterface {
                 duplicateCheck[j] = false;
             }
         }
-        //나의번호를 랜덤으로 미리 저장
         findLottoNumber();
     }
     public void  semiAutoProgram () {
@@ -187,8 +194,7 @@ public class LottoProgram implements LottoInterface {
         for (int i = 0; i < 5 * buyLottoNumber;i++) {
             for (int j = 0; j < 6; j++) {
                 for (int k = 0; k < 6;k++) {
-                    if (myLottoNumber[i][k] == resultNumber.get(j) && !duplicateCheck[myLottoNumber[i][k]]) {
-                        duplicateCheck[myLottoNumber[i][j]] = true;
+                    if (myLottoNumber[i][k] == resultNumber.get(j)) {
                         correctCount += 1; //한줄에 맞는 개수 저장
                     }
                 }
@@ -209,9 +215,6 @@ public class LottoProgram implements LottoInterface {
                 winnerAmount += 5000;
             } else { //꽝
                 correctNumberRanking[4] += 1;
-            }
-            for (int j = 1;j < 46;j++) {
-                duplicateCheck[j] = false;
             }
             correctCount = 0;
         }
