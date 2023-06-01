@@ -6,7 +6,7 @@ public class lottoMain {
         LottoInterface lottoInterface = new LottoProgram();
 
         while (true) {
-            System.out.println("1.로또 돌리기 2.프로그램 종료");
+            System.out.println("1.로또 프로그램 실행 2.프로그램 종료");
 
             int menuChoice = sc.nextInt();
 
