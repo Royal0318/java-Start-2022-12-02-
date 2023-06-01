@@ -6,6 +6,4 @@ public interface LottoInterface  {
 
     void inputMyMoney ();
 
-    void buyLotto();
-
 }
