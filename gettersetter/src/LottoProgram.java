@@ -154,14 +154,19 @@ public class LottoProgram implements LottoInterface {
                 char str = (char) (j + 65);
 
                 for (int k = 0; k < number;k++) {
-                    System.out.println(""+(i + 1)+"번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
+                    System.out.println("" + (i + 1) + "번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
                     int lottoNumber = sc.nextInt();
 
-                    if (!duplicateCheck[lottoNumber]) {
-                        duplicateCheck[lottoNumber] = true;
-                        myLottoNumber[j][k] = lottoNumber;
-                    } else { //중복인경우 다시
-                        System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
+                    if (lottoNumber >= 1 && lottoNumber <= 45) {
+                        if (!duplicateCheck[lottoNumber]) {
+                            duplicateCheck[lottoNumber] = true;
+                            myLottoNumber[j][k] = lottoNumber;
+                        } else { //중복인경우 다시
+                            System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
+                            k -= 1;
+                        }
+                    } else {
+                        System.out.println("벗어난 범위입니다 다시 입력해주세요");
                         k -= 1;
                     }
                 }
@@ -193,13 +198,18 @@ public class LottoProgram implements LottoInterface {
                 char str = (char) (j + 65);
 
                 for (int k = 0; k < 6; k++) {
-                    System.out.println(""+(i + 1)+"번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
+                    System.out.println("" + (i + 1) + "번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
                     int lottoNumber = sc.nextInt();
 
-                    if (!duplicateCheck[lottoNumber]) {
-                        duplicateCheck[lottoNumber] = true;
-                    } else { //중복인경우 다시
-                        System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
+                    if (lottoNumber >= 1 && lottoNumber <= 45) {
+                        if (!duplicateCheck[lottoNumber]) {
+                            duplicateCheck[lottoNumber] = true;
+                        } else { //중복인경우 다시
+                            System.out.println("안내 : 중복되는 숫자는 입력할 수 없습니다");
+                            k -= 1;
+                        }
+                    } else {
+                        System.out.println("벗어난 범위입니다 다시 입력해주세요");
                         k -= 1;
                     }
                 }
@@ -267,7 +277,7 @@ public class LottoProgram implements LottoInterface {
         System.out.println("총 당첨금액은 "+winnerAmount+"원 입니다");
 
         if (((buyLottoNumber * 5000)) < winnerAmount) {
-            System.out.println("차익은 총 "+(winnerAmount - (buyLottoNumber * 5000))+"원 이므로 "+(winnerAmount - (buyLottoNumber * 5000))+"원 더 흭득하였습니다");
+            System.out.println("차익은 총 "+(winnerAmount - (buyLottoNumber * 5000))+"원 이므로 "+(winnerAmount - (buyLottoNumber * 5000))+"원 더 이득입니다");
         } else if (((buyLottoNumber * 5000)) > winnerAmount) {
             System.out.println("차익은 총 "+((buyLottoNumber * 5000) - winnerAmount)+"원 이므로 "+((buyLottoNumber * 5000) - winnerAmount)+"원 더 손해입니다");
         } else {
