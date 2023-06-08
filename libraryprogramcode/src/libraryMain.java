@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class libraryMain {
@@ -7,7 +7,7 @@ public class libraryMain {
         ManagementInterface managementInterface = new LibraryManagement();
         BookFindWayInterface bookFindWayInterface = new LibraryBookFindWay();
 
-        HashMap<LibraryManagement, Integer> bookList = new HashMap<>();
+        LinkedHashMap<LibraryManagement, Integer> bookList = new LinkedHashMap<>();
 
         LibraryManagement book1 = new LibraryManagement("세이노의 가르침","데이원","세이노",2023,3,2);
         LibraryManagement book2 = new LibraryManagement("역행자","웅진지식하우스","자청",2023,5,29);
@@ -26,18 +26,19 @@ public class libraryMain {
 
         while (true) {
             System.out.println("==============A도서관 관리 프로그램입니다==============");
-            System.out.println("1.책 관리 2.회원관리 3.관리자모드 4.시스템종료");
+            System.out.println("1.책 관리 \n2.회원관리 \n3.관리자모드 \n4.시스템종료");
 
             int menuChoice = sc.nextInt();
 
             if (menuChoice == 1) {
-                System.out.println("1.책 등록 2.책 수정 3.책 삭제 4.책 찾기 5.돌아가기");
+                System.out.println("1.책 등록 \n2.책 수정 \n3.책 삭제 \n4.책 찾기 \n5.돌아가기");
 
                 int bookManagementMenuChoice = sc.nextInt();
 
                 if (bookManagementMenuChoice == 1) {
                     System.out.println("책 등록을 시작합니다");
                     managementInterface.bookNumbering(bookList);
+                    managementInterface.inputReleaseDays(bookList);
                 }
                 else if (bookManagementMenuChoice == 2) {
 
@@ -56,7 +57,7 @@ public class libraryMain {
                 }
             }
             else if (menuChoice == 2) {
-                System.out.println("1.회원 정보 조회 2.회원 등록 3.회원 삭제 4.돌아가기");
+                System.out.println("1.회원 정보 조회 \n2.회원 등록 \n3.회원 삭제 \n4.돌아가기");
 
                 int memberManagementMenuChoice = sc.nextInt();
 

@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public  class LibraryManagement implements ManagementInterface { //책관리 클래스
+public class LibraryManagement implements ManagementInterface { //책관리 클래스
     private String bookName; //책이름
     private String bookPublisher; //책 출판사
     private String bookWriter; //책 작가
@@ -71,33 +71,26 @@ public  class LibraryManagement implements ManagementInterface { //책관리 클
     }
     @Override
     public void bookNumbering (HashMap<LibraryManagement, Integer> bookList) {
-        int newSerialNumber = 1;
-        /*
-        for (int book : bookNumber) {
-
-        }
-        System.out.println("등록할 책의 번호는 "++"번 입니다");
-
-         */
+        System.out.println("등록할 책의 번호는 "+(bookList.size() + 1)+"번 입니다");
         inputBookName();
     }
 
     public void inputBookName () {
         System.out.println("등록할 책 이름을 적어주세요");
         setBookName(sc.next());
-        System.out.println("등록이 완료되었습니다 (등록할 책 이름 : "+getBookName()+"");
+        System.out.println("등록이 완료되었습니다");
         inputBookPublisher();
     }
     public void inputBookPublisher () {
         System.out.println("등록할 책의 출판사를 적어주세요");
         setBookPublisher(sc.next());
-        System.out.println("등록이 완료되었습니다 (등록할 책 출판사 : "+getBookPublisher()+"");
+        System.out.println("등록이 완료되었습니다");
         inputBookWriter();
     }
     public void inputBookWriter () {
         System.out.println("등록할 책의 작가 이름을 적어주세요");
         setBookWriter(sc.next());
-        System.out.println("등록이 완료되었습니다 (등록할 책 작가 이름 : "+getBookWriter()+"");
+        System.out.println("등록이 완료되었습니다");
         inputReleaseYear();
     }
     public void inputReleaseYear () {
@@ -107,7 +100,7 @@ public  class LibraryManagement implements ManagementInterface { //책관리 클
             setReleaseYear(sc.nextInt());
 
             if (getReleaseYear() >= 1900 && getReleaseYear() <= 2023) {
-                System.out.println("등록이 완료되었습니다 (등록할 책 출시연도 : "+getReleaseYear()+"년");
+                System.out.println("등록이 완료되었습니다");
                 inputReleaseMonth();
                 break;
             }
@@ -123,26 +116,27 @@ public  class LibraryManagement implements ManagementInterface { //책관리 클
             setReleaseMonth(sc.nextInt());
 
             if (getReleaseMonth() >= 1 && getReleaseMonth() <= 12) {
-                System.out.println("등록이 완료되었습니다 (등록할 책 출시 월(月) : "+getReleaseMonth()+"월");
-                inputReleaseDays();
+                System.out.println("등록이 완료되었습니다");
                 break;
             }
             else {
                 System.out.println("잘못된 입력입니다 다시 입력해주세요");
             }
         }
-
     }
-    public void inputReleaseDays () {
+    @Override
+    public void inputReleaseDays(HashMap<LibraryManagement, Integer> bookList) {
         while (true) {
             System.out.println("등록할 책의 출시 일(日)를 입력해주세요 (1일 ~ 31일 까지 가능합니다)");
 
             setReleaseDays(sc.nextInt());
 
             if (getReleaseDays() >= 1 && getReleaseDays() <= 31) {
-                System.out.println("등록이 완료되었습니다 (등록할 책 출시 일(日) : "+getReleaseMonth()+"일");
-                System.out.println("=============책 등록이 모두 완료되었습니다=============");
-
+                System.out.println("등록이 완료되었습니다");
+                LibraryManagement bookAdd = new LibraryManagement(""+getBookName()+"",""+getBookPublisher()+"",""+getBookWriter()+"",getReleaseYear(),getReleaseMonth(),getReleaseDays());
+                bookList.put(bookAdd, (bookList.size() + 1));
+                System.out.println("=============책 등록이 모두 완료되었습니다=============\n");
+                break;
             }
             else {
                 System.out.println("잘못된 입력입니다 다시 입력해주세요");
