@@ -6,6 +6,8 @@ public class LibraryManagement implements ManagementInterface { //책관리 클�
     private String bookPublisher; //책 출판사
     private String bookWriter; //책 작가
     private String modifyBookName; //수정하는 책 이름이 존재하는지 여부를 확인
+    private String deleteBookName; //책을 지우기 위해 책 이름입력받음
+
     private int modifyMenuChoice; //수정 메뉴 선택
     private int releaseYear; //책 출시 연도(年)
     private int releaseMonth; //책 출시 월(月)
@@ -96,6 +98,14 @@ public class LibraryManagement implements ManagementInterface { //책관리 클�
 
     public void setModifyMenuChoice(int modifyMenuChoice) {
         this.modifyMenuChoice = modifyMenuChoice;
+    }
+
+    public String getDeleteBookName() {
+        return deleteBookName;
+    }
+
+    public void setDeleteBookName(String deleteBookName) {
+        this.deleteBookName = deleteBookName;
     }
 
     @Override
@@ -205,10 +215,12 @@ public class LibraryManagement implements ManagementInterface { //책관리 클�
         }
         if (!isDuplicateCheck()) { //책이 존재하지않는경우
             System.out.println("존재하지 않는 책입니다 다시 시도해 주세요");
+            setDuplicateCheck(false); //boolean 값 초기화
         }
     }
 
     public void modifyInformation(LibraryManagement modify) {
+        System.out.println("안내 : 원하는 메뉴의 번호를 적어주세요");
         System.out.println("1.책 이름 수정 2.책 출판사 수정 3.책 작가 수정 4.연도(年) 수정 5.월(月)수정 6.일(日) 수정 7.돌아가기");
 
         setModifyMenuChoice(sc.nextInt());
@@ -290,6 +302,45 @@ public class LibraryManagement implements ManagementInterface { //책관리 클�
         }
         else {
             System.out.println("잘못된 입력입니다 다시 시도해주세요");
+        }
+    }
+
+    @Override
+    public void deleteBook(HashMap<LibraryManagement, Integer> bookList) {
+        System.out.println("지우고싶은 책 이름을 적어주세요");
+
+        setDeleteBookName(sc.nextLine());
+
+        for (LibraryManagement modify : bookList.keySet()) {
+            if (Objects.equals(getDeleteBookName(), modify.getBookName())) { //책이 존재하고 일치하는경우
+                setDuplicateCheck(true); //존재하는경우 true
+                confirmDeletion(modify,bookList);
+                break;
+            }
+        }
+        if (!isDuplicateCheck()) {
+            System.out.println("존재하지 않는 책입니다 다시 시도해주세요");
+        }
+        setDuplicateCheck(false);
+    }
+
+    public void confirmDeletion(LibraryManagement modify,HashMap<LibraryManagement, Integer> bookList) {
+        while (true) {
+            System.out.println("정말로 삭제하시겠습니까? 1.예 2.아니요 \n안내 : 삭제하면 다시 복구 할 수 없습니다!");
+
+            int deleteMenuChoice = sc.nextInt();
+
+            if (deleteMenuChoice == 1) {
+                System.out.println("정상적으로 삭제되었습니다");
+                bookList.remove(modify); //modify 가 담고있는 index번호를 remove메소드에 담아 booklist에 저장되어있는 해시값을 삭제한다
+                break;
+            } else if (deleteMenuChoice == 2) {
+                System.out.println("메인 메뉴로 돌아갑니다");
+                setDuplicateCheck(false);
+                break;
+            } else {
+                System.out.println("잘못된 입력입니다 다시 시도해주세요");
+            }
         }
     }
 }

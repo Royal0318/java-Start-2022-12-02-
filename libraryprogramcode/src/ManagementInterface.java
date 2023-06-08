@@ -6,4 +6,5 @@ public interface ManagementInterface {
     void bookNumbering (HashMap<LibraryManagement, Integer> bookList);
     void inputReleaseDays(HashMap<LibraryManagement, Integer> bookList);
     void findBookInformation(HashMap<LibraryManagement, Integer> bookList);
+    void deleteBook(HashMap<LibraryManagement, Integer> bookList);
 }

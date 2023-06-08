@@ -5,6 +5,7 @@ public class libraryMain {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ManagementInterface managementInterface = new LibraryManagement();
+
         BookFindWayInterface bookFindWayInterface = new LibraryBookFindWay();
 
         LinkedHashMap<LibraryManagement, Integer> bookList = new LinkedHashMap<>();
@@ -44,7 +45,7 @@ public class libraryMain {
                     managementInterface.findBookInformation(bookList);
                 }
                 else if (bookManagementMenuChoice == 3) {
-
+                    managementInterface.deleteBook(bookList);
                 }
                 else if (bookManagementMenuChoice == 4) {
                     bookFindWayInterface.selectLookup(bookList);
