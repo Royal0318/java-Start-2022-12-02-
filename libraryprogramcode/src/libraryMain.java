@@ -17,21 +17,21 @@ public class libraryMain {
         LibraryManagement book6 = new LibraryManagement("도둑맞은 집중력","어크로스","요한 하리",2023,4,28);
         LibraryManagement book7 = new LibraryManagement("모든 삶은 흐른다","피카","로랑스 드빌레르",2023,4,3);
         bookList.put(book1, 1);
-        bookList.put(book2, 2);
-        bookList.put(book3, 3);
-        bookList.put(book4, 4);
-        bookList.put(book5, 5);
-        bookList.put(book6, 6);
-        bookList.put(book7, 7);
+        bookList.put(book2, 1);
+        bookList.put(book3, 1);
+        bookList.put(book4, 1);
+        bookList.put(book5, 1);
+        bookList.put(book6, 1);
+        bookList.put(book7, 1);
 
         while (true) {
             System.out.println("==============A도서관 관리 프로그램입니다==============");
-            System.out.println("1.책 관리 \n2.회원관리 \n3.관리자모드 \n4.시스템종료");
+            System.out.println("1.책 관리 2.회원관리 3.관리자모드 4.시스템종료");
 
             int menuChoice = sc.nextInt();
 
             if (menuChoice == 1) {
-                System.out.println("1.책 등록 \n2.책 수정 \n3.책 삭제 \n4.책 찾기 \n5.돌아가기");
+                System.out.println("1.책 등록 2.책 수정 3.책 삭제 4.책 찾기 5.돌아가기");
 
                 int bookManagementMenuChoice = sc.nextInt();
 
@@ -41,7 +41,7 @@ public class libraryMain {
                     managementInterface.inputReleaseDays(bookList);
                 }
                 else if (bookManagementMenuChoice == 2) {
-
+                    managementInterface.findBookInformation(bookList);
                 }
                 else if (bookManagementMenuChoice == 3) {
 
@@ -57,7 +57,7 @@ public class libraryMain {
                 }
             }
             else if (menuChoice == 2) {
-                System.out.println("1.회원 정보 조회 \n2.회원 등록 \n3.회원 삭제 \n4.돌아가기");
+                System.out.println("1.회원 정보 조회 2.회원 등록 3.회원 삭제 4.돌아가기");
 
                 int memberManagementMenuChoice = sc.nextInt();
 
