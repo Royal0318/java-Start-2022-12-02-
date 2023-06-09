@@ -28,11 +28,6 @@ public class LottoProgram implements LottoInterface {
     }
     @Override
     public void inputMyMoney() {
-        /*
-        메소드 역할 : 오버라이딩 되어 가장처음에 실행되며 로또를 구매하기전에
-        자신이 가진 돈을 입력받는다 최소 5000원 부터 가능하여 5000원 미만을 입력할 경우 다시 입력받도록
-        예외처리를 해주었다
-         */
         while (true) {
             System.out.println("내가 가질 돈을 입력하세요 (최소 5000원 이상부터 가능합니다)");
             int initialAmount = sc.nextInt();
@@ -48,12 +43,6 @@ public class LottoProgram implements LottoInterface {
         }
     }
     public void resultNumberAutoInput () {
-        /*
-        메소드 역할 : 프로그램이 동작하면 미리 당첨 로또번호를 저장한다
-        Hash를 이용하였으므로 1 ~ 45번의 랜덤값이 temp 전역변수에 담기고 그 값이 만약에 중복이 발생할경우
-        add되지않는다 resultNumberSave.size가 6이되면 탈출한다 6이되었다는것은 중복없이 6개의 당첨번호가 생성되었다는 것을 의미한다
-        그 이후에 Hash는 직접 배열과 비교할 수 없어서 비교가능한 Arraylist형으로 변환시켜 주었다
-         */
         while (resultNumberSave.size() != 6) {
             temp = random.nextInt(45) + 1;
             resultNumberSave.add(temp);
@@ -62,11 +51,6 @@ public class LottoProgram implements LottoInterface {
         buyLotto();
     }
     public void buyLotto() {
-        /*
-        메소드 역할 : 가진돈을 가지고 로또를 구매하는 메소드이다
-        buyLottoNumber 전역변수는 나중에 n장만큼 추가적으로 입력받아야하므로 전역변수 처리해주었으며
-        가진돈보다 구매한 값이 더 큰경우 다시 입력받도록 예외처리를 해주었다
-         */
         while (true) {
             System.out.println("몇장을 구매하시겠습니까? (1장의 가격은 5000원이며 1장당 5번 이용할 수 있습니다");
             buyLottoNumber = sc.nextInt();
@@ -89,10 +73,6 @@ public class LottoProgram implements LottoInterface {
         }
     }
     public void inputMyInputNumber() {
-        /*
-        메소드 역할 : 0 ~ 6개까지 숫자를 입력받는다 0개라면 자동 6개면 모두 수동이며 나머지는 반자동으로 배치되고
-        그 외의 범위를 입력했을때 다시 입력받도록 예외처리도 하였다
-         */
         while (true) {
             System.out.println("몇개의 숫자를 입력하시겠습니까? (0 ~ 6까지 입력하세요)");
             int number = sc.nextInt();
@@ -118,14 +98,6 @@ public class LottoProgram implements LottoInterface {
         }
     }
     public void inputAutoNumber() { //자동
-        /*
-        메소드 역할 : 0개를 입력하였을때 모두 자동으로 입력된다
-        All 자동일 경우에는 5 * 로또 구매용지 개수 만큼 for문이 돌면서 랜덤값이 저장된다
-        boolean을 사용하여 temp값이 false 즉 중복되지않은 값이라면 그값을 true로 바꿔주고
-        myLottoNumber 배열에 값을 담는다
-        만약에 true라면 다시 입력받도록 j -= 1로 처리하였으며
-        한 횡을 모두 입력이 완료되면 다시 boolean을 초기화한다
-         */
         for (int i = 0; i < buyLottoNumber;i++) {
             for (int j = 0; j < 5;j++) {
                 for (int k = 0; k < 6;k++) {
@@ -142,44 +114,29 @@ public class LottoProgram implements LottoInterface {
             }
             a += 5;
         }
-        a = 0;
         findLottoNumber();
         //Math.random을 1 ~ 45범위로 지정하고 Arraylist contains를사용하여 중복하지않게했을때 왜 0이저장되는가?
     }
     public void  semiAutoProgram (int number) { //반자동
-        /*
-        메소드 역할 : 처음에 몇개를 입력할건지 담은 number변수만큼 for문이 돌면서 값을 저장한다
-        나머지 방식은 위와 같으며 수동으로 입력이 끝난경우에
-        나머지는 자동으로 입력되어야 하기 때문에 temp 변수를 통하여 랜덤 값을 담고 수동으로 입력한 값이 중복으로 존재하는지 체크한다
-        char형을 이용하여 실제 복권과 유사하도록 A~E가 나타나도록 아스키 코드를 참고하여 숫자를 문자형으로 변환하여 사용했다
-         */
         for (int i = 0; i < number; i++) { //수동번호 입력
             System.out.println("A 수동 " + (i + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
             int lottoNumber = sc.nextInt();
 
-            if (lottoNumber >= 1 && lottoNumber <= 45 && !numberSave.contains(lottoNumber)) {
+            if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
+                duplicateCheck[lottoNumber] = true;
                 myLottoNumber[0][i] = lottoNumber;
-                numberSave.add(lottoNumber);
             } else {
                 System.out.println("벗어난 범위이거나 이미 존재하는 번호입니다");
                 i -= 1;
             }
         }
-        for (int i = 1; i < 5; i++) { //bcde도 a와 같이 번호를 복사
-            for (int j = 0; j < number; j++) {
-                myLottoNumber[i][j] = myLottoNumber[0][j];
-            }
-        }
-        a = 5;
-        if (buyLottoNumber > 1) {
-            for (int i = 0; i < (buyLottoNumber - 1); i++) {
-                for (int j = 0; j < 5; j++) {
-                    for (int k = 0; k < 6; k++) {
-                        myLottoNumber[a + j][k] = myLottoNumber[j][k];
-                    }
+        for (int i = 0; i < buyLottoNumber; i++) {
+            for (int j = 0; j < 5; j++) {
+                for (int k = 0; k < number; k++) {
+                    myLottoNumber[a + j][k] = myLottoNumber[0][k];
                 }
-                a += 5;
             }
+            a += 5;
         }
         a = 0;
         for (int i = 0; i < buyLottoNumber; i++) {
@@ -187,30 +144,28 @@ public class LottoProgram implements LottoInterface {
                 for (int k = number; k < 6; k++) {
                     int randomNumber = random.nextInt(45) + 1;
 
-                    if (!numberSave.contains(randomNumber)) {
+                    if (!duplicateCheck[randomNumber] && !numberSave.contains(randomNumber)) {
+                        numberSave.add(randomNumber);
                         myLottoNumber[a + j][k] = randomNumber;
                     } else {
                         k -= 1;
                     }
                 }
+                numberSave.clear();
             }
             a += 5;
         }
-        System.out.println("입력이 완료되었습니다 나머지 번호는 자동으로 입력됩니다");
+        a = 0;
         findLottoNumber();
     }
     public void manualProgram () { //수동
-        /*
-        메소드 역할 : 전체 수동은 입력한 값이 중복인지 여부만 판단하면 되기 때문에 간단하게 처리하였다
-         */
-        a = 0;
         for (int i = 0; i < 6; i++) {
             System.out.println("1번째 장 A 수동 " + (i + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
             int lottoNumber = sc.nextInt();
 
             if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
                 duplicateCheck[lottoNumber] = true;
-                myLottoNumber[a][i] = lottoNumber;
+                myLottoNumber[0][i] = lottoNumber;
             }
             else {
                 System.out.println("벗어난 범위이거나 이미 존재하는 번호입니다");
@@ -222,25 +177,21 @@ public class LottoProgram implements LottoInterface {
                 myLottoNumber[i][j] = myLottoNumber[0][j];
             }
         }
-        a = 5;
-        for (int k = 0; k < (5 * (buyLottoNumber - 1));k++) {
-            for (int n = 0; n < 6;n++) {
-                myLottoNumber[a + k][n] = myLottoNumber[0][n];
+        if (buyLottoNumber > 1) {
+            a = 5;
+            for (int i = 0; i < buyLottoNumber; i++) {
+                for (int j = 0; j < 5; j++) {
+                    for (int k = 0; k < 6; k++) {
+                        myLottoNumber[a + j][k] = myLottoNumber[0][k];
+                    }
+                }
+                a += 5;
             }
         }
+        a = 0;
         findLottoNumber();
     }
     public void findLottoNumber () {
-        /*
-        메소드 역할 : 자동,반자동,수동이 모두 로또번호를 입력하였을때
-        여기에서 로또 번호를 맞춘다
-        3중for문을 이용하여 Hash에서 Arraylist로 변환하였기 때문에 배열과 값을 비교하는 것이 가능하다
-        그러므로 if를 통하여 resultNumber.get을 사용하여 먼저 내가 입력한 횡의 값에 맞는것이 있는지 확인하면서 for문이 작동한다
-        맞는번호가 존재하는경우 correctCount변수가 1씩증가하며
-        한 횡이끝났을경우 등수를 확인한다 각각의 등수에 적혀진 1차원 배열에 1씩 추가하며
-        winnerAmount(누적상금) 전역변수에 등수에 따른 상금이 누적된다
-         */
-
         for (int i = 0; i < buyLottoNumber;i++) {
             for (int j = 0; j < 5; j++) {
                 for (int k = 0; k < 6;k++) {
@@ -249,24 +200,27 @@ public class LottoProgram implements LottoInterface {
                         correctCount += 1; //한줄에 맞는 개수 저장
                     }
                 }
-                if (correctCount == 6) { //1등
-                    correctNumberRanking[0] += 1;
-                    winnerAmount += 100000;
-                }
-                else if (correctCount == 5 || correctCount == 4) { //2등
-                    correctNumberRanking[1] += 1;
-                    winnerAmount += 70000;
-                }
-                else if (correctCount == 3) { //3등
-                    correctNumberRanking[2] += 1;
-                    winnerAmount += 30000;
-                }
-                else if (correctCount == 2) { //4등
-                    correctNumberRanking[3] += 1;
-                    winnerAmount += 5000;
-                }
-                else { //꽝
-                    correctNumberRanking[4] += 1;
+                switch (correctCount) {
+                    case 6 : //1등
+                        correctNumberRanking[0] += 1;
+                        winnerAmount += 100000;
+                        break;
+                    case 5 :
+                    case 4 : //2등
+                        correctNumberRanking[1] += 1;
+                        winnerAmount += 70000;
+                        break;
+                    case 3 : //3등
+                        correctNumberRanking[2] += 1;
+                        winnerAmount += 30000;
+                        break;
+                    case 2 : //4등
+                        correctNumberRanking[3] += 1;
+                        winnerAmount += 5000;
+                        break;
+                    default : //꽝
+                        correctNumberRanking[4] += 1;
+                        break;
                 }
                 correctCount = 0;
             }
@@ -276,11 +230,6 @@ public class LottoProgram implements LottoInterface {
         loadResult();
     }
     public void loadResult () { //총 결과값
-        /*
-        메소드 역할 : 로또 당첨결과를 모두 출력한다
-        만약 내가 로또를 산 가격보다 당첨금액이 많은경우 또는 그반대인경우를 대비해
-        if문으로 예외처리를 하였다
-         */
         System.out.println("=================내가 입력한 로또번호=================");
         for (int i = 0; i < buyLottoNumber;i++) {
 
