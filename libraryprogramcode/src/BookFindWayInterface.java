@@ -4,5 +4,5 @@ import java.util.Scanner;
 public interface BookFindWayInterface {
     Scanner sc = new Scanner(System.in);
 
-    void selectLookup(HashMap<LibraryManagement, Integer> bookList);
+    void selectLookup(HashMap<LibraryBookManagement, Integer> bookList);
 }
