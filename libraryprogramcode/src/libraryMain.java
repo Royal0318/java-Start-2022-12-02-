@@ -84,7 +84,9 @@ public class libraryMain {
                     if (memberManagementMenuChoice == 1) {
 
                     } else if (memberManagementMenuChoice == 2) {
-                        member_management_interface.memberNumbering(bookList,memberList);
+                        member_management_interface.memberNumbering(memberList);
+                        member_management_interface.memberRegistrationDate(memberList);
+                        break;
                     } else if (memberManagementMenuChoice == 3) {
 
                     } else if (memberManagementMenuChoice == 4) {
@@ -116,50 +118,3 @@ public class libraryMain {
         }
     }
 }
-/*
-import java.util.*;
-
-public class BookManager {
-    public static void main(String[] args) {
-        HashMap<String, Book> bookMap = new HashMap<>();
-
-        Book book1 = new Book("알고리즘", "방송통신", 1997);
-        Book book2 = new Book("알고리즘2", "방송통신2", 1996);
-        Book book3 = new Book("알고리즘3", "방송통신3", 1995);
-
-        bookMap.put("1번째 책", book1);
-        bookMap.put("2번째 책", book2);
-        bookMap.put("3번째 책", book3);
-
-        for (String key : bookMap.keySet()) {
-            Book book = bookMap.get(key);
-            System.out.println(key + " - " + book.getTitle() + " / " + book.getPublisher() + " / " + book.getYear());
-        }
-    }
-}
-
-class Book {
-    private String title;
-    private String publisher;
-    private int year;
-
-    public Book(String title, String publisher, int year) {
-        this.title = title;
-        this.publisher = publisher;
-        this.year = year;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public int getYear() {
-        return year;
-    }
-}
-
- */

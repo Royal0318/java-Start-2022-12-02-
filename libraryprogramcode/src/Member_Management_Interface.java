@@ -4,5 +4,6 @@ import java.util.Scanner;
 public interface Member_Management_Interface {
     Scanner sc = new Scanner(System.in);
 
-    void memberNumbering (HashMap<LibraryBookManagement, Integer> bookList,HashMap<LibraryMemberManagement, Integer> memberList);
+    void memberNumbering (HashMap<LibraryMemberManagement, Integer> memberList);
+    void memberRegistrationDate (HashMap<LibraryMemberManagement, Integer> memberList);
 }

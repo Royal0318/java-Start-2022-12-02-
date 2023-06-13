@@ -117,21 +117,21 @@ public class LibraryBookManagement implements BookManagementInterface { //책관
     public void inputBookName() {
         System.out.println("등록할 책 이름을 적어주세요");
         setBookName(sc.next());
-        System.out.println("등록이 완료되었습니다");
+        System.out.println("\n안내 : 책 이름이 정상적으로 등록되었습니다\n");
         inputBookPublisher();
     }
 
     public void inputBookPublisher() {
         System.out.println("등록할 책의 출판사를 적어주세요");
         setBookPublisher(sc.next());
-        System.out.println("등록이 완료되었습니다");
+        System.out.println("\n안내 : 출판사가 정상적으로 등록되었습니다\n");
         inputBookWriter();
     }
 
     public void inputBookWriter() {
         System.out.println("등록할 책의 작가 이름을 적어주세요");
         setBookWriter(sc.next());
-        System.out.println("등록이 완료되었습니다");
+        System.out.println("\n안내 : 작가 이름이 정상적으로 등록되었습니다\n");
         inputReleaseYear();
     }
 
@@ -142,7 +142,7 @@ public class LibraryBookManagement implements BookManagementInterface { //책관
             setReleaseYear(sc.nextInt());
 
             if (getReleaseYear() >= 1900 && getReleaseYear() <= 2023) {
-                System.out.println("등록이 완료되었습니다");
+                System.out.println("\n안내 : 출시연(年)도가 정상적으로 등록되었습니다\n");
                 inputReleaseMonth();
                 break;
             } else {
@@ -158,7 +158,7 @@ public class LibraryBookManagement implements BookManagementInterface { //책관
             setReleaseMonth(sc.nextInt());
 
             if (getReleaseMonth() >= 1 && getReleaseMonth() <= 12) {
-                System.out.println("등록이 완료되었습니다");
+                System.out.println("\n안내 : 출시 월(月)이 정상적으로 등록되었습니다\n");
                 break;
             } else {
                 System.out.println("잘못된 입력입니다 다시 입력해주세요");
@@ -174,7 +174,7 @@ public class LibraryBookManagement implements BookManagementInterface { //책관
             setReleaseDays(sc.nextInt());
 
             if (getReleaseDays() >= 1 && getReleaseDays() <= 31) {
-                System.out.println("등록이 완료되었습니다\n");
+                System.out.println("\n안내 : 출시 일(日)이 정상적으로 등록되었습니다\n");
 
                 for (LibraryBookManagement bookName : bookList.keySet()) { //같은 책 존재여부 검사
                     if (Objects.equals(getBookName(), bookName.getBookName()) && Objects.equals(getBookPublisher(), bookName.getBookPublisher()) && Objects.equals(getBookWriter(), bookName.getBookWriter()) && getReleaseYear() == bookName.getReleaseYear() && getReleaseMonth() == bookName.getReleaseMonth() && getReleaseDays() == bookName.getReleaseDays()) {
