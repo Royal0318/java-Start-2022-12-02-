@@ -82,16 +82,20 @@ public class libraryMain {
                     int memberManagementMenuChoice = sc.nextInt();
 
                     if (memberManagementMenuChoice == 1) {
-
-                    } else if (memberManagementMenuChoice == 2) {
+                        member_management_interface.findMemberInformation(memberList);
+                    }
+                    else if (memberManagementMenuChoice == 2) {
                         member_management_interface.memberNumbering(memberList);
                         member_management_interface.memberRegistrationDate(memberList);
                         break;
-                    } else if (memberManagementMenuChoice == 3) {
+                    }
+                    else if (memberManagementMenuChoice == 3) {
 
-                    } else if (memberManagementMenuChoice == 4) {
+                    }
+                    else if (memberManagementMenuChoice == 4) {
 
-                    } else {
+                    }
+                    else {
                         System.out.println("잘못된 입력입니다 다시 입력해주세요");
                     }
                 }

@@ -180,6 +180,7 @@ public class LibraryBookManagement implements BookManagementInterface { //책관
                     if (Objects.equals(getBookName(), bookName.getBookName()) && Objects.equals(getBookPublisher(), bookName.getBookPublisher()) && Objects.equals(getBookWriter(), bookName.getBookWriter()) && getReleaseYear() == bookName.getReleaseYear() && getReleaseMonth() == bookName.getReleaseMonth() && getReleaseDays() == bookName.getReleaseDays()) {
                         System.out.println("안내 : 같은 책이 이미 존재하기 때문에 책 수량을 조정합니다");
 
+
                         int plusBook = bookList.get(bookName); //기존에 존재하는 1권을 1권추가하여 2권으로 조정
 
                         bookList.replace(bookName, bookList.get(bookName) + plusBook); //replace (등록된 책,그 책의 value 값 + 1권추가)

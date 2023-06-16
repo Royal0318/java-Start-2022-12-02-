@@ -51,7 +51,7 @@ public class LibraryBookFindWay implements BookFindWayInterface {
                 findBookName(bookList);
             }
             else if (menuChoice == 2) {
-                findWriterName();
+                findWriterName(bookList);
             }
             else if (menuChoice == 3) {
                 System.out.println("1.출시연도 빠른순으로 보기 2.책 가나다순으로 보기 3.돌아가기");
@@ -115,7 +115,25 @@ public class LibraryBookFindWay implements BookFindWayInterface {
             System.out.println("존재하지 않는 책입니다 다시 시도해주세요");
         }
     }
-    public void findWriterName () {
+    public void findWriterName (HashMap<LibraryBookManagement, Integer> bookList) {
+        //책이름으로 찾기
+        System.out.println("작가 이름을 적어주세요");
+        sc.nextLine(); //매개값 삭제
+        setFindBookWriter(sc.next());
 
+        for (LibraryBookManagement outputBook : bookList.keySet()) {
+            if (Objects.equals(getFindBookWriter(), outputBook.getBookWriter())) {
+                System.out.println("책을 찾았습니다!!!");
+                System.out.println("제목 : "+outputBook.getBookName()+"");
+                System.out.println("작가 : "+outputBook.getBookWriter()+"");
+                System.out.println("출판사 : "+outputBook.getBookPublisher()+"");
+                System.out.println("발매 연월일 : "+outputBook.getReleaseYear()+"년 "+outputBook.getReleaseMonth()+"월 "+outputBook.getReleaseDays()+"일");
+                setFindCheck(true);
+                break;
+            }
+        }
+        if (!isFindCheck()) {
+            System.out.println("존재하지 않는 책입니다 다시 시도해주세요");
+        }
     }
 }

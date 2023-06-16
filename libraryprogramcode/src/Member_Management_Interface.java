@@ -6,4 +6,6 @@ public interface Member_Management_Interface {
 
     void memberNumbering (HashMap<LibraryMemberManagement, Integer> memberList);
     void memberRegistrationDate (HashMap<LibraryMemberManagement, Integer> memberList);
+    void findMemberInformation(HashMap<LibraryMemberManagement, Integer> memberList);
+    void deleteMemberInformation (HashMap<LibraryMemberManagement, Integer> memberList);
 }
