@@ -11,13 +11,15 @@ public class lottoMain {
             int menuChoice = sc.nextInt();
 
             if (menuChoice == 1) {
-                System.out.println("=============로또 프로그램을 시작합니다=============");
+                System.out.println("=============로또 프로그램을 시작합니다=============\n");
                 lottoInterface.inputMyMoney();
                 break;
-            } else if (menuChoice == 2) {
+            }
+            else if (menuChoice == 2) {
                 System.out.println("프로그램을 종료합니다");
                 break;
-            } else {
+            }
+            else {
                 System.out.println("잘못된 입력입니다");
             }
         }

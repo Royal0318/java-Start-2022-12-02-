@@ -6,12 +6,11 @@ import java.util.Random;
 public class LottoProgram implements LottoInterface {
     static int[] correctNumberRanking = new int[5]; //해당 등수를 몇번 맞았는지 세는 배열값
     static int winnerAmount = 0; //누적 당첨금액
-    static Random random = new Random();
+    static Random random = new Random(); //랜덤 선언
     static HashSet<Integer> resultNumberSave = new HashSet<>(); //정답 로또번호를 저장
     static ArrayList<Integer> resultNumber; //Hashset에서 중복이 걸러진 로또번호를 비교 가능하도록 Arraylist로 저장이 필요하기 때문
     static int[][] myLottoNumber; //나의 전체 로또넘버
     static boolean[] duplicateCheck = new boolean[46]; //로또 번호 중복을 체크하기 위한 boolean형 전역변수
-    static ArrayList<Integer> numberSave = new ArrayList<>();
 
     static int buyLottoNumber = 0; //로또 구매한 장수
 
@@ -82,12 +81,12 @@ public class LottoProgram implements LottoInterface {
                 inputAutoNumber();
                 break;
             }
-            else if (number == lottoMaxNumber) { //수동
+            else if (number == 6) { //수동
                 System.out.println("전체 수동으로 입력합니다");
                 manualProgram();
                 break;
             }
-            else if (number >= 1 && number < lottoMaxNumber) { //반자동
+            else if (number >= 1 && number < 6) { //반자동
                 System.out.println("" + number + "개를 입력하므로 나머지 번호는 모두 반자동으로 입력됩니다");
                 semiAutoProgram(number);
                 break;
@@ -110,88 +109,78 @@ public class LottoProgram implements LottoInterface {
                         k -= 1;
                     }
                 }
-                Arrays.fill(duplicateCheck, false); //boolean초기화
+                Arrays.fill(duplicateCheck, false);
             }
             a += 5;
         }
         findLottoNumber();
-        //Math.random을 1 ~ 45범위로 지정하고 Arraylist contains를사용하여 중복하지않게했을때 왜 0이저장되는가?
     }
     public void  semiAutoProgram (int number) { //반자동
-        for (int i = 0; i < number; i++) { //수동번호 입력
-            System.out.println("A 수동 " + (i + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
-            int lottoNumber = sc.nextInt();
+        for (int i = 0; i < buyLottoNumber;i++) {
 
-            if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
-                duplicateCheck[lottoNumber] = true;
-                myLottoNumber[0][i] = lottoNumber;
-            } else {
-                System.out.println("벗어난 범위이거나 이미 존재하는 번호입니다");
-                i -= 1;
-            }
-        }
-        for (int i = 0; i < buyLottoNumber; i++) {
-            for (int j = 0; j < 5; j++) {
-                for (int k = 0; k < number; k++) {
-                    myLottoNumber[a + j][k] = myLottoNumber[0][k];
-                }
-            }
-            a += 5;
-        }
-        a = 0;
-        for (int i = 0; i < buyLottoNumber; i++) {
-            for (int j = 0; j < 5; j++) {
-                for (int k = number; k < 6; k++) {
-                    int randomNumber = random.nextInt(45) + 1;
+            for (int j = 0; j < 5;j++) {
+                char str = (char) (j + 65);
 
-                    if (!duplicateCheck[randomNumber] && !numberSave.contains(randomNumber)) {
-                        numberSave.add(randomNumber);
-                        myLottoNumber[a + j][k] = randomNumber;
-                    } else {
+                for (int k = 0; k < number;k++) {
+                    System.out.println("" + (i + 1) + "번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요");
+                    int lottoNumber = sc.nextInt();
+
+                    if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
+                        duplicateCheck[lottoNumber] = true;
+                        myLottoNumber[a + j][k] = lottoNumber;
+                    }
+                    else {
+                        System.out.println("안내 : 중복되는 숫자이거나 벗어난 범위를 입력하였습니다 다시 시도해주세요");
                         k -= 1;
                     }
                 }
-                numberSave.clear();
+
+                System.out.println("입력이 완료되었습니다 나머지 번호는 자동으로 입력됩니다");
+                for (int k = number;k < 6;k++) {
+                    int randomNumber = random.nextInt(45) + 1;
+
+                    if (!duplicateCheck[randomNumber]) {
+                        duplicateCheck[randomNumber] = true;
+                        myLottoNumber[a + j][k] = randomNumber;
+                    }
+                    else {
+                        k -= 1;
+                    }
+                }
+                Arrays.fill(duplicateCheck, false);
             }
             a += 5;
         }
-        a = 0;
         findLottoNumber();
+        //5개 입력시 마지막은 모든 경우의수를따짐 예를들어 12345입력시 마지막1칸은 6 ~ 45까지의 랜덤번호 모든경우의수 출력
+        //4개인경우 마지막2개 경우의수 모두출력
     }
     public void manualProgram () { //수동
-        for (int i = 0; i < 6; i++) {
-            System.out.println("1번째 장 A 수동 " + (i + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
-            int lottoNumber = sc.nextInt();
+        for (int i = 0; i < buyLottoNumber;i++) {
+            for (int j = 0; j < 5; j++) {
+                char str = (char) (j + 65);
 
-            if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
-                duplicateCheck[lottoNumber] = true;
-                myLottoNumber[0][i] = lottoNumber;
-            }
-            else {
-                System.out.println("벗어난 범위이거나 이미 존재하는 번호입니다");
-                i -= 1;
-            }
-        }
-        for (int i = 1 ; i < 5;i++) {
-            for (int j = 0 ; j< 6;j++) {
-                myLottoNumber[i][j] = myLottoNumber[0][j];
-            }
-        }
-        if (buyLottoNumber > 1) {
-            a = 5;
-            for (int i = 0; i < buyLottoNumber; i++) {
-                for (int j = 0; j < 5; j++) {
-                    for (int k = 0; k < 6; k++) {
-                        myLottoNumber[a + j][k] = myLottoNumber[0][k];
+                for (int k = 0; k < 6; k++) {
+                    System.out.println("" + (i + 1) + "번째 장 : " + str + "수동 " + (k + 1) + "번째 숫자를 입력해주세요 (1 ~ 45번까지)");
+                    int lottoNumber = sc.nextInt();
+
+                    if (lottoNumber >= 1 && lottoNumber <= 45 && !duplicateCheck[lottoNumber]) {
+                        duplicateCheck[lottoNumber] = true;
+                        myLottoNumber[a + j][k] = lottoNumber;
+                    }
+                    else {
+                        System.out.println("안내 : 중복되는 숫자이거나 벗어난 범위를 입력하였습니다 다시 시도해주세요");
+                        k -= 1;
                     }
                 }
-                a += 5;
+                Arrays.fill(duplicateCheck, false);
             }
+            a += 5;
         }
-        a = 0;
         findLottoNumber();
     }
     public void findLottoNumber () {
+        a = 0;
         for (int i = 0; i < buyLottoNumber;i++) {
             for (int j = 0; j < 5; j++) {
                 for (int k = 0; k < 6;k++) {
