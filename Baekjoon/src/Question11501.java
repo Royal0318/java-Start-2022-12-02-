@@ -13,6 +13,7 @@ public class Question11501 {
         for (int i = 0; i < testCase; i++) {
             int inputNumber = Integer.parseInt(br.readLine());
 
+            //inputNumber가 최대100만개가 들어오기때문에 각각의 차이들이 1과 10000일경우 int의값을 넘어버림
             int[] arr = new int[inputNumber];
 
             st = new StringTokenizer(br.readLine());
