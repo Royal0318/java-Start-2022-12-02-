@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class Question14469 {
-    public static class saveNum  { //배열에 객체로 저장
+    public static class saveNum  { //클래스배열을 만들기위해 생성자 생성
         public int one;
         public int two;
         saveNum (int one,int two) {
